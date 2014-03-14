@@ -7,6 +7,8 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Hopnscotch.Integration.AmoCRM.DataProvider;
+using Hopnscotch.Integration.AmoCRM.Entities;
 
 namespace Hopnscotch.Integration.AmoCRM
 {
@@ -15,6 +17,8 @@ namespace Hopnscotch.Integration.AmoCRM
         private const string ApiBaseUrlTemplate = "https://{0}.amocrm.ru/";
         private const string ApiAuthorizationUrlTail = "private/api/auth.php?type=json";
         private const string ApiGetContactsUrlTail = "private/api/v2/json/contacts/list";
+        private const string ApiGetLeadsUrlTail = "private/api/v2/json/leads/list";
+        private const string ApiGetTasksUrlTail = "private/api/v2/json/tasks/list";
         
         private readonly string _subDomain;
         private readonly string _login;
@@ -58,10 +62,24 @@ namespace Hopnscotch.Integration.AmoCRM
 
         public async Task<ApiResponseRoot<ApiContactListResponse>> GetContactsAsync()
         {
-            var response = await _client.GetAsync(new Uri(ApiGetContactsUrlTail, UriKind.Relative));
-            var apiResponseRoot = response.Content.ReadAsAsync<ApiResponseRoot<ApiContactListResponse>>().Result;
+            return await GetEntitiesAsync<ApiContactListResponse>(ApiGetContactsUrlTail);
+        }
 
-            return apiResponseRoot;
+        public async Task<ApiResponseRoot<ApiLeadListResponse>> GetLeadsAsync()
+        {
+            return await GetEntitiesAsync<ApiLeadListResponse>(ApiGetLeadsUrlTail);
+        }
+
+        public async Task<ApiResponseRoot<ApiTaskListResponse>> GetTasksAsync()
+        {
+            return await GetEntitiesAsync<ApiTaskListResponse>(ApiGetTasksUrlTail);
+        }
+
+        private async Task<ApiResponseRoot<T>> GetEntitiesAsync<T>(string relativeUrl) where T : class
+        {
+            var response = await _client.GetAsync(new Uri(relativeUrl, UriKind.Relative));
+
+            return await response.Content.ReadAsAsync<ApiResponseRoot<T>>();
         }
     }
 }

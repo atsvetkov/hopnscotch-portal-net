@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Hopnscotch.Integration.AmoCRM
+namespace Hopnscotch.Integration.AmoCRM.Entities
 {
     internal class ApiAuthParameters
     {

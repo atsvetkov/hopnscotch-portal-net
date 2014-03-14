@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace Hopnscotch.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
-    public sealed class ApiLeadResponse : ApiNamedBusinessEntityResponseBase
+    public sealed class ApiTaskListResponse
     {
-        [JsonProperty("price")]
-        public double Price { get; set; }
+        [JsonProperty("tasks")]
+        public ApiTaskResponse[] Tasks { get; set; }
     }
 }

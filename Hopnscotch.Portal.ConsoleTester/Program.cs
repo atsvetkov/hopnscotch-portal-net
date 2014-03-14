@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM;
+using Hopnscotch.Integration.AmoCRM.DataProvider;
 
 namespace Hopnscotch.Portal.ConsoleTester
 {
@@ -25,6 +26,11 @@ namespace Hopnscotch.Portal.ConsoleTester
 
             var result = await amoDataProvider.AuthenticateAsync();
             var contacts = await amoDataProvider.GetContactsAsync();
+            var leads = await amoDataProvider.GetLeadsAsync();
+            var tasks = await amoDataProvider.GetTasksAsync();
+
+            var numberOfLeadsWithPrice = leads.Response.Leads.Count(l => l.Price > 0);
+            var latestLead = leads.Response.Leads.OrderByDescending(l => l.Created).First();
         }
     }
 

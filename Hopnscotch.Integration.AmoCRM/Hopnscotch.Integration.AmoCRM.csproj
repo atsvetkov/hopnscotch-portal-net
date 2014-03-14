@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmoDataProvider.cs" />
+    <Compile Include="Converters\CustomJsonDateConverter.cs" />
+    <Compile Include="DataProvider\AmoDataProvider.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
     <Compile Include="Entities\ApiEntityResponseBase.cs" />
     <Compile Include="Entities\ApiNamedBusinessEntityResponseBase.cs" />
@@ -57,8 +58,11 @@
     <Compile Include="Entities\Contact\ApiContactListResponse.cs" />
     <Compile Include="Entities\Contact\ApiContactResponse.cs" />
     <Compile Include="Entities\ApiResponseRoot.cs" />
+    <Compile Include="Entities\Lead\ApiContactListResponse.cs" />
     <Compile Include="Entities\Lead\ApiLeadResponse.cs" />
-    <Compile Include="IAmoDataProvider.cs" />
+    <Compile Include="DataProvider\IAmoDataProvider.cs" />
+    <Compile Include="Entities\Task\ApiTaskListResponse.cs" />
+    <Compile Include="Entities\Task\ApiTaskResponse.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
