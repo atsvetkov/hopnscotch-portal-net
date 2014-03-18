@@ -6,9 +6,9 @@ using Hopnscotch.Portal.Contracts;
 
 namespace Hopnscotch.Portal.Data
 {
-    public abstract class EFRepository<T> : IRepository<T> where T : class
+    public class EFRepository<T> : IRepository<T> where T : class
     {
-        protected EFRepository(DbContext context)
+        public EFRepository(DbContext context)
         {
             if (context == null)
             {
@@ -21,7 +21,7 @@ namespace Hopnscotch.Portal.Data
 
         protected DbSet<T> Entities { get; set; }
 
-        public DbContext Context  { get; set; }
+        private DbContext Context  { get; set; }
 
         public virtual IQueryable<T> GetAll()
         {

@@ -1,5 +1,6 @@
 ﻿using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Data.Helpers;
+using Hopnscotch.Portal.Model;
 
 namespace Hopnscotch.Portal.Data
 {
@@ -26,19 +27,19 @@ namespace Hopnscotch.Portal.Data
             context.Dispose();
         }
 
-        public ILessonRepository Lessons
+        public IRepository<Lesson> Lessons
         {
             get
             {
-                return repositoryProvider.GetRepository<ILessonRepository>();
+                return repositoryProvider.GetRepositoryForEntityType<Lesson>();
             }
         }
 
-        public IAttendanceRepository Attendances
+        public IRepository<Attendance> Attendances
         {
             get
             {
-                return repositoryProvider.GetRepository<IAttendanceRepository>();
+                return repositoryProvider.GetRepositoryForEntityType<Attendance>();
             }
         }
     }

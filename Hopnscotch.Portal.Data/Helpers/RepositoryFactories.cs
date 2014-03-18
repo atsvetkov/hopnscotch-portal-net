@@ -11,8 +11,8 @@ namespace Hopnscotch.Portal.Data.Helpers
         {
             return new Dictionary<Type, Func<DbContext, object>>
                 {
-                   { typeof(IAttendanceRepository), dbContext => new AttendanceRepository(dbContext) },
-                   { typeof(ILessonRepository), dbContext => new LessonRepository(dbContext) }
+                   //{ typeof(IAttendanceRepository), dbContext => new AttendanceRepository(dbContext) },
+                   //{ typeof(ILessonRepository), dbContext => new LessonRepository(dbContext) }
                 };
         }
 
@@ -35,7 +35,12 @@ namespace Hopnscotch.Portal.Data.Helpers
 
         public Func<DbContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
         {
-            return GetRepositoryFactory<T>();
+            return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
+        }
+
+        private Func<DbContext, object> DefaultEntityRepositoryFactory<T>() where T : class
+        {
+            return dbContext => new EFRepository<T>(dbContext);
         }
 
         private readonly IDictionary<Type, Func<DbContext, object>> _repositoryFactories;

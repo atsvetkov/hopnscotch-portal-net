@@ -1,11 +1,12 @@
 ﻿using System;
+using Hopnscotch.Portal.Model;
 
 namespace Hopnscotch.Portal.Contracts
 {
     public interface IAttendanceUow : IDisposable
     {
-        ILessonRepository Lessons { get; }
-        IAttendanceRepository Attendances { get; }
+        IRepository<Lesson> Lessons { get; }
+        IRepository<Attendance> Attendances { get; }
 
         void Commit();
     }
