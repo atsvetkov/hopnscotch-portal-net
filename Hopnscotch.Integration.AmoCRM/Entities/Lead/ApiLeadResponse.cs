@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Hopnscotch.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
-    public sealed class ApiLeadResponse : ApiNamedBusinessEntityResponseBase
+    public sealed class ApiLeadResponse : ApiNamedBusinessEntityWithFieldsResponseBase
     {
         [JsonProperty("price")]
         public double Price { get; set; }

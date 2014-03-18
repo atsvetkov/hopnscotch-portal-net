@@ -15,9 +15,9 @@ namespace Hopnscotch.Integration.AmoCRM.Entities
         public DateTime LastModified { get; set; }
 
         [JsonProperty("responsible_user_id")]
-        public string ResponsibleUserId { get; set; }
+        public int ResponsibleUserId { get; set; }
 
         [JsonProperty("account_id")]
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
     }
 }

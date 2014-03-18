@@ -12,5 +12,7 @@ namespace Hopnscotch.Integration.AmoCRM.DataProvider
         Task<ApiResponseRoot<ApiLeadListResponse>> GetLeadsAsync();
 
         Task<ApiResponseRoot<ApiTaskListResponse>> GetTasksAsync();
+
+        Task<ApiResponseRoot<ApiContactLeadLinkListResponse>> GetContactLeadLinksAsync();
     }
 }

@@ -5,6 +5,6 @@ namespace Hopnscotch.Integration.AmoCRM.Entities
     public abstract class ApiEntityResponseBase
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }

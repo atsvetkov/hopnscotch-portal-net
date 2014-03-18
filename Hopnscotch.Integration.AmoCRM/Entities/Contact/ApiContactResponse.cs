@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Hopnscotch.Integration.AmoCRM.Entities
 {
-    public abstract class ApiBaseContactResponse : ApiNamedBusinessEntityResponseBase
+    public abstract class ApiBaseContactResponse : ApiNamedBusinessEntityWithFieldsResponseBase
     {
         [JsonProperty("type")]
         public string ContactType { get; set; }

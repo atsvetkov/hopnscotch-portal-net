@@ -51,10 +51,15 @@
     <Compile Include="Converters\CustomJsonDateConverter.cs" />
     <Compile Include="DataProvider\AmoDataProvider.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
+    <Compile Include="Entities\CustomField\ApiCustomFieldResponse.cs" />
+    <Compile Include="Entities\CustomField\ApiCustomFieldValueResponse.cs" />
     <Compile Include="Entities\ApiEntityResponseBase.cs" />
     <Compile Include="Entities\ApiNamedBusinessEntityResponseBase.cs" />
+    <Compile Include="Entities\ApiNamedBusinessEntityWithFieldsResponseBase.cs" />
     <Compile Include="Entities\Auth\ApiAuthParameters.cs" />
     <Compile Include="Entities\Auth\ApiAuthResponse.cs" />
+    <Compile Include="Entities\ContactLeadLinks\ApiContactListResponse.cs" />
+    <Compile Include="Entities\ContactLeadLinks\ApiContactLeadLinkResponse.cs" />
     <Compile Include="Entities\Contact\ApiContactListResponse.cs" />
     <Compile Include="Entities\Contact\ApiContactResponse.cs" />
     <Compile Include="Entities\ApiResponseRoot.cs" />

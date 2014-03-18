@@ -28,6 +28,7 @@ namespace Hopnscotch.Portal.ConsoleTester
             var contacts = await amoDataProvider.GetContactsAsync();
             var leads = await amoDataProvider.GetLeadsAsync();
             var tasks = await amoDataProvider.GetTasksAsync();
+            var links = await amoDataProvider.GetContactLeadLinksAsync();
 
             var numberOfLeadsWithPrice = leads.Response.Leads.Count(l => l.Price > 0);
             var latestLead = leads.Response.Leads.OrderByDescending(l => l.Created).First();

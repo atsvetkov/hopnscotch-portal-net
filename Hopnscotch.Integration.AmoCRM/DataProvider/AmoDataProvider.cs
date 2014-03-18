@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM.DataProvider;
 using Hopnscotch.Integration.AmoCRM.Entities;
@@ -19,6 +15,7 @@ namespace Hopnscotch.Integration.AmoCRM
         private const string ApiGetContactsUrlTail = "private/api/v2/json/contacts/list";
         private const string ApiGetLeadsUrlTail = "private/api/v2/json/leads/list";
         private const string ApiGetTasksUrlTail = "private/api/v2/json/tasks/list";
+        private const string ApiGetContactLeadLinksUrlTail = "private/api/v2/json/contacts/links";
         
         private readonly string _subDomain;
         private readonly string _login;
@@ -73,6 +70,11 @@ namespace Hopnscotch.Integration.AmoCRM
         public async Task<ApiResponseRoot<ApiTaskListResponse>> GetTasksAsync()
         {
             return await GetEntitiesAsync<ApiTaskListResponse>(ApiGetTasksUrlTail);
+        }
+
+        public async Task<ApiResponseRoot<ApiContactLeadLinkListResponse>> GetContactLeadLinksAsync()
+        {
+            return await GetEntitiesAsync<ApiContactLeadLinkListResponse>(ApiGetContactLeadLinksUrlTail);
         }
 
         private async Task<ApiResponseRoot<T>> GetEntitiesAsync<T>(string relativeUrl) where T : class
