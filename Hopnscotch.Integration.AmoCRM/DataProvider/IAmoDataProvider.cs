@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM.Entities;
+using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 
-namespace Hopnscotch.Integration.AmoCRM.DataProvider
+namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
 {
     public interface IAmoDataProvider
     {

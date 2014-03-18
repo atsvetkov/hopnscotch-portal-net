@@ -3,10 +3,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Hopnscotch.Integration.AmoCRM.DataProvider;
 using Hopnscotch.Integration.AmoCRM.Entities;
+using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 
-namespace Hopnscotch.Integration.AmoCRM
+namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
 {
     public sealed class AmoDataProvider : IAmoDataProvider
     {

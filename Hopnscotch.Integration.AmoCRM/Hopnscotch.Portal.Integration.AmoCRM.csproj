@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{30DB527B-7DFD-4599-9AB8-69003A15AE87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hopnscotch.Portal.Integration.AmoCRM</RootNamespace>
+    <AssemblyName>Hopnscotch.Portal.Integration.AmoCRM</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\CustomJsonDateConverter.cs" />
+    <Compile Include="DataProvider\AmoDataProvider.cs" />
+    <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
+    <Compile Include="Entities\CustomField\ApiCustomFieldResponse.cs" />
+    <Compile Include="Entities\CustomField\ApiCustomFieldValueResponse.cs" />
+    <Compile Include="Entities\ApiEntityResponseBase.cs" />
+    <Compile Include="Entities\ApiNamedBusinessEntityResponseBase.cs" />
+    <Compile Include="Entities\ApiNamedBusinessEntityWithFieldsResponseBase.cs" />
+    <Compile Include="Entities\Auth\ApiAuthParameters.cs" />
+    <Compile Include="Entities\Auth\ApiAuthResponse.cs" />
+    <Compile Include="Entities\ContactLeadLinks\ApiContactListResponse.cs" />
+    <Compile Include="Entities\ContactLeadLinks\ApiContactLeadLinkResponse.cs" />
+    <Compile Include="Entities\Contact\ApiContactListResponse.cs" />
+    <Compile Include="Entities\Contact\ApiContactResponse.cs" />
+    <Compile Include="Entities\ApiResponseRoot.cs" />
+    <Compile Include="Entities\Lead\ApiContactListResponse.cs" />
+    <Compile Include="Entities\Lead\ApiLeadResponse.cs" />
+    <Compile Include="DataProvider\IAmoDataProvider.cs" />
+    <Compile Include="Entities\Task\ApiTaskListResponse.cs" />
+    <Compile Include="Entities\Task\ApiTaskResponse.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

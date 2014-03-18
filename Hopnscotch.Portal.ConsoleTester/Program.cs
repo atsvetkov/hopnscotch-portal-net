@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM;
-using Hopnscotch.Integration.AmoCRM.DataProvider;
+using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
 
 namespace Hopnscotch.Portal.ConsoleTester
 {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Hopnscotch.Integration.AmoCRM.Converters
+namespace Hopnscotch.Portal.Integration.AmoCRM.Converters
 {
     internal sealed class CustomJsonDateConverter : DateTimeConverterBase
     {

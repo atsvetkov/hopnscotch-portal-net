@@ -1,9 +1,10 @@
 using System;
 using Hopnscotch.Integration.AmoCRM.Annotations;
-using Hopnscotch.Integration.AmoCRM.Converters;
+using Hopnscotch.Portal.Integration.AmoCRM.Converters;
+using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 using Newtonsoft.Json;
 
-namespace Hopnscotch.Integration.AmoCRM.Entities
+namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
     public sealed class ApiTaskResponse : ApiNamedBusinessEntityResponseBase

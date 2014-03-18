@@ -1,8 +1,9 @@
 using System;
-using Hopnscotch.Integration.AmoCRM.Converters;
+using Hopnscotch.Integration.AmoCRM.Entities;
+using Hopnscotch.Portal.Integration.AmoCRM.Converters;
 using Newtonsoft.Json;
 
-namespace Hopnscotch.Integration.AmoCRM.Entities
+namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
 {
     public abstract class ApiBusinessEntityResponseBase : ApiEntityResponseBase
     {

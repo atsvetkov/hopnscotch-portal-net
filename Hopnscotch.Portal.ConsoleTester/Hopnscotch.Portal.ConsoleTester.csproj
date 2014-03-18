@@ -48,9 +48,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hopnscotch.Integration.AmoCRM\Hopnscotch.Integration.AmoCRM.csproj">
+    <ProjectReference Include="..\Hopnscotch.Integration.AmoCRM\Hopnscotch.Portal.Integration.AmoCRM.csproj">
       <Project>{30db527b-7dfd-4599-9ab8-69003a15ae87}</Project>
-      <Name>Hopnscotch.Integration.AmoCRM</Name>
+      <Name>Hopnscotch.Portal.Integration.AmoCRM</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
