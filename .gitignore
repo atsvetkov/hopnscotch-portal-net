@@ -151,4 +151,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 amo.txt
-#Hopnscotch.Portal.Web/appSettings.config
+appSettings.config
