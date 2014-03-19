@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM;
+using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
 
 namespace Hopnscotch.Portal.ConsoleTester
@@ -19,10 +20,7 @@ namespace Hopnscotch.Portal.ConsoleTester
         static async Task RunAsync()
         {
             var config = new AmoConfig("..\\..\\..\\amo.txt");
-            var subDomain = config.SubDomain;
-            var login = config.Login;
-            var hash = config.Hash;
-            IAmoDataProvider amoDataProvider = new AmoDataProvider(subDomain, login, hash);
+            IAmoDataProvider amoDataProvider = new AmoDataProvider(config);
 
             var result = await amoDataProvider.AuthenticateAsync();
             var contacts = await amoDataProvider.GetContactsAsync();
@@ -35,15 +33,15 @@ namespace Hopnscotch.Portal.ConsoleTester
         }
     }
 
-    internal class AmoConfig
+    internal class AmoConfig : IConfig
     {
         private const string subDomain = "subDomain";
         private const string login = "login";
         private const string hash = "hash";
 
-        public string SubDomain { get; set; }
-        public string Login { get; set; }
-        public string Hash { get; set; }
+        public string AmoSubDomain { get; set; }
+        public string AmoLogin { get; set; }
+        public string AmoHash { get; set; }
 
         public AmoConfig(string path)
         {
@@ -60,17 +58,17 @@ namespace Hopnscotch.Portal.ConsoleTester
 
                     if (parts[0].Trim() == subDomain)
                     {
-                        SubDomain = parts[1].Trim();
+                        AmoSubDomain = parts[1].Trim();
                     }
 
                     if (parts[0].Trim() == login)
                     {
-                        Login = parts[1].Trim();
+                        AmoLogin = parts[1].Trim();
                     }
 
                     if (parts[0].Trim() == hash)
                     {
-                        Hash = parts[1].Trim();
+                        AmoHash = parts[1].Trim();
                     }
                 }
             }

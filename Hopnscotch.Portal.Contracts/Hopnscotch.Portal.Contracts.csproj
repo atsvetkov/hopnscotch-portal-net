@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="IAttendanceRepository.cs" />
     <Compile Include="IAttendanceUow.cs" />
+    <Compile Include="IConfig.cs" />
     <Compile Include="ILessonRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

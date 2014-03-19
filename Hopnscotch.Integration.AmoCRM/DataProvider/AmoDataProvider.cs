@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM.Entities;
+using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 
 namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
@@ -24,11 +25,11 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         private readonly HttpClientHandler _handler;
         private readonly HttpClient _client;
 
-        public AmoDataProvider(string subDomain, string login, string hash)
+        public AmoDataProvider(IConfig config)
         {
-            _subDomain = subDomain;
-            _login = login;
-            _hash = hash;
+            _subDomain = config.AmoSubDomain;
+            _login = config.AmoLogin;
+            _hash = config.AmoHash;
 
             _handler = new HttpClientHandler
             {

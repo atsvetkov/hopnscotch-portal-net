@@ -52,6 +52,10 @@
       <Project>{30db527b-7dfd-4599-9ab8-69003a15ae87}</Project>
       <Name>Hopnscotch.Portal.Integration.AmoCRM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hopnscotch.Portal.Contracts\Hopnscotch.Portal.Contracts.csproj">
+      <Project>{96E1D3A1-41D5-4846-814B-8D1CB4285EA6}</Project>
+      <Name>Hopnscotch.Portal.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

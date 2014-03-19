@@ -42,5 +42,29 @@ namespace Hopnscotch.Portal.Data
                 return repositoryProvider.GetRepositoryForEntityType<Attendance>();
             }
         }
+
+        public IRepository<Contact> Contacts
+        {
+            get
+            {
+                return repositoryProvider.GetRepositoryForEntityType<Contact>();
+            }
+        }
+
+        public IRepository<Lead> Leads
+        {
+            get
+            {
+                return repositoryProvider.GetRepositoryForEntityType<Lead>();
+            }
+        }
+
+        public IRepository<Task> Tasks
+        {
+            get
+            {
+                return repositoryProvider.GetRepositoryForEntityType<Task>();
+            }
+        }
     }
 }

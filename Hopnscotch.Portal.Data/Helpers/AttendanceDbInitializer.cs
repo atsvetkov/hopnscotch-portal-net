@@ -4,18 +4,11 @@ using Hopnscotch.Portal.Model;
 
 namespace Hopnscotch.Portal.Data
 {
-    internal sealed class AttendanceDbInitializer : DropCreateDatabaseIfModelChanges<AttendanceDbContext>
+    internal sealed class AttendanceDbInitializer : DropCreateDatabaseAlways<AttendanceDbContext>
     {
         protected override void Seed(AttendanceDbContext context)
         {
-            var lesson = new Lesson
-            {
-                Date = DateTime.Now,
-                LeadId = 123
-            };
 
-            context.Lessons.Add(lesson);
-            context.SaveChanges();
         }
     }
 }

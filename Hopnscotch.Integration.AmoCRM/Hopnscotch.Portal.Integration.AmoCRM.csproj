@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Converters\CustomJsonDateConverter.cs" />
     <Compile Include="DataProvider\AmoDataProvider.cs" />
+    <Compile Include="Entities\AmoCrmEntityTypes.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
     <Compile Include="Entities\CustomField\ApiCustomFieldResponse.cs" />
     <Compile Include="Entities\CustomField\ApiCustomFieldValueResponse.cs" />
@@ -78,7 +79,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Hopnscotch.Portal.Contracts\Hopnscotch.Portal.Contracts.csproj">
+      <Project>{96e1d3a1-41d5-4846-814b-8d1cb4285ea6}</Project>
+      <Name>Hopnscotch.Portal.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
