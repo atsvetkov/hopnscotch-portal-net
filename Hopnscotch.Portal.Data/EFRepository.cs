@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Expressions;
 using Hopnscotch.Portal.Contracts;
 
 namespace Hopnscotch.Portal.Data
@@ -26,6 +27,17 @@ namespace Hopnscotch.Portal.Data
         public virtual IQueryable<T> GetAll()
         {
             return Entities;
+        }
+
+        public virtual IQueryable<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
+        {
+            IQueryable<T> query = Entities;
+            foreach (var navigationProperty in navigationProperties)
+            {
+                query = query.Include(navigationProperty);
+            }
+
+            return query;
         }
 
         public virtual T GetById(int id)

@@ -2,10 +2,15 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Contact : NamedBusinessEntityBase
+    public sealed class Contact : NamedBusinessEntityBase
     {
+        public Contact()
+        {
+            Leads = new List<Lead>();
+        }
+
         public int LevelId { get; set; }
 
-        public virtual ICollection<Lead> Leads { get; set; }
+        public ICollection<Lead> Leads { get; set; }
     }
 }

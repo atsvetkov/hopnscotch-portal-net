@@ -10,12 +10,15 @@ namespace Hopnscotch.Portal.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(IAmoCrmImportManager importManager, IAttendanceUow attendanceUow)
+        public ActionResult Index(IAttendanceUow attendanceUow)
         {
-            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
+            var contacts = attendanceUow.Contacts.GetAll(c => c.Leads).ToArray();
+            var leads = attendanceUow.Leads.GetAll(l => l.Contacts).ToArray();
+            var leadsWithSomeContacts = attendanceUow.Leads.GetAll().Where(l => l.Contacts.Count > 0).ToArray();
 
-            var contacts = attendanceUow.Contacts.GetAll().ToArray();
-            var leads = attendanceUow.Leads.GetAll().ToArray();
+            var cc = leadsWithSomeContacts[0].Contacts.ToArray();
+
+            var contactsWithSomeLeads = attendanceUow.Contacts.GetAll().Where(c => c.Leads.Count > 0).ToArray();
 
             ViewBag.Title = "Home Page";
 

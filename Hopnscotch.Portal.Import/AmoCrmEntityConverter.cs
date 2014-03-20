@@ -11,8 +11,8 @@ namespace Hopnscotch.Portal.Import
             return new Contact
             {
                 AmoId = response.Id,
-                Created = response.Created,
-                Modified = response.LastModified,
+                Created = GetDateTimeOrDefault(response.Created),
+                Modified = GetDateTimeOrDefault(response.LastModified),
                 Name = response.Name
             };
         }
@@ -23,8 +23,8 @@ namespace Hopnscotch.Portal.Import
             {
                 AmoId = response.Id,
                 Name = response.Name,
-                Created = response.Created,
-                Modified = response.LastModified,
+                Created = GetDateTimeOrDefault(response.Created),
+                Modified = GetDateTimeOrDefault(response.LastModified),
                 Price = response.Price
             };
         }
@@ -32,6 +32,11 @@ namespace Hopnscotch.Portal.Import
         public Task Convert(ApiTaskResponse response)
         {
             throw new NotImplementedException();
+        }
+
+        private DateTime? GetDateTimeOrDefault(DateTime dateTime)
+        {
+            return dateTime == DateTime.MinValue ? default(DateTime?) : dateTime;
         }
     }
 }

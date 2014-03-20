@@ -10,6 +10,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Hopnscotch.Portal.Import;
 
 namespace Hopnscotch.Portal.Web
 {
@@ -26,6 +27,9 @@ namespace Hopnscotch.Portal.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             SetupIoc();
+            
+            var importManager = DependencyResolver.Current.GetService<IAmoCrmImportManager>();
+            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
         }
 
         private void SetupIoc()

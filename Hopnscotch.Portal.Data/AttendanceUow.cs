@@ -6,32 +6,31 @@ namespace Hopnscotch.Portal.Data
 {
     public sealed class AttendanceUow : IAttendanceUow
     {
-        private readonly IAttendanceDbContextFactory dbContextFactory;
-        private readonly IRepositoryProvider repositoryProvider;
-        private AttendanceDbContext context { get; set; }
+        private readonly IRepositoryProvider _repositoryProvider;
+        private readonly AttendanceDbContext _context;
 
         public AttendanceUow(IRepositoryProvider repositoryProvider, IAttendanceDbContextFactory dbContextFactory)
         {
-            this.repositoryProvider = repositoryProvider;
-            context = dbContextFactory.GetContext();
-            repositoryProvider.DbContext = context;
+            _repositoryProvider = repositoryProvider;
+            _context = dbContextFactory.GetContext();
+            _repositoryProvider.DbContext = _context;
         }
 
         public void Commit()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            _context.Dispose();
         }
 
         public IRepository<Lesson> Lessons
         {
             get
             {
-                return repositoryProvider.GetRepositoryForEntityType<Lesson>();
+                return _repositoryProvider.GetRepositoryForEntityType<Lesson>();
             }
         }
 
@@ -39,7 +38,7 @@ namespace Hopnscotch.Portal.Data
         {
             get
             {
-                return repositoryProvider.GetRepositoryForEntityType<Attendance>();
+                return _repositoryProvider.GetRepositoryForEntityType<Attendance>();
             }
         }
 
@@ -47,7 +46,7 @@ namespace Hopnscotch.Portal.Data
         {
             get
             {
-                return repositoryProvider.GetRepositoryForEntityType<Contact>();
+                return _repositoryProvider.GetRepositoryForEntityType<Contact>();
             }
         }
 
@@ -55,7 +54,7 @@ namespace Hopnscotch.Portal.Data
         {
             get
             {
-                return repositoryProvider.GetRepositoryForEntityType<Lead>();
+                return _repositoryProvider.GetRepositoryForEntityType<Lead>();
             }
         }
 
@@ -63,7 +62,7 @@ namespace Hopnscotch.Portal.Data
         {
             get
             {
-                return repositoryProvider.GetRepositoryForEntityType<Task>();
+                return _repositoryProvider.GetRepositoryForEntityType<Task>();
             }
         }
     }

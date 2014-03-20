@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
+using Hopnscotch.Portal.Model;
 
 namespace Hopnscotch.Portal.Import
 {
@@ -45,9 +46,12 @@ namespace Hopnscotch.Portal.Import
             
             foreach (var link in contactLeadLinks)
             {
-                var contact = contactsMap[link.ContactId];
-                var lead = leadsMap[link.LeadId];
-                contact.Leads.Add(lead);
+                Contact contact;
+                Lead lead;
+                if (contactsMap.TryGetValue(link.ContactId, out contact) && leadsMap.TryGetValue(link.LeadId, out lead))
+                {
+                    contact.Leads.Add(lead);
+                }
             }
 
             foreach (var contact in contactsMap.Values)

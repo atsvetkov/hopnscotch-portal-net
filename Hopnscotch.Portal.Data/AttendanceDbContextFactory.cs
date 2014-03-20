@@ -7,9 +7,9 @@
         public AttendanceDbContextFactory()
         {
             _context = new AttendanceDbContext();
-            _context.Configuration.ProxyCreationEnabled = false;
-            _context.Configuration.LazyLoadingEnabled = false;
-            _context.Configuration.ValidateOnSaveEnabled = false;
+            // _context.Configuration.ProxyCreationEnabled = false;
+            //_context.Configuration.LazyLoadingEnabled = false;
+            // _context.Configuration.ValidateOnSaveEnabled = false;
         }
 
         public AttendanceDbContext GetContext()
