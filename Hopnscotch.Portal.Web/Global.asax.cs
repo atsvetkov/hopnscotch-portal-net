@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -9,7 +10,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
-using Autofac.Integration.Mvc;
+//using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using Hopnscotch.Portal.Import;
 
 namespace Hopnscotch.Portal.Web
@@ -28,8 +30,8 @@ namespace Hopnscotch.Portal.Web
 
             SetupIoc();
             
-            var importManager = DependencyResolver.Current.GetService<IAmoCrmImportManager>();
-            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
+            //var importManager = DependencyResolver.Current.GetService<IAmoCrmImportManager>();
+            //var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
         }
 
         private void SetupIoc()
@@ -38,16 +40,18 @@ namespace Hopnscotch.Portal.Web
             var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().Where(a => a.FullName.StartsWith(AssemblyPrefix)).ToArray();
             builder.RegisterAssemblyModules(assemblies);
 
-            builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
-            builder.RegisterModelBinderProvider();
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterModule<AutofacWebTypesModule>();
+            //builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
+            //builder.RegisterModelBinderProvider();
+            //builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            //builder.RegisterModule<AutofacWebTypesModule>();
 
             // Change controller action parameter injection by changing web.config.
-            builder.RegisterType<ExtensibleActionInvoker>().As<IActionInvoker>().InstancePerHttpRequest();
+            //builder.RegisterType<ExtensibleActionInvoker>().As<IActionInvoker>().InstancePerHttpRequest();
             
             IContainer container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
