@@ -18,8 +18,6 @@ namespace Hopnscotch.Portal.Web
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        private string AssemblyPrefix = "Hopnscotch";
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,31 +25,10 @@ namespace Hopnscotch.Portal.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            SetupIoc();
+            IocConfig.Configure();
             
             //var importManager = DependencyResolver.Current.GetService<IAmoCrmImportManager>();
             //var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
-        }
-
-        private void SetupIoc()
-        {
-            var builder = new ContainerBuilder();
-            var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().Where(a => a.FullName.StartsWith(AssemblyPrefix)).ToArray();
-            builder.RegisterAssemblyModules(assemblies);
-
-            //builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
-            //builder.RegisterModelBinderProvider();
-            //builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            //builder.RegisterModule<AutofacWebTypesModule>();
-
-            // Change controller action parameter injection by changing web.config.
-            //builder.RegisterType<ExtensibleActionInvoker>().As<IActionInvoker>().InstancePerHttpRequest();
-            
-            IContainer container = builder.Build();
-
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
