@@ -20,7 +20,7 @@
                 padding-bottom: 20px;
             }
         </style>
-        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/scripts/modernizr")
     </head>
 
 <body>
@@ -35,7 +35,7 @@
         </div>
     </div> <!-- /container -->
     
-    @Scripts.Render("~/bundles/vendors")
-    <script src="/Scripts/require.js" data-main="/App/main"></script>
+    @Scripts.Render("~/scripts/vendors")
+    <script src="/App/durandal/amd/require.js" data-main="App/main"></script>
 </body>
 </html>

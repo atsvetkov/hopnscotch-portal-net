@@ -1,0 +1,16 @@
+﻿<section>
+    <header>
+        <button class="btn btn-info pull-right" data-bind="click: refresh">
+            <i class="fa fa-refresh"></i> Refresh
+        </button>
+        <h3 data-bind="text: title"></h3>
+    </header>
+    
+    <section data-bind="foreach: contacts()">
+        <article>
+            <div>
+                <address data-bind="text: name()"></address>
+            </div>
+        </article>
+    </section>
+</section>
