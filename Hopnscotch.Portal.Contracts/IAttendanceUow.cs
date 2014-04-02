@@ -10,6 +10,7 @@ namespace Hopnscotch.Portal.Contracts
         IRepository<Contact> Contacts { get; }
         IRepository<Lead> Leads { get; }
         IRepository<Task> Tasks { get; }
+        IRepository<User> Users { get; }
 
         void Commit();
     }

@@ -65,5 +65,13 @@ namespace Hopnscotch.Portal.Data
                 return _repositoryProvider.GetRepositoryForEntityType<Task>();
             }
         }
+
+        public IRepository<User> Users
+        {
+            get
+            {
+                return _repositoryProvider.GetRepositoryForEntityType<User>();
+            }
+        }
     }
 }

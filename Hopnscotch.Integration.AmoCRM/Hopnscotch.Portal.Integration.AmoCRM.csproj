@@ -53,6 +53,9 @@
   <ItemGroup>
     <Compile Include="Converters\CustomJsonDateConverter.cs" />
     <Compile Include="DataProvider\AmoDataProvider.cs" />
+    <Compile Include="Entities\Account\ApiAccountResponse.cs" />
+    <Compile Include="Entities\Account\ApiAccountRootResponse.cs" />
+    <Compile Include="Entities\Account\ApiUserResponse.cs" />
     <Compile Include="Entities\AmoCrmEntityTypes.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
     <Compile Include="Entities\CustomField\ApiCustomFieldResponse.cs" />

@@ -8,5 +8,6 @@ namespace Hopnscotch.Portal.Import
         Contact Convert(ApiIndividualContactResponse response);
         Lead Convert(ApiLeadResponse response);
         Task Convert(ApiTaskResponse response);
+        User Convert(ApiUserResponse response);
     }
 }

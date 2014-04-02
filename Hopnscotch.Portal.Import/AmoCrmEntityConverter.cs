@@ -11,9 +11,10 @@ namespace Hopnscotch.Portal.Import
             return new Contact
             {
                 AmoId = response.Id,
+                AmoResponsibleUserId = response.ResponsibleUserId,
                 Created = GetDateTimeOrDefault(response.Created),
                 Modified = GetDateTimeOrDefault(response.LastModified),
-                Name = response.Name
+                Name = response.Name,
             };
         }
 
@@ -22,10 +23,24 @@ namespace Hopnscotch.Portal.Import
             return new Lead
             {
                 AmoId = response.Id,
+                AmoResponsibleUserId = response.ResponsibleUserId,
                 Name = response.Name,
                 Created = GetDateTimeOrDefault(response.Created),
                 Modified = GetDateTimeOrDefault(response.LastModified),
-                Price = response.Price
+                Price = response.Price.GetValueOrDefault(),
+                ScheduleText = response.ScheduleText,
+                StartDate = response.StartDate
+            };
+        }
+
+        public User Convert(ApiUserResponse response)
+        {
+            return new User
+            {
+                AmoId = response.Id,
+                FirstName = response.FirstName,
+                LastName = response.LastName,
+                Login = response.Login
             };
         }
 

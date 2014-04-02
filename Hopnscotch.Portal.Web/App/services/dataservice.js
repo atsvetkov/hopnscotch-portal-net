@@ -49,16 +49,56 @@
             .fail(queryFailed);
     };
 
+    var runImport = function (numberOfLeads, numberOfContacts, numberOfUsers) {
+        var options = {
+            url: 'api/admin/import',
+            type: 'POST',
+            dataType: 'json'
+        };
+
+        function querySucceded(data) {
+            numberOfLeads(data.numberOfLeads);
+            numberOfContacts(data.numberOfContacts);
+            numberOfUsers(data.numberOfUsers);
+            log('Import successful', data, true);
+        }
+
+        return $.ajax(options)
+            .then(querySucceded)
+            .fail(queryFailed);
+    };
+
+    var refreshTotals = function (numberOfLeads, numberOfContacts, numberOfUsers) {
+        var options = {
+            url: 'api/admin/refresh',
+            type: 'POST',
+            dataType: 'json'
+        };
+
+        function querySucceded(data) {
+            numberOfLeads(data.numberOfLeads);
+            numberOfContacts(data.numberOfContacts);
+            numberOfUsers(data.numberOfUsers);
+            log('Refresh successful', data, true);
+        }
+
+        return $.ajax(options)
+            .then(querySucceded)
+            .fail(queryFailed);
+    };
+
     var dataservice = {
         getLeads: getLeads,
-        getContacts: getContacts
+        getContacts: getContacts,
+        runImport: runImport,
+        refreshTotals: refreshTotals
     };
 
     return dataservice;
 
     function queryFailed(xhr, status) {
         var msg = 'Error getting data. ' + status;
-        logger.log(msg, data, system.getModuleId(dataservice), true);
+        logger.log(msg, xhr, system.getModuleId(dataservice), true);
     }
 
     function log(msg, data, showToast) {

@@ -8,8 +8,12 @@ namespace Hopnscotch.Portal.Data.Configuration
         public AttendanceConfiguration()
         {
             HasRequired(a => a.Lesson)
-                .WithMany(l => l.AttendanceList)
+                .WithMany(l => l.Attendances)
                 .HasForeignKey(a => a.LessonId);
+
+            HasRequired(a => a.Contact)
+                .WithMany(l => l.Attendances)
+                .HasForeignKey(a => a.ContactId);
         }
     }
 }

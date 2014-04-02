@@ -7,7 +7,8 @@ namespace Hopnscotch.Portal.Data.Configuration
     {
         public LessonConfiguration()
         {
-            
+            HasRequired(l => l.Lead)
+                .WithMany(l => l.Lessons);
         }
     }
 }

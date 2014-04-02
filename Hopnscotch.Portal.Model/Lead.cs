@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public sealed class Lead : NamedBusinessEntityBase
+    public class Lead : NamedBusinessEntityBase
     {
         public Lead()
         {
@@ -14,11 +14,12 @@ namespace Hopnscotch.Portal.Model
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public int LevelId { get; set; }
-        public int GroupTypeId { get; set; }
+        //public int LevelId { get; set; }
+        //public int GroupTypeId { get; set; }
         public string ScheduleText { get; set; }
-
-        public ICollection<Contact> Contacts { get; set; }
+        
+        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 
     // TODO: add lookups (custom field tables):

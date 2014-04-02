@@ -7,7 +7,6 @@ namespace Hopnscotch.Portal.Data.Configuration
     {
         public ContactConfiguration()
         {
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿define(['durandal/system', 'services/logger', 'durandal/plugins/router', 'config'],
+﻿define(['durandal/system', 'services/logger', 'plugins/router', 'config'],
     function(system, logger, router, config) {
         var shell = {
             activate: activate,

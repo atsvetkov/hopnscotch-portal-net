@@ -1,4 +1,4 @@
-﻿define(function() {
+﻿define(function () {
     toastr.options.timeOut = 4000;
 
     var routes = [{
@@ -7,7 +7,13 @@
         name: 'Dashboard',
         title: 'Dashboard',
         nav: true
-        }, {
+    },{
+        route: 'admin',
+        moduleId: 'viewmodels/admin',
+        name: 'Admin',
+        title: 'Admin',
+        nav: true
+    }, {
         route: 'leads',
         moduleId: 'viewmodels/leads',
         name: 'Leads',
@@ -20,11 +26,8 @@
         title: 'Contacts',
         nav: true
     }];
-
-    var startModule = 'leads';
-
+    
     return {
-        routes: routes,
-        startModule: startModule
+        routes: routes
     };
 });

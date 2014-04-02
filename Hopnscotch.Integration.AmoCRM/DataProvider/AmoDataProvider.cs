@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Hopnscotch.Integration.AmoCRM.Entities;
 using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
+using Newtonsoft.Json;
 
 namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
 {
@@ -17,6 +20,7 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         private const string ApiGetLeadsUrlTail = "private/api/v2/json/leads/list";
         private const string ApiGetTasksUrlTail = "private/api/v2/json/tasks/list";
         private const string ApiGetContactLeadLinksUrlTail = "private/api/v2/json/contacts/links";
+        private const string ApiGetAccountUrlTail = "private/api/v2/json/accounts/current";
         
         private readonly string _subDomain;
         private readonly string _login;
@@ -58,6 +62,20 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
             return response.Content.ReadAsAsync<ApiResponseRoot<ApiAuthResponse>>().Result.Response.IsAuthorized;
         }
 
+        public bool Authenticate()
+        {
+            var authParams = new ApiAuthParameters(_login, _hash);
+            var response = _client.PostAsJsonAsync(new Uri(ApiAuthorizationUrlTail, UriKind.Relative), authParams).Result;
+            response.EnsureSuccessStatusCode();
+
+            return response.Content.ReadAsAsync<ApiResponseRoot<ApiAuthResponse>>().Result.Response.IsAuthorized;
+        }
+
+        public async Task<ApiResponseRoot<ApiAccountRootResponse>> GetAccountAsync()
+        {
+            return await GetEntitiesAsync<ApiAccountRootResponse>(ApiGetAccountUrlTail);
+        }
+
         public async Task<ApiResponseRoot<ApiContactListResponse>> GetContactsAsync()
         {
             return await GetEntitiesAsync<ApiContactListResponse>(ApiGetContactsUrlTail);
@@ -77,12 +95,49 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         {
             return await GetEntitiesAsync<ApiContactLeadLinkListResponse>(ApiGetContactLeadLinksUrlTail);
         }
+        
 
+        public ApiResponseRoot<ApiAccountRootResponse> GetAccount()
+        {
+            return GetEntities<ApiAccountRootResponse>(ApiGetAccountUrlTail);
+        }
+
+        public ApiResponseRoot<ApiContactListResponse> GetContacts()
+        {
+            return GetEntities<ApiContactListResponse>(ApiGetContactsUrlTail);
+        }
+
+        public ApiResponseRoot<ApiLeadListResponse> GetLeads()
+        {
+            return GetEntities<ApiLeadListResponse>(ApiGetLeadsUrlTail);
+        }
+
+        public ApiResponseRoot<ApiTaskListResponse> GetTasks()
+        {
+            return GetEntities<ApiTaskListResponse>(ApiGetTasksUrlTail);
+        }
+
+        public ApiResponseRoot<ApiContactLeadLinkListResponse> GetContactLeadLinks()
+        {
+            return GetEntities<ApiContactLeadLinkListResponse>(ApiGetContactLeadLinksUrlTail);
+        }
+        
         private async Task<ApiResponseRoot<T>> GetEntitiesAsync<T>(string relativeUrl) where T : class
         {
             var response = await _client.GetAsync(new Uri(relativeUrl, UriKind.Relative));
 
             return await response.Content.ReadAsAsync<ApiResponseRoot<T>>();
+        }
+
+        private ApiResponseRoot<T> GetEntities<T>(string relativeUrl) where T : class
+        {
+            var response = _client.GetAsync(new Uri(relativeUrl, UriKind.Relative)).Result;
+
+            //var result = response.Content.ReadAsByteArrayAsync().Result;
+            //var responseString = Encoding.UTF8.GetString(result, 0, result.Length - 1);
+            //Debug.Write(responseString);
+
+            return response.Content.ReadAsAsync<ApiResponseRoot<T>>().Result;
         }
     }
 }

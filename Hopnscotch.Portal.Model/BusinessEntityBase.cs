@@ -8,8 +8,12 @@ namespace Hopnscotch.Portal.Model
 
         public DateTime? Modified { get; set; }
 
+        public int AmoResponsibleUserId { get; set; }
+
         public int ResponsibleUserId { get; set; }
 
         public int AccountId { get; set; }
+
+        public User ResponsibleUser { get; set; }
     }
 }

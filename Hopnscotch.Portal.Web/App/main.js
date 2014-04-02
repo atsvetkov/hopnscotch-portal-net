@@ -2,6 +2,7 @@
     paths: {
         "text": "../App/durandal/amd/text",
         "plugins": "../App/durandal/plugins",
+        "transitions": "../App/durandal/transitions",
         "knockout": "../scripts/knockout-3.1.0",
         "jquery": "../scripts/jquery-2.1.0"
     }
@@ -24,7 +25,7 @@ define(function(require) {
         //router.useConvention();
         viewLocator.useConvention();
 
-        app.setRoot('viewmodels/shell');
+        app.setRoot('viewmodels/shell', 'entrance');
 
         router.handleInvalidRoute = function (route, params) {
             logger.logError('No route found', route, 'main', true);

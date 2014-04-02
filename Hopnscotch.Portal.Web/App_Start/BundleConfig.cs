@@ -13,11 +13,13 @@ namespace Hopnscotch.Portal.Web
             bundles.Add(new ScriptBundle("~/scripts/vendors").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/respond.js",
-                        "~/Scripts/toastr.js",
                         "~/Scripts/knockout-{version}.js",
+                        "~/Scripts/respond.js",
                         "~/Scripts/sammy-{version}.js",
-                        "~/Scripts/moment.js"
+                        "~/Scripts/moment.js",
+                        "~/Scripts/q.js",
+                        "~/Scripts/breeze.debug.js",
+                        "~/Scripts/toastr.js"
                         ));
             
             bundles.Add(new StyleBundle("~/Content/css").Include(

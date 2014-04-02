@@ -14,5 +14,8 @@ namespace Hopnscotch.Portal.Model
         
         public int? LeadId { get; set; }
         public int? ContactId { get; set; }
+
+        public virtual Lead Lead { get; set; }
+        public virtual Contact Contact { get; set; }
     }
 }

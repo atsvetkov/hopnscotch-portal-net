@@ -8,6 +8,8 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
     {
         Task<bool> AuthenticateAsync();
 
+        Task<ApiResponseRoot<ApiAccountRootResponse>> GetAccountAsync();
+
         Task<ApiResponseRoot<ApiContactListResponse>> GetContactsAsync();
         
         Task<ApiResponseRoot<ApiLeadListResponse>> GetLeadsAsync();
@@ -15,5 +17,17 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         Task<ApiResponseRoot<ApiTaskListResponse>> GetTasksAsync();
 
         Task<ApiResponseRoot<ApiContactLeadLinkListResponse>> GetContactLeadLinksAsync();
+
+        bool Authenticate();
+
+        ApiResponseRoot<ApiAccountRootResponse> GetAccount();
+
+        ApiResponseRoot<ApiContactListResponse> GetContacts();
+
+        ApiResponseRoot<ApiLeadListResponse> GetLeads();
+
+        ApiResponseRoot<ApiTaskListResponse> GetTasks();
+
+        ApiResponseRoot<ApiContactLeadLinkListResponse> GetContactLeadLinks();
     }
 }

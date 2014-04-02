@@ -15,13 +15,17 @@ namespace Hopnscotch.Portal.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Lead> Leads { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder.Configurations.Add(new ContactConfiguration());
             modelBuilder.Configurations.Add(new LeadConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new LessonConfiguration());
             modelBuilder.Configurations.Add(new AttendanceConfiguration());
         }
