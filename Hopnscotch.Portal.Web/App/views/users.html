@@ -6,10 +6,10 @@
         <h3 data-bind="text: title"></h3>
     </header>
     
-    <section data-bind="foreach: contacts">
+    <section data-bind="foreach: users">
         <article>
             <div>
-                <address data-bind="text: name()"></address>
+                <address data-bind="text: displayName()"></address>
             </div>
         </article>
     </section>

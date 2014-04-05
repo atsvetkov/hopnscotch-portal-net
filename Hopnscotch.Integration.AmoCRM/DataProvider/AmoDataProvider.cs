@@ -133,8 +133,8 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         {
             var response = _client.GetAsync(new Uri(relativeUrl, UriKind.Relative)).Result;
 
-            //var result = response.Content.ReadAsByteArrayAsync().Result;
-            //var responseString = Encoding.UTF8.GetString(result, 0, result.Length - 1);
+            var result = response.Content.ReadAsByteArrayAsync().Result;
+            var responseString = Encoding.UTF8.GetString(result, 0, result.Length - 1);
             //Debug.Write(responseString);
 
             return response.Content.ReadAsAsync<ApiResponseRoot<T>>().Result;

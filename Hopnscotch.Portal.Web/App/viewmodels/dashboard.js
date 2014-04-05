@@ -1,4 +1,4 @@
-﻿define(['services/dataservice'], function (dataservice) {
+﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
     var message = ko.observable('Welcome, this is your amazing dashboard!');
 
     var vm = {

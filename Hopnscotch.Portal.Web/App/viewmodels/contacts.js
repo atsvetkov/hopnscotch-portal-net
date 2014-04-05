@@ -1,4 +1,4 @@
-﻿define(['services/dataservice'], function (dataservice) {
+﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
     var contacts = ko.observableArray([]);
     var initialized = false;
 
@@ -19,7 +19,7 @@
     };
 
     function refresh() {
-        return dataservice.getContacts(contacts);
+        return datacontext.getContacts(contacts);
     };
 
     return vm;

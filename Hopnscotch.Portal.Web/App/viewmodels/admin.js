@@ -1,7 +1,8 @@
-﻿define(['services/dataservice', 'knockout'], function (dataservice, ko) {
+﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
     var numberOfLeads = ko.observable();
     var numberOfContacts = ko.observable();
     var numberOfUsers = ko.observable();
+    var numberOfLevels = ko.observable();
 
     var vm = {
         activate: activate,
@@ -9,11 +10,12 @@
         title: 'Admin',
         numberOfLeads: numberOfLeads,
         numberOfContacts: numberOfContacts,
-        numberOfUsers: numberOfUsers
+        numberOfUsers: numberOfUsers,
+        numberOfLevels: numberOfLevels
     };
 
     function refreshTotals() {
-        return dataservice.refreshTotals(numberOfLeads, numberOfContacts, numberOfUsers);
+        return datacontext.refreshTotals(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels);
     };
 
     function activate() {
@@ -21,7 +23,7 @@
     };
 
     function runImport() {
-        return dataservice.runImport(numberOfLeads, numberOfContacts, numberOfUsers);
+        return datacontext.runImport(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels);
     };
 
     return vm;

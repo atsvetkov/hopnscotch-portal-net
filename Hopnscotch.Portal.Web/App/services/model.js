@@ -1,34 +1,17 @@
-﻿define(function() {
-    var Lead = function(dto) {
-        return mapToObservable(dto);
-    };
-
-    var Contact = function (dto) {
-        return addLeadComputeds(mapToObservable(dto));
-    };
-
+﻿define(['knockout'], function(ko) {
     var model = {
-        Lead: Lead,
-        Contact: Contact
+        configureMetadataStore: configureMetadataStore
     };
 
     return model;
 
-    function mapToObservable(dto) {
-        var mapped = {};
-        for (prop in dto) {
-            if (dto.hasOwnProperty(prop)) {
-                mapped[prop] = ko.observable(dto[prop]);
-            }
-        }
-
-        return mapped;
+    function configureMetadataStore(metadataStore) {
+        metadataStore.registerEntityTypeCtor('User', null, userInitializer);
     }
 
-    function addLeadComputeds(entity) {
-        // add any necessary computed observables here
-
-        return entity;
+    function userInitializer(user) {
+        user.displayName = ko.computed(function () {
+            return user.firstName() + ' ' + user.lastName();
+        });
     }
-
 });

@@ -16,6 +16,7 @@ namespace Hopnscotch.Portal.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Lead> Leads { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Level> Levels { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,6 +29,7 @@ namespace Hopnscotch.Portal.Data
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new LessonConfiguration());
             modelBuilder.Configurations.Add(new AttendanceConfiguration());
+            modelBuilder.Configurations.Add(new LevelConfiguration());
         }
 
         static AttendanceDbContext()

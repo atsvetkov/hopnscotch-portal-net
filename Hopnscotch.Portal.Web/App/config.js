@@ -1,6 +1,8 @@
 ﻿define(function () {
     toastr.options.timeOut = 4000;
 
+    var serviceUrl = 'api/breeze';
+
     var routes = [{
         route: '',
         moduleId: 'viewmodels/dashboard',
@@ -25,9 +27,16 @@
         name: 'Contacts',
         title: 'Contacts',
         nav: true
+    }, {
+        route: 'users',
+        moduleId: 'viewmodels/users',
+        name: 'Users',
+        title: 'Users',
+        nav: true
     }];
     
     return {
-        routes: routes
+        routes: routes,
+        serviceUrl: serviceUrl
     };
 });

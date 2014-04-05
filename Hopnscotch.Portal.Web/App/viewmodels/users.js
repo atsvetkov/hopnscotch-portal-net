@@ -1,11 +1,11 @@
 ﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
-    var leads = ko.observableArray([]);
+    var users = ko.observableArray([]);
     var initialized = false;
 
     var vm = {
         activate: activate,
-        leads: leads,
-        title: 'Leads',
+        users: users,
+        title: 'Users',
         refresh: refresh
     };
 
@@ -19,7 +19,7 @@
     };
 
     function refresh() {
-        return datacontext.getLeads(leads);
+        return datacontext.getUsers(users);
     };
 
     return vm;

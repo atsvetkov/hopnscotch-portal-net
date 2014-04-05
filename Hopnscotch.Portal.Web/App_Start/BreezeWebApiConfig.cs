@@ -1,7 +1,6 @@
 using System.Web.Http;
 
-[assembly: WebActivator.PreApplicationStartMethod(
-    typeof(Hopnscotch.Portal.Web.App_Start.BreezeWebApiConfig), "RegisterBreezePreStart")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(Hopnscotch.Portal.Web.App_Start.BreezeWebApiConfig), "RegisterBreezePreStart")]
 namespace Hopnscotch.Portal.Web.App_Start {
   ///<summary>
   /// Inserts the Breeze Web API controller route at the front of all Web API routes
@@ -15,7 +14,7 @@ namespace Hopnscotch.Portal.Web.App_Start {
     public static void RegisterBreezePreStart() {
       GlobalConfiguration.Configuration.Routes.MapHttpRoute(
           name: "BreezeApi",
-          routeTemplate: "breeze/{controller}/{action}"
+          routeTemplate: "api/{controller}/{action}"
       );
     }
   }

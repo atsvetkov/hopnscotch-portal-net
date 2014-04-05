@@ -1,4 +1,5 @@
-﻿using Hopnscotch.Portal.Integration.AmoCRM.Entities;
+﻿using System.Collections.Generic;
+using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 using Hopnscotch.Portal.Model;
 
 namespace Hopnscotch.Portal.Import
@@ -9,5 +10,6 @@ namespace Hopnscotch.Portal.Import
         Lead Convert(ApiLeadResponse response);
         Task Convert(ApiTaskResponse response);
         User Convert(ApiUserResponse response);
+        IEnumerable<Level> Convert(ApiCustomFieldDefinitionResponse response);
     }
 }

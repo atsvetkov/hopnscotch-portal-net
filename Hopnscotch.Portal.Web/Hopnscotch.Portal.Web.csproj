@@ -237,8 +237,6 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\BreezeController.cs" />
-    <Compile Include="Controllers\ContactsController.cs" />
-    <Compile Include="Controllers\LeadsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -254,13 +252,15 @@
     <Content Include="404.html" />
     <Content Include="apple-touch-icon-precomposed.png" />
     <Content Include="App\config.js" />
-    <Content Include="App\services\dataservice.js" />
+    <Content Include="App\services\datacontext.js" />
     <Content Include="App\viewmodels\contacts.js" />
     <Content Include="App\viewmodels\admin.js" />
     <Content Include="App\viewmodels\dashboard.js" />
+    <Content Include="App\viewmodels\users.js" />
     <Content Include="App\views\contacts.html" />
     <Content Include="App\views\admin.html" />
     <Content Include="App\views\dashboard.html" />
+    <Content Include="App\views\users.html" />
     <Content Include="App\views\leads.html" />
     <Content Include="App\viewmodels\leads.js" />
     <Content Include="App\services\logger.js" />

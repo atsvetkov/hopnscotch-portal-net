@@ -55,6 +55,9 @@
     <Compile Include="DataProvider\AmoDataProvider.cs" />
     <Compile Include="Entities\Account\ApiAccountResponse.cs" />
     <Compile Include="Entities\Account\ApiAccountRootResponse.cs" />
+    <Compile Include="Entities\Account\ApiCustomFieldDefinitionResponse.cs" />
+    <Compile Include="Entities\Account\ApiCustomFieldsRootResponse.cs" />
+    <Compile Include="Entities\Account\ApiLeadStatusResponse.cs" />
     <Compile Include="Entities\Account\ApiUserResponse.cs" />
     <Compile Include="Entities\AmoCrmEntityTypes.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
@@ -70,7 +73,7 @@
     <Compile Include="Entities\Contact\ApiContactListResponse.cs" />
     <Compile Include="Entities\Contact\ApiContactResponse.cs" />
     <Compile Include="Entities\ApiResponseRoot.cs" />
-    <Compile Include="Entities\Lead\ApiContactListResponse.cs" />
+    <Compile Include="Entities\Lead\ApiLeadListResponse.cs" />
     <Compile Include="Entities\Lead\ApiLeadResponse.cs" />
     <Compile Include="DataProvider\IAmoDataProvider.cs" />
     <Compile Include="Entities\Task\ApiTaskListResponse.cs" />

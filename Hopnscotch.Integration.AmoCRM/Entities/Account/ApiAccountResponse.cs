@@ -14,5 +14,11 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
 
         [JsonProperty("users")]
         public ApiUserResponse[] Users { get; set; }
+
+        [JsonProperty("leads_statuses")]
+        public ApiLeadStatusResponse[] LeadStatuses { get; set; }
+
+        [JsonProperty("custom_fields")]
+        public ApiCustomFieldsRootResponse CustomFields { get; set; }
     }
 }

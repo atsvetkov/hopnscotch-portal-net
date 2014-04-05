@@ -11,6 +11,7 @@ namespace Hopnscotch.Portal.Contracts
         IRepository<Lead> Leads { get; }
         IRepository<Task> Tasks { get; }
         IRepository<User> Users { get; }
+        IRepository<Level> Levels { get; }
 
         void Commit();
     }

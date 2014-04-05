@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 using Hopnscotch.Portal.Model;
 
@@ -23,6 +24,7 @@ namespace Hopnscotch.Portal.Import
             return new Lead
             {
                 AmoId = response.Id,
+                AmoLevelId = response.AmoLevelId,
                 AmoResponsibleUserId = response.ResponsibleUserId,
                 Name = response.Name,
                 Created = GetDateTimeOrDefault(response.Created),
@@ -47,6 +49,23 @@ namespace Hopnscotch.Portal.Import
         public Task Convert(ApiTaskResponse response)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Level> Convert(ApiCustomFieldDefinitionResponse response)
+        {
+            if (response == null || response.Enums == null)
+            {
+                yield break;
+            }
+
+            foreach (var fieldValue in response.Enums)
+            {
+                yield return new Level
+                {
+                    AmoId = fieldValue.Key,
+                    Name = fieldValue.Value
+                };
+            }
         }
 
         private DateTime? GetDateTimeOrDefault(DateTime dateTime)

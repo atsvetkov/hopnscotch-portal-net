@@ -15,6 +15,8 @@ namespace Hopnscotch.Portal.Import
         // temporary const for generating lesson stubs
         private const int NumberOfLessons = 8;
 
+        private const string LevelCustomFieldName = "Уровень";
+
         private readonly IAmoDataProvider _amoDataProvider;
         private readonly IAttendanceUow _attendanceUow;
         private readonly IAmoCrmEntityConverter _entityConverter;
@@ -56,6 +58,25 @@ namespace Hopnscotch.Portal.Import
             var usersMap = accountResponse.Response.Account.Users.Select(u => _entityConverter.Convert(u)).ToDictionary(c => c.AmoId);
             var contactLeadLinks = contactLeadLinksResponse.Response.Links;
             
+            var levelsCustomField = accountResponse.Response.Account.CustomFields.LeadFields.FirstOrDefault(f => f.Name == LevelCustomFieldName);
+            var levelsMap = new Dictionary<int, Level>();
+            if (levelsCustomField != null)
+            {
+                levelsMap = _entityConverter.Convert(levelsCustomField).ToDictionary(l => l.AmoId);
+            }
+
+            // add users to datacontext
+            foreach (var user in usersMap.Values)
+            {
+                _attendanceUow.Users.Add(user);
+            }
+
+            // add levels to datacontext
+            foreach (var level in levelsMap.Values)
+            {
+                _attendanceUow.Levels.Add(level);
+            }
+
             // setup contact-to-lead relationships
             foreach (var link in contactLeadLinks)
             {
@@ -67,9 +88,10 @@ namespace Hopnscotch.Portal.Import
                 }
             }
 
-            // set responsible user for contacts and add contacts to datacontext
+            // set related entities for contacts and add contacts to datacontext
             foreach (var contact in contactsMap.Values)
             {
+                // set responsible user
                 User user;
                 if (usersMap.TryGetValue(contact.AmoResponsibleUserId, out user))
                 {
@@ -79,13 +101,21 @@ namespace Hopnscotch.Portal.Import
                 _attendanceUow.Contacts.Add(contact);
             }
 
-            // set responsible user for leads and add leads to datacontext
+            // set related entities for leads and add leads to datacontext
             foreach (var lead in leadsMap.Values)
             {
+                // set responsible user
                 User user;
                 if (usersMap.TryGetValue(lead.AmoResponsibleUserId, out user))
                 {
                     lead.ResponsibleUser = user;
+                }
+
+                // set group level if set and exists
+                Level level;
+                if (lead.AmoLevelId.HasValue && levelsMap.TryGetValue(lead.AmoLevelId.Value, out level))
+                {
+                    lead.LanguageLevel = level;
                 }
 
                 // generate lessons according to schedule and add them to datacontext
@@ -97,12 +127,6 @@ namespace Hopnscotch.Portal.Import
                 _attendanceUow.Leads.Add(lead);
             }
 
-            // add users to datacontext
-            foreach (var user in usersMap.Values)
-            {
-                _attendanceUow.Users.Add(user);
-            }
-            
             _attendanceUow.Commit();
 
             return new AmoCrmImportResult();

@@ -15,6 +15,9 @@ namespace Hopnscotch.Portal.Data.Configuration
 
             HasRequired(l => l.ResponsibleUser)
                 .WithMany(u => u.Leads);
+
+            HasOptional(l => l.LanguageLevel)
+                .WithMany(l => l.Leads);
         }
     }
 }
