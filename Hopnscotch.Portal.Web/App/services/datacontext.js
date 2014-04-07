@@ -1,6 +1,7 @@
-﻿define(['services/logger', 'durandal/system', 'services/model', 'config'], function (logger, system, model, config) {
+﻿define(['services/logger', 'durandal/system', 'services/model', 'config', 'knockout'], function (logger, system, model, config, ko) {
     var EntityQuery = breeze.EntityQuery;
     var manager = configureBreezeManager();
+
     var getLeads = function (leadsObservable) {
         var query = EntityQuery.from('Leads')
             .orderBy('name');
@@ -15,6 +16,62 @@
             }
 
             log('Retrieved leads', data, true);
+        }
+    };
+
+    var getTeacherLeads = function (teacherId, teacherLeadsObservable) {
+        var condition = breeze.Predicate('responsibleUserId', '==', teacherId);
+        var query = EntityQuery.from('Leads')
+            .where(condition)
+            .orderBy('name');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            if (teacherLeadsObservable) {
+                teacherLeadsObservable(data.results);
+            }
+
+            log('Retrieved leads for teacher with ID=' + teacherId, data, true);
+        }
+    };
+
+    var getLeadLessons = function (leadId, lessonsObservable) {
+        var condition = breeze.Predicate('leadId', '==', leadId);
+        var query = EntityQuery.from('Lessons')
+            .where(condition)
+            .orderBy('date');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            if (lessonsObservable) {
+                lessonsObservable(data.results);
+            }
+
+            log('Retrieved lessons for lead with ID=' + leadId, data, true);
+        }
+    };
+
+    var getLeadContacts = function (leadId, contactsObservable) {
+        var query = EntityQuery.from('ContactsOfLead')
+            .withParameters({ leadId: leadId })
+            .orderBy('name');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            if (contactsObservable) {
+                contactsObservable(data.results);
+            }
+
+            log('Retrieved contacts for lead with ID=' + leadId, data, true);
         }
     };
 
@@ -100,7 +157,10 @@
         getUsers: getUsers,
         primeData: primeData,
         runImport: runImport,
-        refreshTotals: refreshTotals
+        refreshTotals: refreshTotals,
+        getTeacherLeads: getTeacherLeads,
+        getLeadLessons: getLeadLessons,
+        getLeadContacts: getLeadContacts
     };
 
     return datacontext;

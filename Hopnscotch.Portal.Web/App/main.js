@@ -1,12 +1,16 @@
 ﻿require.config({
     paths: {
         "text": "../App/durandal/amd/text",
+        //"durandal": "../App/durandal",
         "plugins": "../App/durandal/plugins",
         "transitions": "../App/durandal/transitions",
-        "knockout": "../scripts/knockout-3.1.0",
+        //"knockout": "../scripts/knockout-3.1.0",
+        "bootstrap": "../scripts/bootstrap",
         "jquery": "../scripts/jquery-2.1.0"
     }
 });
+
+define('knockout', ko);
 
 define(function(require) {
     var system = require('durandal/system');

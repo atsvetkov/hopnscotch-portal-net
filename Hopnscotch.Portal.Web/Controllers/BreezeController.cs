@@ -41,7 +41,9 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Lead> Leads()
         {
-            return contextProvider.Context.Leads.Include("LanguageLevel");
+            var dbQuery = contextProvider.Context.Leads.Include("LanguageLevel").Include("Lessons");
+
+            return dbQuery;
         }
 
         [HttpGet]
@@ -51,9 +53,29 @@ namespace Hopnscotch.Portal.Web.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Contact> ContactsOfLead(int leadId)
+        {
+            return contextProvider.Context.Contacts.Where(c => c.Leads.Select(l => l.Id).Contains(leadId));
+
+            //var lead = contextProvider.Context.Leads.Include("Contacts").FirstOrDefault(l => l.Id == leadId);
+            //if (lead == null)
+            //{
+            //    return null;
+            //}
+
+            //return lead.Contacts.AsQueryable();
+        }
+
+        [HttpGet]
         public IQueryable<User> Users()
         {
             return contextProvider.Context.Users;
+        }
+
+        [HttpGet]
+        public IQueryable<Lesson> Lessons()
+        {
+            return contextProvider.Context.Lessons;
         }
 
         [HttpGet]
