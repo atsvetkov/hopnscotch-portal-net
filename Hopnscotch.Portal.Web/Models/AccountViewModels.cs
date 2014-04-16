@@ -32,6 +32,8 @@ namespace Hopnscotch.Portal.Web.Models
         public bool HasRegistered { get; set; }
 
         public string LoginProvider { get; set; }
+        
+        public string UserRoles { get; set; }
     }
 
     public class UserLoginInfoViewModel

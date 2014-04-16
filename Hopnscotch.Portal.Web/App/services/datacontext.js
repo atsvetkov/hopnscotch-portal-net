@@ -2,21 +2,16 @@
     var EntityQuery = breeze.EntityQuery;
     var manager = configureBreezeManager();
 
-    var getLeads = function (leadsObservable) {
-        var query = EntityQuery.from('Leads')
-            .orderBy('name');
+    var getLeads = function (leadsObservable, forceRemote) {
+        return getEntities(leadsObservable, 'Leads', 'name', 'Retrieved leads', forceRemote);
+    };
 
-        return manager.executeQuery(query)
-            .then(querySucceded)
-            .fail(queryFailed);
+    var getContacts = function (contactsObservable, forceRemote) {
+        return getEntities(contactsObservable, 'Contacts', 'name', 'Retrieved contacts', forceRemote);
+    };
 
-        function querySucceded(data) {
-            if (leadsObservable) {
-                leadsObservable(data.results);
-            }
-
-            log('Retrieved leads', data, true);
-        }
+    var getUsers = function (usersObservable, forceRemote) {
+        return getEntities(usersObservable, 'Users', 'firstName, lastName', 'Retrieved users', forceRemote);
     };
 
     var getTeacherLeads = function (teacherId, teacherLeadsObservable) {
@@ -74,43 +69,34 @@
             log('Retrieved contacts for lead with ID=' + leadId, data, true);
         }
     };
+    
+    function getEntities(observable, entityName, ordering, message, forceRemote) {
+        if (!forceRemote) {
+            var p = getLocal(entityName, ordering);
+            if (p.length > 0) {
+                observable(p);
+                return Q.resolve();
+            }
+        }
 
-    var getContacts = function (contactsObservable) {
-        var query = EntityQuery.from('Contacts')
-            .orderBy('name');
+        var query = EntityQuery.from(entityName)
+            .orderBy(ordering);
 
         return manager.executeQuery(query)
             .then(querySucceded)
             .fail(queryFailed);
 
         function querySucceded(data) {
-            if (contactsObservable) {
-                contactsObservable(data.results);
+            if (observable) {
+                observable(data.results);
             }
 
-            log('Retrieved contacts', data, true);
+            log(message, data, true);
         }
-    };
-
-    var getUsers = function (usersObservable) {
-        var query = EntityQuery.from('Users')
-            .orderBy('firstName, lastName');
-
-        return manager.executeQuery(query)
-            .then(querySucceded)
-            .fail(queryFailed);
-
-        function querySucceded(data) {
-            if (usersObservable) {
-                usersObservable(data.results);
-            }
-
-            log('Retrieved users', data, true);
-        }
-    };
+    }
 
     var primeData = function () {
-        return Q.all([getLookups(), getUsers()]);
+        return Q.all([getLookups(), getUsers(null, true)]);
     };
 
     var runImport = function (numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels) {
@@ -177,6 +163,12 @@
         model.configureMetadataStore(mgr.metadataStore);
 
         return mgr;
+    }
+
+    function getLocal(resource, ordering) {
+        var query = EntityQuery.from(resource)
+            .orderBy(ordering);
+        return manager.executeQueryLocally(query);
     }
 
     function getLookups() {

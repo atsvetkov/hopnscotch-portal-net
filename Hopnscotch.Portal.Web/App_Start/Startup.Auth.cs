@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using Hopnscotch.Portal.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -17,7 +19,26 @@ namespace Hopnscotch.Portal.Web
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () =>
+            {
+                var context = new IdentityDbContext();
+                Database.SetInitializer(new IdentityDbInitializer());
+                
+                var userStore = new UserStore<IdentityUser>(context);
+                userStore.DisposeContext = true;
+
+                return new UserManager<IdentityUser>(userStore);
+            };
+
+            RoleManagerFactory = () =>
+            {
+                var context = new IdentityDbContext();
+                Database.SetInitializer(new IdentityDbInitializer());
+
+                var roleStore = new RoleStore<IdentityRole>(context);
+
+                return new RoleManager<IdentityRole>(roleStore);
+            };
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -32,6 +53,8 @@ namespace Hopnscotch.Portal.Web
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        
+        public static Func<RoleManager<IdentityRole>> RoleManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 

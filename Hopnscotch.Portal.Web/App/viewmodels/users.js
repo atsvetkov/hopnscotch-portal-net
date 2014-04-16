@@ -1,6 +1,5 @@
 ﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
     var users = ko.observableArray([]);
-    var initialized = false;
 
     var vm = {
         activate: activate,
@@ -10,16 +9,11 @@
     };
 
     function activate() {
-        if (initialized) {
-            return true;
-        }
-
-        initialized = true;
-        return refresh();
+        return datacontext.getUsers(users);
     };
 
     function refresh() {
-        return datacontext.getUsers(users);
+        return datacontext.getUsers(users, true);
     };
 
     return vm;
