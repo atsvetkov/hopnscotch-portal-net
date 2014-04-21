@@ -15,7 +15,7 @@
         name: 'Dashboard',
         title: 'Dashboard',
         nav: true,
-        requiredRoles: ['RegisteredUsers']
+        requiredRoles: ['Teachers']
     }, {
         route: 'admin',
         moduleId: 'viewmodels/admin',
@@ -29,21 +29,21 @@
         name: 'Leads',
         title: 'Leads',
         nav: true,
-        requiredRoles: ['RegisteredUsers']
+        requiredRoles: ['Managers', 'Administrators']
     }, {
         route: 'contacts',
         moduleId: 'viewmodels/contacts',
         name: 'Contacts',
         title: 'Contacts',
         nav: true,
-        requiredRoles: ['RegisteredUsers']
+        requiredRoles: ['Managers', 'Administrators']
     }, {
         route: 'users',
         moduleId: 'viewmodels/users',
         name: 'Users',
         title: 'Users',
         nav: true,
-        requiredRoles: ['RegisteredUsers']
+        requiredRoles: ['Managers', 'Administrators']
     }, {
         route: 'login',
         moduleId: 'viewmodels/login',

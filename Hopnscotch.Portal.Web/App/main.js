@@ -14,14 +14,8 @@
 
 define('knockout', ko);
 
-define(function(require) {
-    var system = require('durandal/system');
-    var app = require('durandal/app');
-    var router = require('durandal/plugins/router');
-    var viewLocator = require('durandal/viewLocator');
-    var logger = require('services/logger');
-    var session = require('services/session');
-
+define(['durandal/system', 'durandal/app', 'durandal/plugins/router', 'durandal/viewLocator', 'services/logger', 'services/session', 'knockout', 'knockout.validation'],
+    function (system, app, router, viewLocator, logger, session, ko) {
     system.debug(true);
 
     app.title = 'Hop&Scotch Attendance';
@@ -29,6 +23,8 @@ define(function(require) {
     app.configurePlugins({
         router: true
     });
+
+    configureKnockout();
 
     app.start().then(function () {
         //router.useConvention();
@@ -81,6 +77,7 @@ define(function(require) {
                         if (!isFirstRender) {
                             ko.virtualElements.setDomNodeChildren(element, ko.utils.cloneNodes(withIfData.savedNodes));
                         }
+
                         ko.applyBindingsToDescendants(makeContextCallback ? makeContextCallback(bindingContext, dataValue) : bindingContext, element);
                     } else {
                         ko.virtualElements.emptyNode(element);

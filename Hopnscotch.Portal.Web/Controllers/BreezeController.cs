@@ -41,7 +41,7 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Lead> Leads()
         {
-            var dbQuery = contextProvider.Context.Leads.Include("LanguageLevel").Include("Lessons");
+            var dbQuery = contextProvider.Context.Leads.Include("LanguageLevel").Include("Lessons").Include("ResponsibleUser");
 
             return dbQuery;
         }

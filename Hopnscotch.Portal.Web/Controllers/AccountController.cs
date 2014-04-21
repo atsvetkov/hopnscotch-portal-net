@@ -58,7 +58,7 @@ namespace Hopnscotch.Portal.Web.Controllers
             if (user != null)
             {
                 userInfo.UserRoles = string.Join(",", user.Roles.Select(r => r.Role.Name));
-            }
+            }   
 
             return userInfo;
         }
@@ -225,7 +225,7 @@ namespace Hopnscotch.Portal.Web.Controllers
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                 var oAuthIdentity = await UserManager.CreateIdentityAsync(user, OAuthDefaults.AuthenticationType);
                 var cookieIdentity = await UserManager.CreateIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
-                var properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                var properties = ApplicationOAuthProvider.CreateProperties(user);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else

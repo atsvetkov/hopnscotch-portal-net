@@ -33,6 +33,26 @@
         }
     };
 
+    var getTeacherLeadsByName = function (teacherName, teacherLeadsObservable) {
+        var condition = breeze.Predicate('responsibleUser.login', '==', teacherName);
+        var query = EntityQuery.from('Leads')
+            .where(condition)
+            .expand('responsibleUser')
+            .orderBy('name');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            if (teacherLeadsObservable) {
+                teacherLeadsObservable(data.results);
+            }
+
+            log('Retrieved leads for teacher with ID=' + teacherId, data, true);
+        }
+    };
+
     var getLeadLessons = function (leadId, lessonsObservable) {
         var condition = breeze.Predicate('leadId', '==', leadId);
         var query = EntityQuery.from('Lessons')
@@ -145,6 +165,7 @@
         runImport: runImport,
         refreshTotals: refreshTotals,
         getTeacherLeads: getTeacherLeads,
+        getTeacherLeadsByName: getTeacherLeadsByName,
         getLeadLessons: getLeadLessons,
         getLeadContacts: getLeadContacts
     };

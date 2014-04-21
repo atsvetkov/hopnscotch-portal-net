@@ -27,7 +27,13 @@ namespace Hopnscotch.Portal.Web
                 var userStore = new UserStore<IdentityUser>(context);
                 userStore.DisposeContext = true;
 
-                return new UserManager<IdentityUser>(userStore);
+                var userManager = new UserManager<IdentityUser>(userStore);
+                userManager.UserValidator = new UserValidator<IdentityUser>(userManager)
+                {
+                    AllowOnlyAlphanumericUserNames = false
+                };
+
+                return userManager;
             };
 
             RoleManagerFactory = () =>

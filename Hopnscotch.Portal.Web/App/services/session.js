@@ -53,7 +53,6 @@
 
         function setUser(user, remember) {
             if (user) {
-                console.log(' set user: ' + user.userName);
                 session.userName(user.userName);
 
                 if (user.hasOwnProperty("accessToken")) {
