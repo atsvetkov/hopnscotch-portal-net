@@ -1,0 +1,35 @@
+﻿<section>
+    <article>
+        <div class="container">
+            <br />
+
+            <div class="row">
+                <h2 data-bind="text: lesson().lead().name() + ' (' + moment(lesson().date()).format('YYYY-MM-DD') + ')'"></h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-bind="click: selectAll">All on board</button>
+                            <button type="button" class="btn btn-default" data-bind="click: selectNone">Nobody showed up</button>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="list-group" data-bind="foreach: lesson().attendances">
+                        <a href="#" class="list-group-item attendance-row" data-bind="css: { 'list-group-item-success': attended, 'list-group-item-danger': !attended() }">
+                            <span data-bind="text: contact().name"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn btn-primary" data-bind="click: save">Complete</button>
+            </div>
+        </div>
+    </article>
+</section>

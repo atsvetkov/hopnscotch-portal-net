@@ -121,6 +121,20 @@ namespace Hopnscotch.Portal.Import
                 // generate lessons according to schedule and add them to datacontext
                 foreach (var lesson in CreateLessonsForLead(lead))
                 {
+                    // generate default attendance records
+                    foreach (var contact in lead.Contacts)
+                    {
+                        var attendance = new Attendance
+                        {
+                            Attended = false,
+                            Contact = contact,
+                            Lesson = lesson
+                        };
+
+                        lesson.Attendances.Add(attendance);
+                        _attendanceUow.Attendances.Add(attendance);
+                    }
+
                     _attendanceUow.Lessons.Add(lesson);
                 }
 

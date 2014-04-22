@@ -255,6 +255,8 @@
     <Content Include="App\services\session.js" />
     <Content Include="App\services\security.js" />
     <Content Include="App\services\datacontext.js" />
+    <Content Include="App\viewmodels\lessonDetails.js" />
+    <Content Include="App\viewmodels\leadDetails.js" />
     <Content Include="App\viewmodels\manage.js" />
     <Content Include="App\viewmodels\welcome.js" />
     <Content Include="App\viewmodels\login.js" />
@@ -262,6 +264,8 @@
     <Content Include="App\viewmodels\admin.js" />
     <Content Include="App\viewmodels\dashboard.js" />
     <Content Include="App\viewmodels\users.js" />
+    <Content Include="App\views\lessonDetails.html" />
+    <Content Include="App\views\leadDetails.html" />
     <Content Include="App\views\manage.html" />
     <Content Include="App\views\welcome.html" />
     <Content Include="App\views\login.html" />

@@ -31,6 +31,20 @@
         nav: true,
         requiredRoles: ['Managers', 'Administrators']
     }, {
+        route: 'leaddetails/:id',
+        moduleId: 'viewmodels/leadDetails',
+        name: 'View Lead',
+        title: 'View Lead',
+        nav: false,
+        requiredRoles: ['Teachers', 'Managers', 'Administrators']
+    }, {
+        route: 'lessondetails/:id',
+        moduleId: 'viewmodels/lessonDetails',
+        name: 'View Lesson',
+        title: 'View Lesson',
+        nav: false,
+        requiredRoles: ['Teachers', 'Managers', 'Administrators']
+    }, {
         route: 'contacts',
         moduleId: 'viewmodels/contacts',
         name: 'Contacts',

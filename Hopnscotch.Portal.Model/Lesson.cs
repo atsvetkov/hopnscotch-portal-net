@@ -5,6 +5,11 @@ namespace Hopnscotch.Portal.Model
 {
     public class Lesson : EntityBase
     {
+        public Lesson()
+        {
+            Attendances = new List<Attendance>();
+        }
+
         public int LeadId { get; set; }
         public DateTime Date { get; set; }
         public int AcademicHours { get; set; }

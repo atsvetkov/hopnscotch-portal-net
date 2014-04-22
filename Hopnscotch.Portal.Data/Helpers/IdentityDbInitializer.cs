@@ -22,12 +22,17 @@ namespace Hopnscotch.Portal.Data
             {
                 AllowOnlyAlphanumericUserNames = false
             };
-            // userManager.PasswordValidator = new MinimumLengthValidator(3);
+            userManager.PasswordValidator = new MinimumLengthValidator(3);
 
             var administrator = new IdentityUser {UserName = "Administrator"};
             userManager.Create(administrator, "qwe");
             userManager.AddToRole(administrator.Id, "RegisteredUsers");
             userManager.AddToRole(administrator.Id, "Administrators");
+
+            var guzel = new IdentityUser {UserName = "takutdinova.g@gmail.com"};
+            userManager.Create(guzel, "qwe");
+            userManager.AddToRole(guzel.Id, "RegisteredUsers");
+            userManager.AddToRole(guzel.Id, "Teachers");
         }
 
         private static void CreateRoles(IdentityDbContext context, params string[] roles)

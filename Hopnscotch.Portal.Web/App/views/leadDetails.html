@@ -1,0 +1,71 @@
+﻿<section>
+    <section>
+        <article>
+            <div class="container">
+                <br />
+
+                <div class="row">
+                    <h2 data-bind="text: lead().name"></h2>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">General</h3>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal">
+                                    <dt>Teacher</dt>
+                                    <dd><span data-bind="text: lead().responsibleUser().displayName"></span></dd>
+                                    
+                                    <!-- ko if: lead().languageLevel() -->
+                                    <dt>Level</dt>
+                                    <dd><span data-bind="text: lead().languageLevel().name"></span></dd>
+                                    <!-- /ko -->
+                                    
+                                    <!-- ko if: lead().startDate() -->
+                                    <dt>Start Date</dt>
+                                    <dd><span data-bind="text: moment(lead().startDate()).format('YYYY-MM-DD')"></span></dd>
+                                    <!-- /ko -->
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Students</h3>
+                            </div>
+                            <!--<div class="panel-body">
+                                
+                            </div>-->
+                            <div class="list-group" data-bind="foreach: leadContacts">
+                                <a href="#" class="list-group-item">
+                                    <span data-bind="text: name"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Lessons</h3>
+                            </div>
+                            <!--<div class="panel-body">
+
+                            </div>-->
+                            <div class="list-group" data-bind="foreach: leadLessons">
+                                <a href="#" class="list-group-item lead-lesson" data-bind="css: { 'list-group-item-success': completed, 'list-group-item-danger': !completed() }">
+                                    <span data-bind="text: moment(date()).format('YYYY-MM-DD')"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</section>

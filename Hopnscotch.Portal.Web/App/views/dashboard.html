@@ -1,48 +1,28 @@
 ﻿<section>
-    <section>
-        <article>
-            <div class="container">
-                <!--<div class="row">
-                    Select teacher
-                    <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
-                </div>-->
+    <article>
+        <div class="container">
+            <!--<div class="row">
+                Select teacher
+                <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
+            </div>-->
 
-                <br />
+            <br />
+            
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Leads</h3>
+                    </div>
+                    <div class="list-group" data-bind="foreach: teacherLeads">
+                        <a href="#" class="list-group-item dashboard-lead">
+                            <span data-bind="text: name"></span>
+                        </a>
 
-                <div class="row">
-                    Select lead
-                    <select data-bind="options: teacherLeads, optionsText: 'name', value: selectedLead, event: { change: leadChanged }"></select>
-                </div>
-
-                <br />
-
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <!-- ko foreach: leadLessons -->
-                                <th>
-                                    <span data-bind="text: moment(date()).format('YYYY-MM-DD')"></span>
-                                </th>
-                                <!-- /ko -->
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: leadContacts">
-                            <tr>
-                                <td>
-                                    <span data-bind="text: name"></span>
-                                </td>
-                                <!-- ko foreach: $parent.leadLessons -->
-                                <td>
-                                    <input type="checkbox"/>
-                                </td>
-                                <!-- /ko -->
-                            </tr>
-                        </tbody>
-                    </table>
+                        <!--TODO: Show number of lessons for this lead which need attention (i.e. entering attendance data, not finalized)-->
+                        <!--<span class="badge" data-bind="text: numberOfLeads"></span> Leads-->
+                    </div>
                 </div>
             </div>
-        </article>
-    </section>
+        </div>
+    </article>
 </section>

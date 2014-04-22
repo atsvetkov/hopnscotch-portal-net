@@ -3,22 +3,43 @@
     var manager = configureBreezeManager();
 
     var getLeads = function (leadsObservable, forceRemote) {
-        return getEntities(leadsObservable, 'Leads', 'name', 'Retrieved leads', forceRemote);
+        return getEntities(leadsObservable, 'Leads', 'ResponsibleUser', 'name', 'Retrieved leads', forceRemote);
+    };
+
+    var getLeadById = function (leadId, leadObservable) {
+        return manager.fetchEntityByKey('Lead', leadId, true)
+            .then(fetchSucceded)
+            .fail(queryFailed);
+
+        function fetchSucceded(data) {
+            leadObservable(data.entity);
+        }
+    };
+
+    var getLessonById = function (lessonId, lessonObservable) {
+        return manager.fetchEntityByKey('Lesson', lessonId, true)
+            .then(fetchSucceded)
+            .fail(queryFailed);
+
+        function fetchSucceded(data) {
+            lessonObservable(data.entity);
+        }
     };
 
     var getContacts = function (contactsObservable, forceRemote) {
-        return getEntities(contactsObservable, 'Contacts', 'name', 'Retrieved contacts', forceRemote);
+        return getEntities(contactsObservable, 'Contacts', 'ResponsibleUser', 'name', 'Retrieved contacts', forceRemote);
     };
 
     var getUsers = function (usersObservable, forceRemote) {
-        return getEntities(usersObservable, 'Users', 'firstName, lastName', 'Retrieved users', forceRemote);
+        return getEntities(usersObservable, 'Users', null, 'firstName, lastName', 'Retrieved users', forceRemote);
     };
 
     var getTeacherLeads = function (teacherId, teacherLeadsObservable) {
         var condition = breeze.Predicate('responsibleUserId', '==', teacherId);
         var query = EntityQuery.from('Leads')
             .where(condition)
-            .orderBy('name');
+            .orderBy('name')
+            .expand('ResponsibleUser');
 
         return manager.executeQuery(query)
             .then(querySucceded)
@@ -37,7 +58,7 @@
         var condition = breeze.Predicate('responsibleUser.login', '==', teacherName);
         var query = EntityQuery.from('Leads')
             .where(condition)
-            .expand('responsibleUser')
+            .expand('ResponsibleUser')
             .orderBy('name');
 
         return manager.executeQuery(query)
@@ -57,7 +78,8 @@
         var condition = breeze.Predicate('leadId', '==', leadId);
         var query = EntityQuery.from('Lessons')
             .where(condition)
-            .orderBy('date');
+            .orderBy('date')
+            .expand('Lead, Attendances');
 
         return manager.executeQuery(query)
             .then(querySucceded)
@@ -90,7 +112,7 @@
         }
     };
     
-    function getEntities(observable, entityName, ordering, message, forceRemote) {
+    function getEntities(observable, entityName, expandedProperties, ordering, message, forceRemote) {
         if (!forceRemote) {
             var p = getLocal(entityName, ordering);
             if (p.length > 0) {
@@ -101,6 +123,10 @@
 
         var query = EntityQuery.from(entityName)
             .orderBy(ordering);
+
+        if (expandedProperties) {
+            query = query.expand(expandedProperties);
+        }
 
         return manager.executeQuery(query)
             .then(querySucceded)
@@ -167,7 +193,9 @@
         getTeacherLeads: getTeacherLeads,
         getTeacherLeadsByName: getTeacherLeadsByName,
         getLeadLessons: getLeadLessons,
-        getLeadContacts: getLeadContacts
+        getLeadContacts: getLeadContacts,
+        getLeadById: getLeadById,
+        getLessonById: getLessonById
     };
 
     return datacontext;

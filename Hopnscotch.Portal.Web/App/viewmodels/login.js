@@ -96,7 +96,6 @@
             }).done(function (data) {
                 if (data.userName && data.access_token) {
                     session.setUser(data, vm.rememberMe());
-                    console.log(JSON.stringify(data));
                     router.navigate('#/', 'replace');
                 } else {
                     logger.logError('Error logging in.', null, system.getModuleId(vm), true);

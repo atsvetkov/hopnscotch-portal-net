@@ -75,7 +75,7 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Lesson> Lessons()
         {
-            return contextProvider.Context.Lessons;
+            return contextProvider.Context.Lessons.Include("Lead").Include("Attendances");
         }
 
         [HttpGet]
