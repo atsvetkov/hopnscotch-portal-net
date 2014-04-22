@@ -6,7 +6,9 @@
     };
 
     var save = function () {
-        console.log('lesson finalized!');
+        lesson().completed(true);
+        datacontext.saveChanges()
+            .then(goBack);
     };
 
     function toggleLessonAttendances(visited) {

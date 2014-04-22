@@ -9,10 +9,14 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <div class="row">
+                    <div class="row" data-bind="if: !lesson().completed()">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-bind="click: selectAll">All on board</button>
-                            <button type="button" class="btn btn-default" data-bind="click: selectNone">Nobody showed up</button>
+                            <button type="button" class="btn btn-default" data-bind="click: selectAll">
+                                <i class="fa fa-check fa-lg"></i> All on board
+                            </button>
+                            <button type="button" class="btn btn-default" data-bind="click: selectNone">
+                                <i class="fa fa-ban fa-lg"></i> Nobody showed up
+                            </button>
                         </div>
                     </div>
 
@@ -27,8 +31,10 @@
                 </div>
             </div>
 
-            <div class="row">
-                <button class="btn btn-primary" data-bind="click: save">Complete</button>
+            <div class="row" data-bind="if: !lesson().completed()">
+                <button class="btn btn-primary" data-bind="click: save">
+                    <i class="fa fa-save fa-lg"></i> Complete
+                </button>
             </div>
         </div>
     </article>

@@ -70,7 +70,7 @@
                 teacherLeadsObservable(data.results);
             }
 
-            log('Retrieved leads for teacher with ID=' + teacherId, data, true);
+            log('Retrieved leads for teacher with Name=' + teacherName, data, true);
         }
     };
 
@@ -183,6 +183,23 @@
         }
     };
 
+    var saveChanges = function() {
+        return manager.saveChanges()
+            .then(saveSucceded)
+            .fail(saveFailed);
+
+        function saveSucceded(saveResult) {
+            log('Saved data successfully', saveResult, true);
+        }
+
+        function saveFailed(error) {
+            var msg = 'Saved failed: ' + error.message;
+            logger.log(msg, error, system.getModuleId(datacontext), true);
+            error.message = msg;
+            throw error;
+        }
+    };
+
     var datacontext = {
         getLeads: getLeads,
         getContacts: getContacts,
@@ -195,7 +212,8 @@
         getLeadLessons: getLeadLessons,
         getLeadContacts: getLeadContacts,
         getLeadById: getLeadById,
-        getLessonById: getLessonById
+        getLessonById: getLessonById,
+        saveChanges: saveChanges
     };
 
     return datacontext;
