@@ -4,18 +4,28 @@
     var numberOfUsers = ko.observable();
     var numberOfLevels = ko.observable();
 
-    var inProgress = ko.observable(false);
+    var importInProgress = ko.observable(false);
+    var clearInProgress = ko.observable(false);
+    var clearImportInProgress = ko.observable(false);
+
+    var inProgress = ko.computed(function () {
+        return importInProgress() || clearInProgress() || clearImportInProgress();
+    });
 
     var vm = {
         activate: activate,
         runImport: runImport,
         runClearImport: runClearImport,
+        runClear: runClear,
         title: 'Admin',
         numberOfLeads: numberOfLeads,
         numberOfContacts: numberOfContacts,
         numberOfUsers: numberOfUsers,
         numberOfLevels: numberOfLevels,
-        inProgress: inProgress
+        inProgress: inProgress,
+        importInProgress: importInProgress,
+        clearInProgress: clearInProgress,
+        clearImportInProgress: clearImportInProgress
     };
 
     function refreshTotals() {
@@ -27,20 +37,29 @@
     };
 
     function runImport() {
-        inProgress(true);
+        importInProgress(true);
 
         return datacontext.runImport(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
             .then(function () {
-                inProgress(false);
+                importInProgress(false);
             });
     };
 
     function runClearImport() {
-        inProgress(true);
+        clearImportInProgress(true);
 
         return datacontext.runClearImport(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
             .then(function () {
-                inProgress(false);
+                clearImportInProgress(false);
+            });
+    };
+
+    function runClear() {
+        clearInProgress(true);
+
+        return datacontext.runClear(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
+            .then(function () {
+                clearInProgress(false);
             });
     };
 

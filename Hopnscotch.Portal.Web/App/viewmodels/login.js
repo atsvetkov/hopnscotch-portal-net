@@ -32,7 +32,6 @@
             loaded: false,
             login: login,
             register: register
-
         };
 
         vm.validationErrors = ko.validation.group([vm.userName, vm.password]);

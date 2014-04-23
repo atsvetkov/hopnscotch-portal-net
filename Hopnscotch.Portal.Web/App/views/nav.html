@@ -22,7 +22,7 @@
             <div class="nav navbar-nav navbar-right">
                 <ul class="nav navbar-nav">
                     <li data-bind="visible: session.isLoggedIn()">
-                        <span class="navbar-text nofloat">Hello, <a href="#manage" class="navbar-link" data-bind="text: session.userName()"></a>!</span>
+                        <span class="navbar-text nofloat">Hello, <a href="#manage" class="navbar-link" data-bind="text: session.userDisplayName()"></a>!</span>
                     </li>
                     <li data-bind="visible: !session.isLoggedIn()">
                         <a href="#login" class="navbar-link">sign in</a>

@@ -14,7 +14,7 @@
         };
         
         return shell;
-
+        
         function activate() {
             return datacontext.primeData()
                 .then(init)
@@ -46,7 +46,7 @@
                 logger.logError('Logout failed.', null, system.getModuleId(shell), true);
             }).always(function () {
                 session.clearUser();
-                router.navigate('#welcome', 'replace');
+                router.navigate('/#login', 'replace');
             });
         }
 

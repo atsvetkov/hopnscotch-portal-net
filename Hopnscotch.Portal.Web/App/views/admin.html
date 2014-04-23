@@ -1,8 +1,9 @@
 ﻿<section>
-    <header>
-        <h3 data-bind="text: title"></h3>
-    </header>
+    <!--<header>
+    </header>-->
     
+    <br />
+
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -37,16 +38,26 @@
 
             <ul class="list-group">
                 <li class="list-group-item">
-                    <button class="btn btn-info" data-bind="click: runImport">
-                        <i class="fa fa-exchange"></i> Update
+                    <button class="btn btn-info" data-bind="click: runImport, disable: inProgress">
+                        <i class="fa fa-refresh" data-bind="css: { 'fa-spin': importInProgress }"></i> Update
                     </button>
                     <div class="pull-right">
                         Add new, update existing
                     </div>
                 </li>
                 <li class="list-group-item">
-                    <button class="btn btn-danger" data-bind="click: runClearImport">
-                        <i class="fa fa-eraser"></i> Import
+                    <button class="btn btn-danger" data-bind="click: runClear, disable: inProgress">
+                        <i class="fa fa-times-circle" data-bind="css: { 'fa-spin': clearInProgress }"></i> Clear
+                    </button>
+                    <div class="pull-right">
+                        Delete existing
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-warning" data-bind="click: runClearImport, disable: inProgress">
+                        <i class="fa fa-times-circle" data-bind="css: { 'fa-spin': clearImportInProgress }"></i>
+                        <i class="fa fa-refresh" data-bind="css: { 'fa-spin': clearImportInProgress }"></i>
+                        Import
                     </button>
                     <div class="pull-right">
                         Delete existing, add all
@@ -54,9 +65,9 @@
                 </li>
             </ul>
         </div>
-        <div class="loader" data-bind="css: { showLoader: inProgress() }">
+        <!--<div class="loader" data-bind="css: { showLoader: inProgress() }">
             <i class="fa fa-spinner fa-spin fa-2x active"></i>
-        </div>
+        </div>-->
     </div>
     
 </section>

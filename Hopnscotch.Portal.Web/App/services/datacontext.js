@@ -26,6 +26,30 @@
         }
     };
 
+    var getUserDisplayNameByLogin = function (login, displayNameObservable) {
+        if (!login) {
+            displayNameObservable('');
+        }
+
+        var condition = breeze.Predicate('login', '==', login);
+        var query = EntityQuery.from('Users')
+            .where(condition);
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            if (!data.results || data.results.length === 0) {
+                displayNameObservable(login);
+            }
+
+            var user = data.results[0];
+            displayNameObservable(user.firstName() + ' ' + user.lastName());
+            log('Retrieved user with login=' + login, data, true);
+        }
+    };
+
     var getContacts = function (contactsObservable, forceRemote) {
         return getEntities(contactsObservable, 'Contacts', 'ResponsibleUser', 'name', 'Retrieved contacts', forceRemote);
     };
@@ -183,6 +207,25 @@
         }
     };
 
+    var runClear = function (numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels) {
+        var query = EntityQuery.from('Clear');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            var result = data.results[0];
+
+            numberOfLeads(result.numberOfLeads);
+            numberOfContacts(result.numberOfContacts);
+            numberOfUsers(result.numberOfUsers);
+            numberOfLevels(result.numberOfLevels);
+
+            log('Clear successful', data, true);
+        }
+    };
+
     var refreshTotals = function (numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels) {
         var query = EntityQuery.from('Refresh');
 
@@ -226,6 +269,7 @@
         primeData: primeData,
         runImport: runImport,
         runClearImport: runClearImport,
+        runClear: runClear,
         refreshTotals: refreshTotals,
         getTeacherLeads: getTeacherLeads,
         getTeacherLeadsByName: getTeacherLeadsByName,
@@ -233,6 +277,7 @@
         getLeadContacts: getLeadContacts,
         getLeadById: getLeadById,
         getLessonById: getLessonById,
+        getUserDisplayNameByLogin: getUserDisplayNameByLogin,
         saveChanges: saveChanges
     };
 

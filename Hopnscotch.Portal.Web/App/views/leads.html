@@ -1,13 +1,27 @@
 ﻿<section>
-    <header>
+    <!--<header>
         <button class="btn btn-info pull-right" data-bind="click: refresh">
             <i class="fa fa-refresh"></i> Refresh
         </button>
-        <h3 data-bind="text: title"></h3>
-    </header>
+    </header>-->
     
-    <section data-bind="foreach: leads">
-        <article>
+    <br />
+
+    <section>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Leads</h3>
+                </div>
+                <div class="list-group" data-bind="foreach: leads">
+                    <a href="#" class="list-group-item lead-row">
+                        <span data-bind="text: name"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--<article>
             <dl class="dl-horizontal">
                 <dt>Name</dt>
                 <dd><span data-bind="text: name"></span></dd>
@@ -15,6 +29,6 @@
                 <dt data-bind="visible: languageLevel()">Level</dt>
                 <dd data-bind="visible: languageLevel()"><span data-bind="text: languageLevel() ? languageLevel().name : ''"></span></dd>
             </dl>
-        </article>
+        </article>-->
     </section>
 </section>

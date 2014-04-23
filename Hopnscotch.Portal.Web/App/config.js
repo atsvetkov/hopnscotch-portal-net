@@ -8,7 +8,7 @@
         moduleId: 'viewmodels/welcome',
         name: 'Welcome',
         title: 'Welcome',
-        nav: true
+        nav: false
     }, {
         route: 'dashboard',
         moduleId: 'viewmodels/dashboard',

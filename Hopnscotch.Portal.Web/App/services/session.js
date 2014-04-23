@@ -1,5 +1,5 @@
-﻿define(['plugins/router', 'services/security', 'knockout', 'jquery', 'jquery.utilities'],
-    function (router, security, ko, $) {
+﻿define(['plugins/router', 'services/security', 'services/datacontext', 'knockout', 'jquery', 'jquery.utilities'],
+    function (router, security, datacontext,ko, $) {
 
         function restoreSessionStorageFromLocalStorage() {
             var backupText = localStorage["sessionStorageBackup"],
@@ -37,6 +37,7 @@
 
         var session = {
             userName: ko.observable(undefined),
+            userDisplayName: ko.observable(undefined),
             isLoggedIn: ko.observable(false),
             isBusy: ko.observable(false),
             userRoles: ko.observableArray(),
@@ -54,6 +55,7 @@
         function setUser(user, remember) {
             if (user) {
                 session.userName(user.userName);
+                datacontext.getUserDisplayNameByLogin(session.userName(), session.userDisplayName);
 
                 if (user.hasOwnProperty("accessToken")) {
                     setAccessToken(user.accessToken, remember);

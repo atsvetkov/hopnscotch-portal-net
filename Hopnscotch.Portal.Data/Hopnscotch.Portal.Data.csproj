@@ -82,6 +82,7 @@
     <Compile Include="Helpers\RepositoryProvider.cs" />
     <Compile Include="IAttendanceDbContextFactory.cs" />
     <Compile Include="LeadRepository.cs" />
+    <Compile Include="LevelRepository.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskRepository.cs" />

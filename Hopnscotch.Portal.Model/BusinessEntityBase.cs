@@ -22,7 +22,7 @@ namespace Hopnscotch.Portal.Model
             this.Modified = entity.Modified;
             this.AmoResponsibleUserId = entity.AmoResponsibleUserId;
             this.AccountId = entity.AccountId;
-            this.ResponsibleUser = entity.ResponsibleUser;
+            // this.ResponsibleUser = entity.ResponsibleUser;
 
             CopyValuesFromSpecific(entity);
         }

@@ -149,7 +149,16 @@ namespace Hopnscotch.Portal.Import
         {
             foreach (var level in context.LevelsMap.Values)
             {
-                attendanceUow.Levels.Add(level);
+                var existingLevel = attendanceUow.Levels.GetByAmoId(level.AmoId);
+                if (existingLevel == null)
+                {
+                    attendanceUow.Levels.Add(level);
+                }
+                else
+                {
+                    existingLevel.CopyValuesFrom(level);
+                    attendanceUow.Levels.Update(existingLevel);
+                }
             }
         }
 
@@ -170,7 +179,7 @@ namespace Hopnscotch.Portal.Import
             }
         }
 
-        private void ClearExistingAttendanceData()
+        public void ClearExistingAttendanceData()
         {
             foreach (var attendance in attendanceUow.Attendances.GetAll())
             {

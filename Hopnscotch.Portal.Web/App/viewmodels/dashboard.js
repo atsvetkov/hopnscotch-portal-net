@@ -33,7 +33,7 @@
     };
 
     var attached = function (view) {
-        bindEventToList(view, '.dashboard-lead', viewDetails);
+        bindEventToList(view, '.lead-row', viewDetails);
     };
 
     var bindEventToList = function(rootSelector, selector, callback, eventName) {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using Breeze.ContextProvider;
 using Breeze.ContextProvider.EF6;
@@ -17,12 +13,12 @@ namespace Hopnscotch.Portal.Web.Controllers
     [BreezeController]
     public class BreezeController : ApiController
     {
-        private readonly IAmoCrmImportManager _importManager;
+        private readonly IAmoCrmImportManager importManager;
         private readonly EFContextProvider<AttendanceDbContext> contextProvider = new EFContextProvider<AttendanceDbContext>();
 
         public BreezeController(IAmoCrmImportManager importManager)
         {
-            _importManager = importManager;
+            this.importManager = importManager;
         }
 
         [HttpGet]
@@ -89,33 +85,34 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public object Import()
         {
-            var amoCrmImportResult = _importManager.Import(new AmoCrmImportOptions());
+            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
 
-            return new 
-            {
-                NumberOfLeads = contextProvider.Context.Leads.Count(),
-                NumberOfContacts = contextProvider.Context.Contacts.Count(),
-                NumberOfUsers = contextProvider.Context.Users.Count(),
-                NumberOfLevels = contextProvider.Context.Levels.Count()
-            };
+            return EntitiesCountResult();
         }
-
+        
         [HttpGet]
         public object ClearImport()
         {
-            var amoCrmImportResult = _importManager.Import(new AmoCrmImportOptions { StartFromScratch = true });
+            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions { StartFromScratch = true });
 
-            return new
-            {
-                NumberOfLeads = contextProvider.Context.Leads.Count(),
-                NumberOfContacts = contextProvider.Context.Contacts.Count(),
-                NumberOfUsers = contextProvider.Context.Users.Count(),
-                NumberOfLevels = contextProvider.Context.Levels.Count()
-            };
+            return EntitiesCountResult();
+        }
+
+        [HttpGet]
+        public object Clear()
+        {
+            importManager.ClearExistingAttendanceData();
+
+            return EntitiesCountResult();
         }
 
         [HttpGet]
         public object Refresh()
+        {
+            return EntitiesCountResult();
+        }
+
+        private object EntitiesCountResult()
         {
             return new
             {

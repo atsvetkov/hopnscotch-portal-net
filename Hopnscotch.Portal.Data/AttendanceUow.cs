@@ -74,11 +74,11 @@ namespace Hopnscotch.Portal.Data
             }
         }
 
-        public IRepository<Level> Levels
+        public ILevelRepository Levels
         {
             get
             {
-                return _repositoryProvider.GetRepositoryForEntityType<Level>();
+                return _repositoryProvider.GetRepository<ILevelRepository>();
             }
         }
     }

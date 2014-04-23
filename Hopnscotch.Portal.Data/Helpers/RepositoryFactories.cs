@@ -14,7 +14,8 @@ namespace Hopnscotch.Portal.Data.Helpers
                    { typeof(IContactRepository), dbContext => new ContactRepository(dbContext) },
                    { typeof(ILeadRepository), dbContext => new LeadRepository(dbContext) },
                    { typeof(IUserRepository), dbContext => new UserRepository(dbContext) },
-                   { typeof(ITaskRepository), dbContext => new TaskRepository(dbContext) }
+                   { typeof(ITaskRepository), dbContext => new TaskRepository(dbContext) },
+                   { typeof(ILevelRepository), dbContext => new LevelRepository(dbContext) }
                 };
         }
 
