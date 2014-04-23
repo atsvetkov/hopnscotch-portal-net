@@ -164,6 +164,25 @@
         }
     };
 
+    var runClearImport = function (numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels) {
+        var query = EntityQuery.from('ClearImport');
+
+        return manager.executeQuery(query)
+            .then(querySucceded)
+            .fail(queryFailed);
+
+        function querySucceded(data) {
+            var result = data.results[0];
+
+            numberOfLeads(result.numberOfLeads);
+            numberOfContacts(result.numberOfContacts);
+            numberOfUsers(result.numberOfUsers);
+            numberOfLevels(result.numberOfLevels);
+
+            log('Clear/Import successful', data, true);
+        }
+    };
+
     var refreshTotals = function (numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels) {
         var query = EntityQuery.from('Refresh');
 
@@ -206,6 +225,7 @@
         getUsers: getUsers,
         primeData: primeData,
         runImport: runImport,
+        runClearImport: runClearImport,
         refreshTotals: refreshTotals,
         getTeacherLeads: getTeacherLeads,
         getTeacherLeadsByName: getTeacherLeadsByName,

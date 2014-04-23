@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Contact : NamedBusinessEntityBase
+    public class Contact : NamedBusinessEntityBase, IUpdatableFrom<Contact>
     {
         public Contact()
         {
@@ -14,5 +14,21 @@ namespace Hopnscotch.Portal.Model
 
         public virtual ICollection<Lead> Leads { get; set; }
         public virtual ICollection<Attendance> Attendances { get; set; }
+
+        protected override void CopyValuesFromSpecific(BusinessEntityBase entity)
+        {
+            var contact = entity as Contact;
+            if (contact == null)
+            {
+                return;
+            }
+
+            this.LevelId = contact.LevelId;
+        }
+
+        public void CopyValuesFrom(Contact entity)
+        {
+            CopyValuesInternal(entity);
+        }
     }
 }

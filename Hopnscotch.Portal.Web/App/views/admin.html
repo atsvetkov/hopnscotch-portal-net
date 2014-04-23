@@ -1,32 +1,62 @@
 ﻿<section>
     <header>
-        <button class="btn btn-info pull-right" data-bind="click: runImport">
-            <i class="fa fa-exchange"></i> Import
-        </button>
         <h3 data-bind="text: title"></h3>
     </header>
-
-    <section>
-        <article>
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <span class="badge" data-bind="text: numberOfLeads"></span> Leads
-                    </li>
-                    
-                    <li class="list-group-item">
-                        <span class="badge" data-bind="text: numberOfContacts"></span> Contacts
-                    </li>
-                    
-                    <li class="list-group-item">
-                        <span class="badge" data-bind="text: numberOfUsers"></span> Users
-                    </li>
-                    
-                    <li class="list-group-item">
-                        <span class="badge" data-bind="text: numberOfLevels"></span> Levels
-                    </li>
-                </ul>
+    
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Database</h3>
             </div>
-        </article>
-    </section>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge" data-bind="text: numberOfLeads"></span> Leads
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge" data-bind="text: numberOfContacts"></span> Contacts
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge" data-bind="text: numberOfUsers"></span> Users
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge" data-bind="text: numberOfLevels"></span> Levels
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Actions</h3>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button class="btn btn-info" data-bind="click: runImport">
+                        <i class="fa fa-exchange"></i> Update
+                    </button>
+                    <div class="pull-right">
+                        Add new, update existing
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-danger" data-bind="click: runClearImport">
+                        <i class="fa fa-eraser"></i> Import
+                    </button>
+                    <div class="pull-right">
+                        Delete existing, add all
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="loader" data-bind="css: { showLoader: inProgress() }">
+            <i class="fa fa-spinner fa-spin fa-2x active"></i>
+        </div>
+    </div>
+    
 </section>

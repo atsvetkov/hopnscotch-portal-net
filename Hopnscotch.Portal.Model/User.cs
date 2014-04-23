@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class User : AmoEntityBase
+    public class User : AmoEntityBase, IUpdatableFrom<User>
     {
         public User()
         {
@@ -14,5 +14,17 @@ namespace Hopnscotch.Portal.Model
         public string Login { get; set; }
 
         public virtual ICollection<Lead> Leads { get; set; }
+
+        public void CopyValuesFrom(User entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            this.FirstName = entity.FirstName;
+            this.LastName = entity.LastName;
+            this.Login = entity.Login;
+        }
     }
 }

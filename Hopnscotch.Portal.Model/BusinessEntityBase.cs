@@ -15,5 +15,21 @@ namespace Hopnscotch.Portal.Model
         public int AccountId { get; set; }
 
         public User ResponsibleUser { get; set; }
+
+        protected void CopyValuesInternal(BusinessEntityBase entity)
+        {
+            this.Created = entity.Created;
+            this.Modified = entity.Modified;
+            this.AmoResponsibleUserId = entity.AmoResponsibleUserId;
+            this.AccountId = entity.AccountId;
+            this.ResponsibleUser = entity.ResponsibleUser;
+
+            CopyValuesFromSpecific(entity);
+        }
+
+        protected virtual void CopyValuesFromSpecific(BusinessEntityBase entity)
+        {
+            
+        }
     }
 }

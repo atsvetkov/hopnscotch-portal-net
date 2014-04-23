@@ -11,8 +11,10 @@ namespace Hopnscotch.Portal.Data.Helpers
         {
             return new Dictionary<Type, Func<DbContext, object>>
                 {
-                   //{ typeof(IAttendanceRepository), dbContext => new AttendanceRepository(dbContext) },
-                   //{ typeof(ILessonRepository), dbContext => new LessonRepository(dbContext) }
+                   { typeof(IContactRepository), dbContext => new ContactRepository(dbContext) },
+                   { typeof(ILeadRepository), dbContext => new LeadRepository(dbContext) },
+                   { typeof(IUserRepository), dbContext => new UserRepository(dbContext) },
+                   { typeof(ITaskRepository), dbContext => new TaskRepository(dbContext) }
                 };
         }
 

@@ -7,10 +7,10 @@ namespace Hopnscotch.Portal.Contracts
     {
         IRepository<Lesson> Lessons { get; }
         IRepository<Attendance> Attendances { get; }
-        IRepository<Contact> Contacts { get; }
-        IRepository<Lead> Leads { get; }
-        IRepository<Task> Tasks { get; }
-        IRepository<User> Users { get; }
+        IContactRepository Contacts { get; }
+        ILeadRepository Leads { get; }
+        ITaskRepository Tasks { get; }
+        IUserRepository Users { get; }
         IRepository<Level> Levels { get; }
 
         void Commit();

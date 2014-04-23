@@ -51,8 +51,12 @@
     <Compile Include="IAttendanceRepository.cs" />
     <Compile Include="IAttendanceUow.cs" />
     <Compile Include="IConfig.cs" />
+    <Compile Include="IContactRepository.cs" />
+    <Compile Include="ILeadRepository.cs" />
     <Compile Include="ILessonRepository.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ITaskRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

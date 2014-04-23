@@ -42,35 +42,35 @@ namespace Hopnscotch.Portal.Data
             }
         }
 
-        public IRepository<Contact> Contacts
+        public IContactRepository Contacts
         {
             get
             {
-                return _repositoryProvider.GetRepositoryForEntityType<Contact>();
+                return _repositoryProvider.GetRepository<IContactRepository>();
             }
         }
 
-        public IRepository<Lead> Leads
+        public ILeadRepository Leads
         {
             get
             {
-                return _repositoryProvider.GetRepositoryForEntityType<Lead>();
+                return _repositoryProvider.GetRepository<ILeadRepository>();
             }
         }
 
-        public IRepository<Task> Tasks
+        public ITaskRepository Tasks
         {
             get
             {
-                return _repositoryProvider.GetRepositoryForEntityType<Task>();
+                return _repositoryProvider.GetRepository<ITaskRepository>();
             }
         }
 
-        public IRepository<User> Users
+        public IUserRepository Users
         {
             get
             {
-                return _repositoryProvider.GetRepositoryForEntityType<User>();
+                return _repositoryProvider.GetRepository<IUserRepository>();
             }
         }
 

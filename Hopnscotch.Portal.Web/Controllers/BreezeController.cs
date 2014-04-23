@@ -101,6 +101,20 @@ namespace Hopnscotch.Portal.Web.Controllers
         }
 
         [HttpGet]
+        public object ClearImport()
+        {
+            var amoCrmImportResult = _importManager.Import(new AmoCrmImportOptions { StartFromScratch = true });
+
+            return new
+            {
+                NumberOfLeads = contextProvider.Context.Leads.Count(),
+                NumberOfContacts = contextProvider.Context.Contacts.Count(),
+                NumberOfUsers = contextProvider.Context.Users.Count(),
+                NumberOfLevels = contextProvider.Context.Levels.Count()
+            };
+        }
+
+        [HttpGet]
         public object Refresh()
         {
             return new

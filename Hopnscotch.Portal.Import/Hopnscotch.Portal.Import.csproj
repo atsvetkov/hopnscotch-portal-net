@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmoCrmEntityConverter.cs" />
+    <Compile Include="AmoCrmImportContext.cs" />
     <Compile Include="AmoCrmImportOptions.cs" />
     <Compile Include="AmoCrmImportResult.cs" />
     <Compile Include="AmoCrmImportResultError.cs" />

@@ -2,6 +2,6 @@
 {
     public sealed class AmoCrmImportOptions
     {
-
+        public bool StartFromScratch { get; set; }
     }
 }

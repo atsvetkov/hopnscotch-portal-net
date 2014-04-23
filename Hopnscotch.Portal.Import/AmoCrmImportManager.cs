@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
@@ -14,24 +12,21 @@ namespace Hopnscotch.Portal.Import
     {
         // temporary const for generating lesson stubs
         private const int NumberOfLessons = 8;
-
-        private const string LevelCustomFieldName = "Уровень";
-
-        private readonly IAmoDataProvider _amoDataProvider;
-        private readonly IAttendanceUow _attendanceUow;
-        private readonly IAmoCrmEntityConverter _entityConverter;
+        
+        private readonly IAmoDataProvider amoDataProvider;
+        private readonly IAttendanceUow attendanceUow;
+        private readonly IAmoCrmEntityConverter entityConverter;
 
         public AmoCrmImportManager(IAmoDataProvider amoDataProvider, IAttendanceUow attendanceUow, IAmoCrmEntityConverter entityConverter)
         {
-            _amoDataProvider = amoDataProvider;
-            _attendanceUow = attendanceUow;
-            _entityConverter = entityConverter;
+            this.amoDataProvider = amoDataProvider;
+            this.attendanceUow = attendanceUow;
+            this.entityConverter = entityConverter;
         }
 
         public AmoCrmImportResult Import(AmoCrmImportOptions options)
         {
-            //if (!_amoDataProvider.AuthenticateAsync().Result)
-            if (!_amoDataProvider.Authenticate())
+            if (!amoDataProvider.Authenticate())
             {
                 return new AmoCrmImportResult(new []
                 {
@@ -43,107 +38,178 @@ namespace Hopnscotch.Portal.Import
                 });
             }
 
-            //var contactsResponse = _amoDataProvider.GetContactsAsync().Result;
-            //var leadsResponse = _amoDataProvider.GetLeadsAsync().Result;
-            //var contactLeadLinksResponse = _amoDataProvider.GetContactLeadLinksAsync().Result;
-            //var accountResponse = _amoDataProvider.GetAccountAsync().Result;
-
-            var contactsResponse = _amoDataProvider.GetContacts();
-            var leadsResponse = _amoDataProvider.GetLeads();
-            var contactLeadLinksResponse = _amoDataProvider.GetContactLeadLinks();
-            var accountResponse = _amoDataProvider.GetAccount();
-            
-            var contactsMap = contactsResponse.Response.Contacts.Select(r => _entityConverter.Convert(r)).ToDictionary(c => c.AmoId);
-            var leadsMap = leadsResponse.Response.Leads.Select(r => _entityConverter.Convert(r)).ToDictionary(c => c.AmoId);
-            var usersMap = accountResponse.Response.Account.Users.Select(u => _entityConverter.Convert(u)).ToDictionary(c => c.AmoId);
-            var contactLeadLinks = contactLeadLinksResponse.Response.Links;
-            
-            var levelsCustomField = accountResponse.Response.Account.CustomFields.LeadFields.FirstOrDefault(f => f.Name == LevelCustomFieldName);
-            var levelsMap = new Dictionary<int, Level>();
-            if (levelsCustomField != null)
+            if (options.StartFromScratch)
             {
-                levelsMap = _entityConverter.Convert(levelsCustomField).ToDictionary(l => l.AmoId);
+                ClearExistingAttendanceData();
             }
 
-            // add users to datacontext
-            foreach (var user in usersMap.Values)
-            {
-                _attendanceUow.Users.Add(user);
-            }
+            var context = new AmoCrmImportContext(amoDataProvider, entityConverter);
 
-            // add levels to datacontext
-            foreach (var level in levelsMap.Values)
-            {
-                _attendanceUow.Levels.Add(level);
-            }
+            ImportUsers(context);
+            ImportLevels(context);
+            SetupContactLeadLinks(context);
+            ImportContacts(context);
+            ImportLeads(context);
 
-            // setup contact-to-lead relationships
-            foreach (var link in contactLeadLinks)
-            {
-                Contact contact;
-                Lead lead;
-                if (contactsMap.TryGetValue(link.ContactId, out contact) && leadsMap.TryGetValue(link.LeadId, out lead))
-                {
-                    contact.Leads.Add(lead);
-                }
-            }
+            attendanceUow.Commit();
 
-            // set related entities for contacts and add contacts to datacontext
-            foreach (var contact in contactsMap.Values)
+            return new AmoCrmImportResult();
+        }
+
+        private void ImportLeads(AmoCrmImportContext context)
+        {
+            foreach (var lead in context.LeadsMap.Values)
             {
                 // set responsible user
                 User user;
-                if (usersMap.TryGetValue(contact.AmoResponsibleUserId, out user))
-                {
-                    contact.ResponsibleUser = user;
-                }
-
-                _attendanceUow.Contacts.Add(contact);
-            }
-
-            // set related entities for leads and add leads to datacontext
-            foreach (var lead in leadsMap.Values)
-            {
-                // set responsible user
-                User user;
-                if (usersMap.TryGetValue(lead.AmoResponsibleUserId, out user))
+                if (context.UsersMap.TryGetValue(lead.AmoResponsibleUserId, out user))
                 {
                     lead.ResponsibleUser = user;
                 }
 
                 // set group level if set and exists
                 Level level;
-                if (lead.AmoLevelId.HasValue && levelsMap.TryGetValue(lead.AmoLevelId.Value, out level))
+                if (lead.AmoLevelId.HasValue && context.LevelsMap.TryGetValue(lead.AmoLevelId.Value, out level))
                 {
                     lead.LanguageLevel = level;
                 }
-
-                // generate lessons according to schedule and add them to datacontext
-                foreach (var lesson in CreateLessonsForLead(lead))
+                
+                var existingLead = attendanceUow.Leads.GetByAmoId(lead.AmoId);
+                if (existingLead == null)
                 {
-                    // generate default attendance records
-                    foreach (var contact in lead.Contacts)
+                    // generate lessons according to schedule and add them to datacontext
+                    foreach (var lesson in CreateLessonsForLead(lead))
                     {
-                        var attendance = new Attendance
+                        // generate default attendance records
+                        foreach (var contact in lead.Contacts)
                         {
-                            Attended = false,
-                            Contact = contact,
-                            Lesson = lesson
-                        };
+                            var attendance = new Attendance
+                            {
+                                Attended = false,
+                                Contact = contact,
+                                Lesson = lesson
+                            };
 
-                        lesson.Attendances.Add(attendance);
-                        _attendanceUow.Attendances.Add(attendance);
+                            lesson.Attendances.Add(attendance);
+                            attendanceUow.Attendances.Add(attendance);
+                        }
+
+                        attendanceUow.Lessons.Add(lesson);
                     }
 
-                    _attendanceUow.Lessons.Add(lesson);
+                    attendanceUow.Leads.Add(lead);
                 }
+                else
+                {
+                    existingLead.CopyValuesFrom(lead);
+                    attendanceUow.Leads.Update(existingLead);
+                }
+            }
+        }
 
-                _attendanceUow.Leads.Add(lead);
+        private void ImportContacts(AmoCrmImportContext context)
+        {
+            foreach (var contact in context.ContactsMap.Values)
+            {
+                // set responsible user
+                User user;
+                if (context.UsersMap.TryGetValue(contact.AmoResponsibleUserId, out user))
+                {
+                    contact.ResponsibleUser = user;
+                }
+                
+                var existingContact = attendanceUow.Contacts.GetByAmoId(contact.AmoId);
+                if (existingContact == null)
+                {
+                    attendanceUow.Contacts.Add(contact);
+                }
+                else
+                {
+                    existingContact.CopyValuesFrom(contact);
+                    attendanceUow.Contacts.Update(existingContact);
+                }
+            }
+        }
+
+        private static void SetupContactLeadLinks(AmoCrmImportContext context)
+        {
+            foreach (var link in context.ContactLeadLinks)
+            {
+                Contact contact;
+                Lead lead;
+                if (context.ContactsMap.TryGetValue(link.ContactId, out contact) && 
+                    context.LeadsMap.TryGetValue(link.LeadId, out lead))
+                {
+                    contact.Leads.Add(lead);
+                }
+            }
+        }
+
+        private void ImportLevels(AmoCrmImportContext context)
+        {
+            foreach (var level in context.LevelsMap.Values)
+            {
+                attendanceUow.Levels.Add(level);
+            }
+        }
+
+        private void ImportUsers(AmoCrmImportContext context)
+        {
+            foreach (var user in context.UsersMap.Values)
+            {
+                var existingUser = attendanceUow.Users.GetByAmoId(user.AmoId);
+                if (existingUser == null)
+                {
+                    attendanceUow.Users.Add(user);
+                }
+                else
+                {
+                    existingUser.CopyValuesFrom(user);
+                    attendanceUow.Users.Update(existingUser);
+                }
+            }
+        }
+
+        private void ClearExistingAttendanceData()
+        {
+            foreach (var attendance in attendanceUow.Attendances.GetAll())
+            {
+                attendanceUow.Attendances.Delete(attendance);
             }
 
-            _attendanceUow.Commit();
+            foreach (var lesson in attendanceUow.Lessons.GetAll())
+            {
+                attendanceUow.Lessons.Delete(lesson);
+            }
+            
+            //foreach (var task in attendanceUow.Tasks.GetAll())
+            //{
+            //    attendanceUow.Tasks.Delete(task);
+            //}
 
-            return new AmoCrmImportResult();
+            foreach (var lead in attendanceUow.Leads.GetAll())
+            {
+                lead.Contacts.Clear();
+                attendanceUow.Leads.Delete(lead);
+            }
+
+            foreach (var contact in attendanceUow.Contacts.GetAll())
+            {
+                contact.Leads.Clear();
+                attendanceUow.Contacts.Delete(contact);
+            }
+            
+            foreach (var level in attendanceUow.Levels.GetAll())
+            {
+                attendanceUow.Levels.Delete(level);
+            }
+            
+            foreach (var user in attendanceUow.Users.GetAll())
+            {
+                attendanceUow.Users.Delete(user);
+            }
+
+            attendanceUow.Commit();
         }
 
         private IEnumerable<Lesson> CreateLessonsForLead(Lead lead)
@@ -191,7 +257,7 @@ namespace Hopnscotch.Portal.Import
 
         public void Dispose()
         {
-            _attendanceUow.Dispose();
+            attendanceUow.Dispose();
         }
     }
 }

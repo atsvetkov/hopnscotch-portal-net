@@ -7,6 +7,8 @@ namespace Hopnscotch.Portal.Data.Helpers
 {
     internal sealed class RepositoryProvider : IRepositoryProvider
     {
+        private readonly IRepositoryFactories repositoryFactories;
+
         public RepositoryProvider(IRepositoryFactories repositoryFactories)
         {
             this.repositoryFactories = repositoryFactories;
@@ -41,8 +43,10 @@ namespace Hopnscotch.Portal.Data.Helpers
             {
                 throw new NotImplementedException("No factory for repository type, " + typeof(T).FullName);
             }
+
             var repo = (T)f(dbContext);
             Repositories[typeof(T)] = repo;
+
             return repo;
         }
 
@@ -50,7 +54,5 @@ namespace Hopnscotch.Portal.Data.Helpers
         {
             Repositories[typeof(T)] = repository;
         }
-
-        private readonly IRepositoryFactories repositoryFactories;
     }
 }

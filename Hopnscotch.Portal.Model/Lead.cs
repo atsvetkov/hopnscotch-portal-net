@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Lead : NamedBusinessEntityBase
+    public class Lead : NamedBusinessEntityBase, IUpdatableFrom<Lead>
     {
         public Lead()
         {
@@ -26,6 +25,28 @@ namespace Hopnscotch.Portal.Model
         public Level LanguageLevel { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Lesson> Lessons { get; set; }
+
+        protected override void CopyValuesFromSpecific(BusinessEntityBase entity)
+        {
+            var lead = entity as Lead;
+            if (lead == null)
+            {
+                return;
+            }
+
+            this.Name = lead.Name;
+            this.Price = lead.Price;
+            this.StartDate = lead.StartDate;
+            this.EndDate = lead.EndDate;
+            this.AmoLevelId = lead.AmoLevelId;
+            this.LanguageLevel = lead.LanguageLevel;
+            this.ScheduleText = lead.ScheduleText;
+        }
+
+        public void CopyValuesFrom(Lead entity)
+        {
+            CopyValuesInternal(entity);
+        }
     }
 
     // TODO: add lookups (custom field tables):
