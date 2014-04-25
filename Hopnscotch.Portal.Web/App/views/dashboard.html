@@ -2,27 +2,79 @@
     <article>
         <div class="container">
             <!--<div class="row">
-                Select teacher
-                <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
-            </div>-->
+                    Select teacher
+                    <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
+                </div>-->
 
             <br />
             
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Leads</h3>
-                    </div>
-                    <div class="list-group" data-bind="foreach: teacherLeads">
-                        <a href="#" class="list-group-item lead-row">
-                            <span data-bind="text: name"></span>
-                        </a>
+            <!-- ko if: userIsInRole('Administrators') -->
+            <div class="col-md-4" data-bind="template: { name: 'adminTemplate' }"></div>
+            <!-- /ko -->
+            
+            <!-- ko if: userIsInRole('Managers') -->
+            <div class="col-md-4" data-bind="template: { name: 'managerTemplate' }"></div>
+            <!-- /ko -->
+            
+            <!-- ko if: userIsInRole('Teachers') -->
+            <div class="col-md-4" data-bind="template: { name: 'teacherTemplate' }"></div>
+            <!-- /ko -->
+            
+            <!-- ko if: userIsInRole('Students') -->
+            <div class="col-md-4" data-bind="template: { name: 'studentTemplate' }"></div>
+            <!-- /ko -->
 
-                        <!--TODO: Show number of lessons for this lead which need attention (i.e. entering attendance data, not finalized)-->
-                        <!--<span class="badge" data-bind="text: numberOfLeads"></span> Leads-->
-                    </div>
-                </div>
-            </div>
         </div>
     </article>
 </section>
+
+<script type="text/html" id="teacherTemplate">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Leads</h3>
+        </div>
+        <div class="list-group" data-bind="foreach: teacherLeads">
+            <a href="#" class="list-group-item lead-row">
+                <span data-bind="text: name"></span>
+            </a>
+
+            <!-- TODO: Show number of lessons for this lead which need attention (i.e. entering attendance data, not finalized)-->
+            <!-- <span class="badge" data-bind="text: numberOfLeads"></span> Leads-->
+            
+            <!-- TODO: Add button to invite group contacts to Attendance app by sending emails; implement click-URL-based registration -->
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="adminTemplate">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Admin tasks</h3>
+        </div>
+        <div class="panel-body">
+            Something for Administrator only
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="managerTemplate">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Manager tasks</h3>
+        </div>
+        <div class="panel-body">
+            Something for Manager only
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="studentTemplate">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Student tasks</h3>
+        </div>
+        <div class="panel-body">
+            Only students will see this
+        </div>
+    </div>
+</script>

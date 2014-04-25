@@ -42,6 +42,7 @@
         function querySucceded(data) {
             if (!data.results || data.results.length === 0) {
                 displayNameObservable(login);
+                return;
             }
 
             var user = data.results[0];

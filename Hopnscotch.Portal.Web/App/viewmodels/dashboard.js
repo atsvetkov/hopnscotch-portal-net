@@ -45,6 +45,10 @@
         });
     };
 
+    var userIsInRole = function(role) {
+        return session.userIsInRole(role);
+    };
+
     var vm = {
         activate: activate,
         attached: attached,
@@ -56,7 +60,8 @@
         selectedLead: selectedLead,
         leadLessons: leadLessons,
         leadContacts: leadContacts,
-        leadChanged: leadChanged
+        leadChanged: leadChanged,
+        userIsInRole: userIsInRole
     };
 
     return vm;

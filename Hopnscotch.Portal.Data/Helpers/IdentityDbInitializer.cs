@@ -24,15 +24,25 @@ namespace Hopnscotch.Portal.Data
             };
             userManager.PasswordValidator = new MinimumLengthValidator(3);
 
-            var administrator = new IdentityUser {UserName = "Administrator"};
-            userManager.Create(administrator, "qwe");
-            userManager.AddToRole(administrator.Id, "RegisteredUsers");
-            userManager.AddToRole(administrator.Id, "Administrators");
+            var admin = new IdentityUser {UserName = "Admin"};
+            userManager.Create(admin, "qwe");
+            userManager.AddToRole(admin.Id, "RegisteredUsers");
+            userManager.AddToRole(admin.Id, "Administrators");
 
             var guzel = new IdentityUser {UserName = "takutdinova.g@gmail.com"};
             userManager.Create(guzel, "qwe");
             userManager.AddToRole(guzel.Id, "RegisteredUsers");
             userManager.AddToRole(guzel.Id, "Teachers");
+
+            var manager = new IdentityUser { UserName = "iammamba@gmail.com" };
+            userManager.Create(manager, "qwe");
+            userManager.AddToRole(manager.Id, "RegisteredUsers");
+            userManager.AddToRole(manager.Id, "Managers");
+
+            var student = new IdentityUser { UserName = "Student" };
+            userManager.Create(student, "qwe");
+            userManager.AddToRole(student.Id, "RegisteredUsers");
+            userManager.AddToRole(student.Id, "Students");
         }
 
         private static void CreateRoles(IdentityDbContext context, params string[] roles)
