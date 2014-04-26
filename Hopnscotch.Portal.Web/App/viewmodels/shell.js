@@ -16,8 +16,10 @@
         return shell;
         
         function activate() {
-            return datacontext.primeData()
-                .then(init)
+            //return datacontext.primeData()
+            //    .then(init)
+            //    .fail(failedInit);
+            return init()
                 .fail(failedInit);
         };
 

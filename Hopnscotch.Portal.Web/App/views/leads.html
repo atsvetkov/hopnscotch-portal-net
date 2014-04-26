@@ -4,31 +4,29 @@
             <i class="fa fa-refresh"></i> Refresh
         </button>
     </header>-->
-    
+
     <br />
 
-    <section>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Leads</h3>
-                </div>
-                <div class="list-group" data-bind="foreach: leads">
-                    <a href="#" class="list-group-item lead-row">
-                        <span data-bind="text: name"></span>
-                    </a>
-                </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Leads</h3>
+            </div>
+            <div class="list-group" data-bind="foreach: leads">
+                <a href="#" class="list-group-item lead-row">
+                    <span data-bind="text: name"></span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <!--<article>
-            <dl class="dl-horizontal">
-                <dt>Name</dt>
-                <dd><span data-bind="text: name"></span></dd>
-                
-                <dt data-bind="visible: languageLevel()">Level</dt>
-                <dd data-bind="visible: languageLevel()"><span data-bind="text: languageLevel() ? languageLevel().name : ''"></span></dd>
-            </dl>
-        </article>-->
-    </section>
+    <!--<article>
+        <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd><span data-bind="text: name"></span></dd>
+
+            <dt data-bind="visible: languageLevel()">Level</dt>
+            <dd data-bind="visible: languageLevel()"><span data-bind="text: languageLevel() ? languageLevel().name : ''"></span></dd>
+        </dl>
+    </article>-->
 </section>

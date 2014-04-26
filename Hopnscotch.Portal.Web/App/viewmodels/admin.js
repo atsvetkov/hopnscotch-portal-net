@@ -4,6 +4,8 @@
     var numberOfUsers = ko.observable();
     var numberOfLevels = ko.observable();
 
+    var totals = {};
+
     var importInProgress = ko.observable(false);
     var clearInProgress = ko.observable(false);
     var clearImportInProgress = ko.observable(false);
@@ -22,6 +24,7 @@
         numberOfContacts: numberOfContacts,
         numberOfUsers: numberOfUsers,
         numberOfLevels: numberOfLevels,
+        totals: totals,
         inProgress: inProgress,
         importInProgress: importInProgress,
         clearInProgress: clearInProgress,
@@ -29,7 +32,7 @@
     };
 
     function refreshTotals() {
-        return datacontext.refreshTotals(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels);
+        return datacontext.refreshTotals(totals);
     };
 
     function activate() {
@@ -39,7 +42,7 @@
     function runImport() {
         importInProgress(true);
 
-        return datacontext.runImport(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
+        return datacontext.runImport(totals)
             .then(function () {
                 importInProgress(false);
             });
@@ -48,7 +51,7 @@
     function runClearImport() {
         clearImportInProgress(true);
 
-        return datacontext.runClearImport(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
+        return datacontext.runClearImport(totals)
             .then(function () {
                 clearImportInProgress(false);
             });
@@ -57,7 +60,7 @@
     function runClear() {
         clearInProgress(true);
 
-        return datacontext.runClear(numberOfLeads, numberOfContacts, numberOfUsers, numberOfLevels)
+        return datacontext.runClear(totals)
             .then(function () {
                 clearInProgress(false);
             });

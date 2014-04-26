@@ -4,27 +4,25 @@
             <i class="fa fa-refresh"></i> Refresh
         </button>
     </header>-->
-    
+
     <br />
 
-    <section>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Users</h3>
-                </div>
-                <div class="list-group" data-bind="foreach: users">
-                    <a href="#" class="list-group-item user-row">
-                        <span data-bind="text: displayName"></span>
-                    </a>
-                </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users</h3>
+            </div>
+            <div class="list-group" data-bind="foreach: users">
+                <a href="#" class="list-group-item user-row">
+                    <span data-bind="text: displayName"></span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <!--<article>
-            <div>
-                <address data-bind="text: displayName()"></address>
-            </div>
-        </article>-->
-    </section>
+    <!--<article>
+        <div>
+            <address data-bind="text: displayName()"></address>
+        </div>
+    </article>-->
 </section>
