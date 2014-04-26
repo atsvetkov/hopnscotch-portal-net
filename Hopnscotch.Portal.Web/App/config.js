@@ -41,6 +41,12 @@
         nav: false,
         requiredRoles: [roleNames.Teachers, roleNames.Managers, roleNames.Administrators]
     }, {
+        route: 'contactdetails/:id',
+        moduleId: 'viewmodels/contactDetails',
+        title: 'View Contact',
+        nav: false,
+        requiredRoles: [roleNames.Teachers, roleNames.Managers, roleNames.Administrators]
+    }, {
         route: 'lessondetails/:id',
         moduleId: 'viewmodels/lessonDetails',
         title: 'View Lesson',

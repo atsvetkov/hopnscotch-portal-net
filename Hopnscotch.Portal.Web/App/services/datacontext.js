@@ -100,6 +100,10 @@
         return getEntityById('Lead', leadId, leadObservable);
     };
 
+    var getContactById = function (contactId, contactObservable) {
+        return getEntityById('Contact', contactId, contactObservable);
+    };
+
     var getLessonById = function (lessonId, lessonObservable) {
         return getEntityById('Lesson', lessonId, lessonObservable);
     };
@@ -238,6 +242,7 @@
         getLeadLessons: getLeadLessons,
         getLeadContacts: getLeadContacts,
         getLeadById: getLeadById,
+        getContactById: getContactById,
         getLessonById: getLessonById,
         getUserDisplayNameByLogin: getUserDisplayNameByLogin,
         saveChanges: saveChanges
