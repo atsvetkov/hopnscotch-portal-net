@@ -4,24 +4,28 @@
             <br />
 
             <div class="row">
-                <h2 data-bind="text: lesson().lead().name() + ' (' + moment(lesson().date()).format('YYYY-MM-DD') + ')'"></h2>
+                <h2 data-bind="text: lesson().lead().name"></h2>
             </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="input-group date">
+                        <input type="text" class="form-control" data-bind="date: lesson().date" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
 
             <div class="row">
                 <div class="col-md-4">
-                    <div class="row" data-bind="if: !lesson().completed()">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-bind="click: selectAll">
-                                <i class="fa fa-check fa-lg"></i> All on board
-                            </button>
-                            <button type="button" class="btn btn-default" data-bind="click: selectNone">
-                                <i class="fa fa-ban fa-lg"></i> Nobody showed up
-                            </button>
-                        </div>
-                    </div>
-
-                    <br />
-
                     <div class="list-group" data-bind="foreach: lesson().attendances">
                         <a href="#" class="list-group-item attendance-row" data-bind="css: { 'list-group-item-success': attended, 'list-group-item-danger': !attended() }">
                             <span data-bind="text: contact().name"></span>
@@ -31,9 +35,32 @@
                 </div>
             </div>
 
-            <div class="row" data-bind="if: !lesson().completed()">
+            <br />
+
+            <div class="row" data-bind="if: !lesson().finalized()">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-bind="click: selectAll">
+                        <i class="fa fa-check fa-lg"></i> All on board
+                    </button>
+                    <button type="button" class="btn btn-default" data-bind="click: selectNone">
+                        <i class="fa fa-ban fa-lg"></i> Nobody showed up
+                    </button>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <textarea class="form-control" rows="4" data-bind="text: lesson().comment" placeholder="Enter a comment..." maxlength="1000"></textarea>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row" data-bind="if: !lesson().finalized()">
                 <button class="btn btn-primary" data-bind="click: save">
-                    <i class="fa fa-save fa-lg"></i> Complete
+                    <i class="fa fa-save fa-lg"></i> Save
                 </button>
             </div>
         </div>

@@ -13,9 +13,19 @@ namespace Hopnscotch.Portal.Model
         public int LeadId { get; set; }
         public DateTime Date { get; set; }
         public int AcademicHours { get; set; }
-        public bool Completed { get; set; }
+        public LessonStatus Status { get; set; }
+        public string Comment { get; set; }
+        public bool Finalized { get; set; }
 
         public virtual Lead Lead { get; set; }
         public virtual ICollection<Attendance> Attendances { get; set; }
+    }
+
+    public enum LessonStatus
+    {
+        None,
+        Planned,
+        Completed,
+        Cancelled
     }
 }

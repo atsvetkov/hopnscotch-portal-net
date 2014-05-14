@@ -13,6 +13,7 @@ namespace Hopnscotch.Portal.Web
             bundles.Add(new ScriptBundle("~/scripts/vendors").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap-datepicker.js",
                         "~/Scripts/knockout-{version}.js",
                         "~/Scripts/respond.js",
                         "~/Scripts/sammy-{version}.js",
@@ -28,7 +29,8 @@ namespace Hopnscotch.Portal.Web
                       "~/Content/durandal.css",
                       "~/Content/toastr.css",
                       "~/Content/font-awesome.css",
-                      "~/Content/main.css"));
+                      "~/Content/main.css",
+                      "~/Content/bootstrap-datepicker3.css"));
         }
     }
 }

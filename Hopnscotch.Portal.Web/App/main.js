@@ -8,7 +8,8 @@
         'knockout.validation': '../scripts/knockout.validation',
         'bootstrap': '../scripts/bootstrap',
         'jquery': '../scripts/jquery-2.1.0',
-        'jquery.utilities': '../scripts/jquery.utilities'
+        'jquery.utilities': '../scripts/jquery.utilities',
+        'datepicker': '../scripts/bootstrap-datepicker'
     }
 });
 
@@ -54,6 +55,26 @@ define(['durandal/system', 'durandal/app', 'durandal/plugins/router', 'durandal/
                 return newNodesArray;
             };
         }
+
+        ko.bindingHandlers.date = {
+            update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var value = valueAccessor();
+                var allBindings = allBindingsAccessor();
+                var valueUnwrapped = ko.utils.unwrapObservable(value);
+                var pattern = allBindings.format || 'DD/MM/YYYY';
+
+                var output = "-";
+                if (valueUnwrapped !== null && valueUnwrapped !== undefined && valueUnwrapped.length > 0) {
+                    output = moment(valueUnwrapped).format(pattern);
+                }
+
+                if ($(element).is("input") === true) {
+                    $(element).val(output);
+                } else {
+                    $(element).text(output);
+                }
+            }
+        };
 
         ko.bindingHandlers.ifIsInRole = {
             init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {

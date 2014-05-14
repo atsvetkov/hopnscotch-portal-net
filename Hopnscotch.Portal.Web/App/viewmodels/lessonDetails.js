@@ -1,4 +1,4 @@
-﻿define(['services/datacontext', 'plugins/router', 'knockout', 'services/session'], function (datacontext, router, ko, session) {
+﻿define(['services/datacontext', 'plugins/router', 'knockout', 'services/session', 'datepicker'], function (datacontext, router, ko, session) {
     var lesson = ko.observable();
     
     var goBack = function () {
@@ -36,6 +36,14 @@
 
     var attached = function (view) {
         bindEventToList(view, '.attendance-row', viewDetails);
+
+        $('.input-group.date').datepicker({
+            language: "ru",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('.input-group.date').datepicker('update', lesson().date());
     };
 
     var bindEventToList = function (rootSelector, selector, callback, eventName) {
@@ -48,6 +56,7 @@
     };
 
     function activate(routeData) {
+        
         var id = parseInt(routeData);
 
         return datacontext.getLessonById(id, lesson);
@@ -63,7 +72,7 @@
         title: 'Lesson Details',
         lesson: lesson
     };
-
+    
     return vm;
 }
 );

@@ -3,6 +3,7 @@
     public class Attendance : EntityBase
     {
         public bool Attended { get; set; }
+        public int HomeworkPercentage { get; set; }
 
         public int LessonId { get; set; }
         public int ContactId { get; set; }
