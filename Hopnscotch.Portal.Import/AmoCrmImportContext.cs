@@ -32,7 +32,7 @@ namespace Hopnscotch.Portal.Import
             LevelsMap = new Dictionary<int, Level>();
             if (levelsCustomField != null)
             {
-                LevelsMap = converter.Convert(levelsCustomField).ToDictionary(l => l.AmoId);
+                LevelsMap = converter.Convert<Level>(levelsCustomField).ToDictionary(l => l.AmoId);
             }
         }
     }

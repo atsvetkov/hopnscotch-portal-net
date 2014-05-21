@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Contact : NamedBusinessEntityBase, IUpdatableFrom<Contact>
+    public class Contact : BusinessEntityBase, IUpdatableFrom<Contact>
     {
         public Contact()
         {

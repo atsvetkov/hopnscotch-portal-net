@@ -1,4 +1,6 @@
-﻿using Hopnscotch.Portal.Contracts;
+﻿using System;
+using System.Data.Entity.Validation;
+using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Data.Helpers;
 using Hopnscotch.Portal.Model;
 
@@ -18,7 +20,14 @@ namespace Hopnscotch.Portal.Data
 
         public void Commit()
         {
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
         }
 
         public void Dispose()
@@ -79,6 +88,14 @@ namespace Hopnscotch.Portal.Data
             get
             {
                 return _repositoryProvider.GetRepository<ILevelRepository>();
+            }
+        }
+
+        public IImportDataRepository ImportData
+        {
+            get
+            {
+                return _repositoryProvider.GetRepository<IImportDataRepository>();
             }
         }
     }

@@ -2933,7 +2933,7 @@ ko.bindingHandlers['attr'] = {
 
             // Treat "name" specially - although you can think of it as an attribute, it also needs
             // special handling on older versions of IE (https://github.com/SteveSanderson/knockout/pull/333)
-            // Deliberately being case-sensitive here because XHTML would regard "Name" as a different thing
+            // Deliberately being case-sensitive here because XHTML would regard "ResponseType" as a different thing
             // entirely, and there's no strong reason to allow for such casing in HTML.
             if (attrName === "name") {
                 ko.utils.setElementName(element, toRemove ? "" : attrValue.toString());

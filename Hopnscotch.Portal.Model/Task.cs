@@ -2,7 +2,7 @@ using System;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Task : NamedBusinessEntityBase
+    public class Task : BusinessEntityBase
     {
         public string Text { get; set; }
         public DateTime CompleteUntil { get; set; }

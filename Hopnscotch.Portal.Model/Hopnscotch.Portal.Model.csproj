@@ -46,6 +46,7 @@
     <Compile Include="Contact.cs" />
     <Compile Include="ElementTypes.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="ImportData.cs" />
     <Compile Include="IUpdatableFrom.cs" />
     <Compile Include="Lead.cs" />
     <Compile Include="Lesson.cs" />

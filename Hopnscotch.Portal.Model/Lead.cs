@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Lead : NamedBusinessEntityBase, IUpdatableFrom<Lead>
+    public class Lead : BusinessEntityBase, IUpdatableFrom<Lead>
     {
         public Lead()
         {

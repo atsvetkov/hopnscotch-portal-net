@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>FontAwesome</id>
-    <version>4.0.3.1</version>
+    <version>4.1.0</version>
     <authors>Dave Gandy</authors>
     <owners>Dave Gandy</owners>
     <licenseUrl>http://fontawesome.io/license/</licenseUrl>
@@ -10,7 +10,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Iconic font designed for use with Twitter Bootstrap. Package Issues? Post them to https://github.com/JustLikeIcarus/Font-Awesome-NuGet/issues</description>
     <summary>Font Awesome for Twitter Bootstrap - http://fontawesome.io</summary>
-    <releaseNotes>Switching to new file structure to match bootstrap. This will also resolve previous issues some may have experienced with css minimization and relative paths.</releaseNotes>
+    <releaseNotes>Font Awesome 4.1.0
+					http://fontawesome.io/whats-new/</releaseNotes>
     <tags>FortAwesome FontAwesome Font Awesome Iconic Twitter Bootstrap</tags>
   </metadata>
 </package>

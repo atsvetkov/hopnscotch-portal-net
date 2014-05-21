@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Converters\CustomJsonDateConverter.cs" />
     <Compile Include="DataProvider\AmoDataProvider.cs" />
+    <Compile Include="DataProvider\SimulationImportDataProvider.cs" />
     <Compile Include="Entities\Account\ApiAccountResponse.cs" />
     <Compile Include="Entities\Account\ApiAccountRootResponse.cs" />
     <Compile Include="Entities\Account\ApiCustomFieldDefinitionResponse.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Entities\Account\ApiUserResponse.cs" />
     <Compile Include="Entities\AmoCrmEntityTypes.cs" />
     <Compile Include="Entities\ApiBusinessEntityResponseBase.cs" />
+    <Compile Include="AmoCrmResponseTypeAttribute.cs" />
     <Compile Include="Entities\CustomField\ApiCustomFieldResponse.cs" />
     <Compile Include="Entities\CustomField\ApiCustomFieldValueResponse.cs" />
     <Compile Include="Entities\ApiEntityResponseBase.cs" />
@@ -78,6 +80,8 @@
     <Compile Include="DataProvider\IAmoDataProvider.cs" />
     <Compile Include="Entities\Task\ApiTaskListResponse.cs" />
     <Compile Include="Entities\Task\ApiTaskResponse.cs" />
+    <Compile Include="Exceptions\ImportSimulationException.cs" />
+    <Compile Include="Extensions\AttributeExtensions.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +93,10 @@
     <ProjectReference Include="..\Hopnscotch.Portal.Contracts\Hopnscotch.Portal.Contracts.csproj">
       <Project>{96e1d3a1-41d5-4846-814b-8d1cb4285ea6}</Project>
       <Name>Hopnscotch.Portal.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hopnscotch.Portal.Model\Hopnscotch.Portal.Model.csproj">
+      <Project>{5AADEBF6-4D73-403C-9E2C-39E7BF31543C}</Project>
+      <Name>Hopnscotch.Portal.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,7 +2,7 @@ using System;
 
 namespace Hopnscotch.Portal.Model
 {
-    public abstract class BusinessEntityBase : AmoEntityBase
+    public abstract class BusinessEntityBase : AmoNamedEntityBase
     {
         public DateTime? Created { get; set; }
 

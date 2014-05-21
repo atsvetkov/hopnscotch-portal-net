@@ -51,7 +51,7 @@ namespace Hopnscotch.Portal.Import
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Level> Convert(ApiCustomFieldDefinitionResponse response)
+        public IEnumerable<T> Convert<T>(ApiCustomFieldDefinitionResponse response) where T : AmoNamedEntityBase, new()
         {
             if (response == null || response.Enums == null)
             {
@@ -60,7 +60,7 @@ namespace Hopnscotch.Portal.Import
 
             foreach (var fieldValue in response.Enums)
             {
-                yield return new Level
+                yield return new T
                 {
                     AmoId = fieldValue.Key,
                     Name = fieldValue.Value

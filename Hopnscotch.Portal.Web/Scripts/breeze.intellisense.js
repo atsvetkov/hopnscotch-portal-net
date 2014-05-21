@@ -44,7 +44,7 @@ intellisense.annotate(breeze.core.Enum.prototype, {
     ///   <summary>
     ///   Returns an Enum symbol given its name. }
     ///   </summary>
-    ///   <param name="name" type="String" optional="true">Name for which an enum symbol should be returned.</param>
+    ///   <param name="name" type="String" optional="true">ResponseType for which an enum symbol should be returned.</param>
     ///   <returns type="breeze.core.EnumSymbol" >The symbol that matches the name or 'undefined' if not found.</returns>
     /// </signature>
   },

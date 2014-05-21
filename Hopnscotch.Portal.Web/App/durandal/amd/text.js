@@ -153,7 +153,7 @@ define(['module'], function (module) {
         },
 
         load: function (name, req, onLoad, config) {
-            //Name has format: some.module.filext!strip
+            //ResponseType has format: some.module.filext!strip
             //The strip part is optional.
             //if strip is present, then that means only get the string contents
             //inside a body tag in an HTML string. For XML/SVG content it means

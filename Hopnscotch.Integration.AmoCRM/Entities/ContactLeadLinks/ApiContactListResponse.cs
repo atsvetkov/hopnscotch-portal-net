@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 namespace Hopnscotch.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
+    [AmoCrmResponseType("ContactLeadLinks")]
     public sealed class ApiContactLeadLinkListResponse
     {
         [JsonProperty("links")]

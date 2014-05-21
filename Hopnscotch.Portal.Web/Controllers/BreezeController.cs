@@ -83,17 +83,9 @@ namespace Hopnscotch.Portal.Web.Controllers
         }
 
         [HttpGet]
-        public object Import()
+        public object Import([FromUri] AmoCrmImportOptions options)
         {
-            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions());
-
-            return EntitiesCountResult();
-        }
-        
-        [HttpGet]
-        public object ClearImport()
-        {
-            var amoCrmImportResult = importManager.Import(new AmoCrmImportOptions { StartFromScratch = true });
+            var amoCrmImportResult = importManager.Import(options ?? new AmoCrmImportOptions());
 
             return EntitiesCountResult();
         }

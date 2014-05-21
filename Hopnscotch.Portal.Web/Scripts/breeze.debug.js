@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2014 IdeaBlade, Inc.  All Rights Reserved.  
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
  * conditions of the IdeaBlade Breeze license, available at http://www.breezejs.com/license
@@ -1066,7 +1066,7 @@ var Enum = (function() {
          var dayOfWeek = DayOfWeek.from("Thursday");
          // nowdayOfWeek === DayOfWeek.Thursday            
     @method fromName
-    @param name {String} Name for which an enum symbol should be returned.
+    @param name {String} ResponseType for which an enum symbol should be returned.
     @return {EnumSymbol} The symbol that matches the name or 'undefined' if not found.
     **/
     proto.fromName = function(name) {
@@ -8272,7 +8272,7 @@ var DataProperty = (function () {
                 } else {
                     this.defaultValue = this.dataType.defaultValue;
                     if (this.defaultValue == null) {
-                        throw new Error("A nonnullable DataProperty cannot have a null defaultValue. Name: " + (this.name || this.nameOnServer));
+                        throw new Error("A nonnullable DataProperty cannot have a null defaultValue. ResponseType: " + (this.name || this.nameOnServer));
                     }
                 }
             }

@@ -106,7 +106,7 @@ namespace Hopnscotch.Integration.AmoCRM.Annotations
   ///   protected virtual void NotifyChanged(string propertyName) { ... }
   ///
   ///   private string _name;
-  ///   public string Name {
+  ///   public string ResponseType {
   ///     get { return _name; }
   ///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
   ///   }

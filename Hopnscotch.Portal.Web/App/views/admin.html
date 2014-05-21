@@ -38,30 +38,44 @@
 
             <ul class="list-group">
                 <li class="list-group-item">
+                    <div class="checkbox">
+                        <label>
+                            <input id="saveImportData" name="saveImportData" type="checkbox" data-bind="checked: options.saveImportData" />
+                            Save import data
+                        </label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="checkbox">
+                        <label>
+                            <input id="simulateImport" name="simulateImport" type="checkbox" data-bind="checked: options.simulateImport" disabled="disabled" />
+                            Use simulation import data
+                        </label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="checkbox">
+                        <label>
+                            <input id="startFromScratch" name="startFromScratch" type="checkbox" data-bind="checked: options.startFromScratch" />
+                            Start import from scratch
+                        </label>
+                    </div>
+                </li>
+                <li class="list-group-item">
                     <button class="btn btn-info" data-bind="click: runImport, disable: inProgress">
                         <i class="fa fa-refresh" data-bind="css: { 'fa-spin': importInProgress }"></i> Update
                     </button>
-                    <div class="pull-right">
-                        Add new, update existing
-                    </div>
+                    <!--<div class="pull-right">
+                Update
+            </div>-->
                 </li>
                 <li class="list-group-item">
                     <button class="btn btn-danger" data-bind="click: runClear, disable: inProgress">
                         <i class="fa fa-times-circle" data-bind="css: { 'fa-spin': clearInProgress }"></i> Clear
                     </button>
-                    <div class="pull-right">
-                        Delete existing
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <button class="btn btn-warning" data-bind="click: runClearImport, disable: inProgress">
-                        <i class="fa fa-times-circle" data-bind="css: { 'fa-spin': clearImportInProgress }"></i>
-                        <i class="fa fa-refresh" data-bind="css: { 'fa-spin': clearImportInProgress }"></i>
-                        Import
-                    </button>
-                    <div class="pull-right">
-                        Delete existing, add all
-                    </div>
+                    <!--<div class="pull-right">
+                Clear
+            </div>-->
                 </li>
             </ul>
         </div>

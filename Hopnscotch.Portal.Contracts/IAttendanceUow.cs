@@ -7,6 +7,7 @@ namespace Hopnscotch.Portal.Contracts
     {
         IRepository<Lesson> Lessons { get; }
         IRepository<Attendance> Attendances { get; }
+        IImportDataRepository ImportData { get; }
         IContactRepository Contacts { get; }
         ILeadRepository Leads { get; }
         ITaskRepository Tasks { get; }

@@ -6,4 +6,9 @@ namespace Hopnscotch.Portal.Contracts
     {
         Contact GetByAmoId(int amoId);
     }
+
+    public interface IImportDataRepository : IRepository<ImportData>
+    {
+        ImportData GetByResponseType(string responseType);
+    }
 }

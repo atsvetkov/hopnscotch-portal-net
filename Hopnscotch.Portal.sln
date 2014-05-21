@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopnscotch.Portal.Integration.AmoCRM", "Hopnscotch.Integration.AmoCRM\Hopnscotch.Portal.Integration.AmoCRM.csproj", "{30DB527B-7DFD-4599-9AB8-69003A15AE87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopnscotch.Portal.ConsoleTester", "Hopnscotch.Portal.ConsoleTester\Hopnscotch.Portal.ConsoleTester.csproj", "{5077FD04-4DDB-49BA-958F-2A4DDA807E03}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopnscotch.Portal.Web", "Hopnscotch.Portal.Web\Hopnscotch.Portal.Web.csproj", "{5AA41633-BDB4-450F-B468-8CA8347A1686}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopnscotch.Portal.Data", "Hopnscotch.Portal.Data\Hopnscotch.Portal.Data.csproj", "{D103D0AB-E080-47E6-A335-7267F3E80268}"
@@ -27,10 +25,6 @@ Global
 		{30DB527B-7DFD-4599-9AB8-69003A15AE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30DB527B-7DFD-4599-9AB8-69003A15AE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30DB527B-7DFD-4599-9AB8-69003A15AE87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5077FD04-4DDB-49BA-958F-2A4DDA807E03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5077FD04-4DDB-49BA-958F-2A4DDA807E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5077FD04-4DDB-49BA-958F-2A4DDA807E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5077FD04-4DDB-49BA-958F-2A4DDA807E03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5AA41633-BDB4-450F-B468-8CA8347A1686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5AA41633-BDB4-450F-B468-8CA8347A1686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA41633-BDB4-450F-B468-8CA8347A1686}.Release|Any CPU.ActiveCfg = Release|Any CPU

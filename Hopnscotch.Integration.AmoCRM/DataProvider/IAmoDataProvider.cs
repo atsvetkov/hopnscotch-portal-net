@@ -29,5 +29,7 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         ApiResponseRoot<ApiTaskListResponse> GetTasks();
 
         ApiResponseRoot<ApiContactLeadLinkListResponse> GetContactLeadLinks();
+
+        bool SaveDataDuringImport { get; set; }
     }
 }

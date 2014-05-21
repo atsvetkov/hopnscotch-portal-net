@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hopnscotch.Portal.Contracts;
+using Hopnscotch.Portal.Integration.AmoCRM;
 using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
 using Hopnscotch.Portal.Integration.AmoCRM.Entities;
 using Hopnscotch.Portal.Model;
@@ -13,7 +14,7 @@ namespace Hopnscotch.Portal.Import
         // temporary const for generating lesson stubs
         private const int NumberOfLessons = 8;
         
-        private readonly IAmoDataProvider amoDataProvider;
+        private IAmoDataProvider amoDataProvider;
         private readonly IAttendanceUow attendanceUow;
         private readonly IAmoCrmEntityConverter entityConverter;
 
@@ -26,6 +27,13 @@ namespace Hopnscotch.Portal.Import
 
         public AmoCrmImportResult Import(AmoCrmImportOptions options)
         {
+            if (options.SimulateImport)
+            {
+                amoDataProvider = new SimulationImportDataProvider(attendanceUow);
+            }
+
+            amoDataProvider.SaveDataDuringImport = options.SaveImportData;
+
             if (!amoDataProvider.Authenticate())
             {
                 return new AmoCrmImportResult(new []
@@ -43,8 +51,23 @@ namespace Hopnscotch.Portal.Import
                 ClearExistingAttendanceData();
             }
 
-            var context = new AmoCrmImportContext(amoDataProvider, entityConverter);
-
+            AmoCrmImportContext context;
+            try
+            {
+                context = new AmoCrmImportContext(amoDataProvider, entityConverter);
+            }
+            catch (ImportSimulationException e)
+            {
+                return new AmoCrmImportResult(new[]
+                {
+                    new AmoCrmImportResultError
+                    {
+                        EntityType = AmoCrmEntityTypes.None,
+                        Message = e.Message
+                    }
+                });
+            }
+            
             ImportUsers(context);
             ImportLevels(context);
             SetupContactLeadLinks(context);

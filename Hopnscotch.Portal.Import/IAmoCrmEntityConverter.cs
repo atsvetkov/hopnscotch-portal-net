@@ -10,6 +10,6 @@ namespace Hopnscotch.Portal.Import
         Lead Convert(ApiLeadResponse response);
         Task Convert(ApiTaskResponse response);
         User Convert(ApiUserResponse response);
-        IEnumerable<Level> Convert(ApiCustomFieldDefinitionResponse response);
+        IEnumerable<T> Convert<T>(ApiCustomFieldDefinitionResponse response) where T : AmoNamedEntityBase, new();
     }
 }

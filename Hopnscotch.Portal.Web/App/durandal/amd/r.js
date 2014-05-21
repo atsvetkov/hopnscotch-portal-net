@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license r.js 2.1.11 Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
@@ -10679,7 +10679,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
             next();
             expect("(");
             if (!is("name"))
-                croak("Name expected");
+                croak("ResponseType expected");
             var name = S.token.value;
             next();
             expect(")");
@@ -17594,7 +17594,7 @@ function parse($TEXT, options) {
 
     function as_symbol(type, noerror) {
         if (!is("name")) {
-            if (!noerror) croak("Name expected");
+            if (!noerror) croak("ResponseType expected");
             return null;
         }
         var sym = _make_symbol(type);

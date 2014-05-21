@@ -2,14 +2,12 @@ using System.Collections.Generic;
 
 namespace Hopnscotch.Portal.Model
 {
-    public class Level : AmoEntityBase, IUpdatableFrom<Level>
+    public class Level : AmoNamedEntityBase, IUpdatableFrom<Level>
     {
         public Level()
         {
             Leads = new List<Lead>();
         }
-
-        public string Name { get; set; }
 
         public virtual ICollection<Lead> Leads { get; set; }
 

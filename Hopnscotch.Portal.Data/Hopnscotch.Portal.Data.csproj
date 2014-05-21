@@ -67,6 +67,7 @@
     <Compile Include="Configuration\AttendanceConfiguration.cs" />
     <Compile Include="AttendanceDbContext.cs" />
     <Compile Include="Configuration\ContactConfiguration.cs" />
+    <Compile Include="Configuration\ImportDataConfiguration.cs" />
     <Compile Include="Configuration\LeadConfiguration.cs" />
     <Compile Include="Configuration\LevelConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Helpers\RepositoryFactories.cs" />
     <Compile Include="Helpers\RepositoryProvider.cs" />
     <Compile Include="IAttendanceDbContextFactory.cs" />
+    <Compile Include="ImportDataRepository.cs" />
     <Compile Include="LeadRepository.cs" />
     <Compile Include="LevelRepository.cs" />
     <Compile Include="Module.cs" />

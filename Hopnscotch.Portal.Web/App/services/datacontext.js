@@ -76,8 +76,12 @@
         }
     }
 
-    function runAction(actionName, mapped) {
+    function runAction(actionName, mapped, options) {
+        console.log(options);
         var query = EntityQuery.from(actionName);
+        if (options) {
+            query = query.withParameters({ options: options });
+        }
 
         return manager.executeQuery(query)
             .then(querySucceded)
@@ -164,7 +168,7 @@
             .expand('ResponsibleUser')
             .orderBy('name');
 
-        var message = 'Retrieved leads for teacher with Name=' + teacherName;
+        var message = 'Retrieved leads for teacher with ResponseType=' + teacherName;
 
         return runQuery(query, message, teacherLeadsObservable);
     };
@@ -195,12 +199,8 @@
         return Q.all([getLookups(), getUsers(null, true)]);
     };
 
-    var runImport = function (totals) {
-        return runAction('Import', totals);
-    };
-
-    var runClearImport = function (totals) {
-        return runAction('ClearImport', totals);
+    var runImport = function (totals, options) {
+        return runAction('Import', totals, options);
     };
 
     var runClear = function (totals) {
@@ -234,7 +234,6 @@
         getUsers: getUsers,
         primeData: primeData,
         runImport: runImport,
-        runClearImport: runClearImport,
         runClear: runClear,
         refreshTotals: refreshTotals,
         getTeacherLeads: getTeacherLeads,

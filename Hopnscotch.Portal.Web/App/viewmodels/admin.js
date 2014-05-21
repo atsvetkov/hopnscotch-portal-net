@@ -5,19 +5,22 @@
     var numberOfLevels = ko.observable();
 
     var totals = {};
+    var options = {};
 
     var importInProgress = ko.observable(false);
     var clearInProgress = ko.observable(false);
-    var clearImportInProgress = ko.observable(false);
 
+    options.saveImportData = ko.observable(false);
+    options.simulateImport = ko.observable(false);
+    options.startFromScratch = ko.observable(false);
+    
     var inProgress = ko.computed(function () {
-        return importInProgress() || clearInProgress() || clearImportInProgress();
+        return importInProgress() || clearInProgress();
     });
 
     var vm = {
         activate: activate,
         runImport: runImport,
-        runClearImport: runClearImport,
         runClear: runClear,
         title: 'Admin',
         numberOfLeads: numberOfLeads,
@@ -25,10 +28,10 @@
         numberOfUsers: numberOfUsers,
         numberOfLevels: numberOfLevels,
         totals: totals,
+        options: options,
         inProgress: inProgress,
         importInProgress: importInProgress,
         clearInProgress: clearInProgress,
-        clearImportInProgress: clearImportInProgress
     };
 
     function refreshTotals() {
@@ -42,18 +45,9 @@
     function runImport() {
         importInProgress(true);
 
-        return datacontext.runImport(totals)
+        return datacontext.runImport(totals, options)
             .then(function () {
                 importInProgress(false);
-            });
-    };
-
-    function runClearImport() {
-        clearImportInProgress(true);
-
-        return datacontext.runClearImport(totals)
-            .then(function () {
-                clearImportInProgress(false);
             });
     };
 
