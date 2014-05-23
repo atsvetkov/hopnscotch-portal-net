@@ -10679,7 +10679,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
             next();
             expect("(");
             if (!is("name"))
-                croak("ResponseType expected");
+                croak("Name expected");
             var name = S.token.value;
             next();
             expect(")");
@@ -17594,7 +17594,7 @@ function parse($TEXT, options) {
 
     function as_symbol(type, noerror) {
         if (!is("name")) {
-            if (!noerror) croak("ResponseType expected");
+            if (!noerror) croak("Name expected");
             return null;
         }
         var sym = _make_symbol(type);

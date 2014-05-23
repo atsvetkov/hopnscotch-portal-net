@@ -57,6 +57,7 @@
         return datacontext.runClear(totals)
             .then(function () {
                 clearInProgress(false);
+                console.log('Leads: ' + totals.numberOfLeads());
             });
     };
 

@@ -91,10 +91,9 @@ namespace Hopnscotch.Portal.Import
                 }
 
                 // set group level if set and exists
-                Level level;
-                if (lead.AmoLevelId.HasValue && context.LevelsMap.TryGetValue(lead.AmoLevelId.Value, out level))
+                if (lead.AmoLevelId.HasValue)
                 {
-                    lead.LanguageLevel = level;
+                    lead.LanguageLevel = attendanceUow.Levels.GetByAmoId(lead.AmoLevelId.Value);
                 }
                 
                 var existingLead = attendanceUow.Leads.GetByAmoId(lead.AmoId);

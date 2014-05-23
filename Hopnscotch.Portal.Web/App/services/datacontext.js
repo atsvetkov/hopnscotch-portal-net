@@ -77,7 +77,6 @@
     }
 
     function runAction(actionName, mapped, options) {
-        console.log(options);
         var query = EntityQuery.from(actionName);
         if (options) {
             query = query.withParameters({ options: options });
@@ -92,7 +91,11 @@
 
             for (var prop in result) {
                 if (result.hasOwnProperty(prop)) {
-                    mapped[prop] = ko.observable(result[prop]);
+                    if (mapped[prop]) {
+                        mapped[prop](result[prop]);
+                    } else {
+                        mapped[prop] = ko.observable(result[prop]);
+                    }
                 }
             }
 
@@ -168,7 +171,7 @@
             .expand('ResponsibleUser')
             .orderBy('name');
 
-        var message = 'Retrieved leads for teacher with ResponseType=' + teacherName;
+        var message = 'Retrieved leads for teacher with Name=' + teacherName;
 
         return runQuery(query, message, teacherLeadsObservable);
     };

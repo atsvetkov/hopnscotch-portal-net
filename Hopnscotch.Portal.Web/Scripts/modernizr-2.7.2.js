@@ -1024,7 +1024,7 @@ window.Modernizr = (function( window, document, undefined ) {
         /** Detect whether the browser supports default html5 styles */
         var supportsHtml5Styles;
 
-        /** ResponseType of the expando, to work with multiple documents or to re-shiv one document */
+        /** Name of the expando, to work with multiple documents or to re-shiv one document */
         var expando = '_html5shiv';
 
         /** The id for the the documents expando */
