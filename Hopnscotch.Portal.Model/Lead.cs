@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hopnscotch.Portal.Model
 {
@@ -25,6 +26,12 @@ namespace Hopnscotch.Portal.Model
         public Level LanguageLevel { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Lesson> Lessons { get; set; }
+
+        [NotMapped]
+        public DayOfWeek[] Days { get; set; }
+
+        [NotMapped]
+        public int? Duration { get; set; }
 
         protected override void CopyValuesFromSpecific(BusinessEntityBase entity)
         {

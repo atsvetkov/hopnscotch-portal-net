@@ -59,7 +59,7 @@
                             </div>-->
                             <div class="list-group" data-bind="foreach: leadLessons">
                                 <a href="#" class="list-group-item lead-lesson" data-bind="css: { 'list-group-item-success': finalized, 'list-group-item-danger': !finalized() }">
-                                    <span data-bind="text: moment(date()).format('YYYY-MM-DD')"></span>
+                                    <span data-bind="text: moment(date()).format('dddd, MMMM Do YYYY')"></span>
                                 </a>
                             </div>
                         </div>

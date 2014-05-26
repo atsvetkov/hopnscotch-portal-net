@@ -1,9 +1,4 @@
 ﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
-    var numberOfLeads = ko.observable();
-    var numberOfContacts = ko.observable();
-    var numberOfUsers = ko.observable();
-    var numberOfLevels = ko.observable();
-
     var totals = {};
     var options = {};
 
@@ -23,10 +18,6 @@
         runImport: runImport,
         runClear: runClear,
         title: 'Admin',
-        numberOfLeads: numberOfLeads,
-        numberOfContacts: numberOfContacts,
-        numberOfUsers: numberOfUsers,
-        numberOfLevels: numberOfLevels,
         totals: totals,
         options: options,
         inProgress: inProgress,
@@ -57,7 +48,6 @@
         return datacontext.runClear(totals)
             .then(function () {
                 clearInProgress(false);
-                console.log('Leads: ' + totals.numberOfLeads());
             });
     };
 

@@ -111,7 +111,8 @@ namespace Hopnscotch.Portal.Web.Controllers
                 NumberOfLeads = contextProvider.Context.Leads.Count(),
                 NumberOfContacts = contextProvider.Context.Contacts.Count(),
                 NumberOfUsers = contextProvider.Context.Users.Count(),
-                NumberOfLevels = contextProvider.Context.Levels.Count()
+                NumberOfLevels = contextProvider.Context.Levels.Count(),
+                NumberOfLessons = contextProvider.Context.Lessons.Count()
             };
         }
     }

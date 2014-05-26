@@ -12,6 +12,8 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
         private const string ScheduleCustomFieldName = "Расписание";
         private const string StartDateCustomFieldName = "Старт группы";
         private const string LevelCustomFieldName = "Уровень";
+        private const string DaysCustomFieldName = "Дни";
+        private const string DurationCustomFieldName = "Длительность (академ. часов)";
 
         private const string AmoDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -69,6 +71,40 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
                 }
 
                 return levelId;
+            }
+        }
+
+        public string[] Days
+        {
+            get
+            {
+                var customField = FindCustomField(DaysCustomFieldName);
+                if (customField == null || customField.Values == null || !customField.Values.Any())
+                {
+                    return null;
+                }
+
+                return customField.Values.Select(f => f.Value).ToArray();
+            }
+        }
+
+        public int? Duration
+        {
+            get
+            {
+                var customField = FindCustomField(DurationCustomFieldName);
+                if (customField == null || customField.Values == null || !customField.Values.Any())
+                {
+                    return null;
+                }
+
+                int duration;
+                if (!int.TryParse(customField.Values[0].Value, out duration))
+                {
+                    return null;
+                }
+
+                return duration;
             }
         }
     }

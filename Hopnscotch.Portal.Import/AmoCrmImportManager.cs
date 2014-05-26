@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Integration.AmoCRM;
 using Hopnscotch.Portal.Integration.AmoCRM.DataProvider;
@@ -11,8 +12,23 @@ namespace Hopnscotch.Portal.Import
 {
     public sealed class AmoCrmImportManager : IAmoCrmImportManager
     {
-        // temporary const for generating lesson stubs
-        private const int NumberOfLessons = 8;
+        private const int LowLevelTotalHoursNumber = 100;
+        private readonly HashSet<string> lowLevelSet = new HashSet<string>
+        {
+            "Beginner",
+            "Elementary",
+            "Pre-Intermediate"
+        };
+
+        private const int HighLevelTotalHoursNumber = 120;
+        private readonly HashSet<string> highLevelSet = new HashSet<string>
+        {
+            "Intermediate",
+            "Upper Intermediate",
+            "Advanced",
+            "Proficiency",
+            "Mover"
+        };
         
         private IAmoDataProvider amoDataProvider;
         private readonly IAttendanceUow attendanceUow;
@@ -93,9 +109,18 @@ namespace Hopnscotch.Portal.Import
                 // set group level if set and exists
                 if (lead.AmoLevelId.HasValue)
                 {
-                    lead.LanguageLevel = attendanceUow.Levels.GetByAmoId(lead.AmoLevelId.Value);
+                    var level = attendanceUow.Levels.GetByAmoId(lead.AmoLevelId.Value);
+
+                    // if level is not found in database, this is probably the first import, so get level from import context
+                    // (already parsed but not committed to database yet)
+                    if (level == null)
+                    {
+                        context.LevelsMap.TryGetValue(lead.AmoLevelId.Value, out level);
+                    }
+
+                    lead.LanguageLevel = level;
                 }
-                
+
                 var existingLead = attendanceUow.Leads.GetByAmoId(lead.AmoId);
                 if (existingLead == null)
                 {
@@ -245,33 +270,51 @@ namespace Hopnscotch.Portal.Import
 
         private IEnumerable<Lesson> CreateLessonsForLead(Lead lead)
         {
-            if (!lead.StartDate.HasValue)
+            if (!lead.StartDate.HasValue || lead.Days == null || !lead.Duration.HasValue || lead.LanguageLevel == null)
             {
                 return Enumerable.Empty<Lesson>();
             }
 
-            // TODO: calculate the exact number based on course length for corresponding language level
-
-            return CalculateLessonDates(lead.StartDate.Value, lead.ScheduleText).Select(lessonDate => new Lesson
+            var totalHours = GetTotalHoursByLevel(lead.LanguageLevel);
+            return CalculateLessonDates(lead.StartDate.Value, lead.Days, lead.Duration.Value, totalHours).Select(lessonDate => new Lesson
             {
-                AcademicHours = 3,
+                AcademicHours = lead.Duration.Value,
                 Date = lessonDate,
                 Lead = lead
             });
         }
 
-        private IEnumerable<DateTime> CalculateLessonDates(DateTime startDate, string scheduleText)
+        private int GetTotalHoursByLevel(Level languageLevel)
         {
-            // Пн - Ср  09:00-10:30
-
-            var lessonDates = new List<DateTime>();
-            var lessonsCreated = 0;
-            var date = startDate;
-            while (lessonsCreated <= NumberOfLessons)
+            if (languageLevel == null)
             {
-                if (date.DayOfWeek == DayOfWeek.Monday || date.DayOfWeek == DayOfWeek.Wednesday)
+                throw new ArgumentNullException("languageLevel");
+            }
+
+            if (lowLevelSet.Contains(languageLevel.Name))
+            {
+                return LowLevelTotalHoursNumber;
+            }
+
+            if (highLevelSet.Contains(languageLevel.Name))
+            {
+                return HighLevelTotalHoursNumber;
+            }
+
+            throw new ArgumentException("Could not determine total course duration for level '" + languageLevel.Name + "'");
+        }
+
+        private static IEnumerable<DateTime> CalculateLessonDates(DateTime startDate, IEnumerable<DayOfWeek> days, int duration, int totalHours)
+        {
+            var lessonDates = new List<DateTime>();
+            var totalHoursCount = 0;
+            var date = startDate;
+            var daysOfWeekMap = new HashSet<DayOfWeek>(days);
+            while (totalHoursCount < totalHours)
+            {
+                if (daysOfWeekMap.Contains(date.DayOfWeek))
                 {
-                    lessonsCreated++;
+                    totalHoursCount += duration;
                     lessonDates.Add(date);
                 }
 
@@ -279,11 +322,6 @@ namespace Hopnscotch.Portal.Import
             }
 
             return lessonDates;
-        }
-
-        class Schedule
-        {
-            DayOfWeek[] Days { get; set; }
         }
 
         public void Dispose()
