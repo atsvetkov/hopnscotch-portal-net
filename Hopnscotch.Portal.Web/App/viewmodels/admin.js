@@ -8,6 +8,7 @@
     options.saveImportData = ko.observable(false);
     options.simulateImport = ko.observable(false);
     options.startFromScratch = ko.observable(false);
+    options.includeHistoricalData = ko.observable(false);
     
     var inProgress = ko.computed(function () {
         return importInProgress() || clearInProgress();

@@ -24,6 +24,11 @@
                                     <dd><span data-bind="text: lead().languageLevel().name"></span></dd>
                                     <!-- /ko -->
                                     
+                                    <!-- ko if: lead().status() -->
+                                    <dt>Status</dt>
+                                    <dd><span data-bind="text: lead().status().name"></span></dd>
+                                    <!-- /ko -->
+                                    
                                     <!-- ko if: lead().startDate() -->
                                     <dt>Start Date</dt>
                                     <dd><span data-bind="text: moment(lead().startDate()).format('YYYY-MM-DD')"></span></dd>

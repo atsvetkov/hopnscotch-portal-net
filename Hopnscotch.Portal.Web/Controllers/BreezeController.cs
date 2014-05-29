@@ -39,7 +39,7 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Lead> Leads()
         {
-            var dbQuery = contextProvider.Context.Leads.Include("LanguageLevel").Include("Lessons").Include("ResponsibleUser");
+            var dbQuery = contextProvider.Context.Leads.Include("LanguageLevel").Include("Status").Include("Lessons").Include("ResponsibleUser");
 
             return dbQuery;
         }
@@ -53,7 +53,14 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Contact> ContactsOfLead(int leadId)
         {
-            return contextProvider.Context.Contacts.Where(c => c.Leads.Select(l => l.Id).Contains(leadId));
+            var lead = contextProvider.Context.Leads.FirstOrDefault(l => l.Id == leadId);
+            var a = lead.Contacts.ToList();
+            var b = a.ToArray();
+            
+            var contactsOfLead = contextProvider.Context.Contacts.Where(c => c.Leads.Select(l => l.Id).Contains(leadId));
+            var cc = contactsOfLead.ToArray();
+            
+            return contactsOfLead;
 
             //var lead = contextProvider.Context.Leads.Include("Contacts").FirstOrDefault(l => l.Id == leadId);
             //if (lead == null)
@@ -112,7 +119,8 @@ namespace Hopnscotch.Portal.Web.Controllers
                 NumberOfContacts = contextProvider.Context.Contacts.Count(),
                 NumberOfUsers = contextProvider.Context.Users.Count(),
                 NumberOfLevels = contextProvider.Context.Levels.Count(),
-                NumberOfLessons = contextProvider.Context.Lessons.Count()
+                NumberOfLessons = contextProvider.Context.Lessons.Count(),
+                NumberOfAttendances = contextProvider.Context.Attendances.Count()
             };
         }
     }

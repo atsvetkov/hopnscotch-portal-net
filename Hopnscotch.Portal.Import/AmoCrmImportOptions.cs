@@ -7,5 +7,7 @@
         public bool SaveImportData { get; set; }
 
         public bool SimulateImport { get; set; }
+
+        public bool IncludeHistoricalData { get; set; }
     }
 }

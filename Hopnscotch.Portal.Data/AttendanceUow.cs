@@ -91,6 +91,14 @@ namespace Hopnscotch.Portal.Data
             }
         }
 
+        public ILeadStatusRepository LeadStatuses
+        {
+            get
+            {
+                return _repositoryProvider.GetRepository<ILeadStatusRepository>();
+            }
+        }
+
         public IImportDataRepository ImportData
         {
             get

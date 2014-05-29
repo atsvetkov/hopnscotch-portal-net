@@ -70,7 +70,7 @@ namespace Hopnscotch.Portal.Import
             AmoCrmImportContext context;
             try
             {
-                context = new AmoCrmImportContext(amoDataProvider, entityConverter);
+                context = new AmoCrmImportContext(amoDataProvider, entityConverter, !options.IncludeHistoricalData);
             }
             catch (ImportSimulationException e)
             {
@@ -86,6 +86,7 @@ namespace Hopnscotch.Portal.Import
             
             ImportUsers(context);
             ImportLevels(context);
+            ImportLeadStatuses(context);
             SetupContactLeadLinks(context);
             ImportContacts(context);
             ImportLeads(context);
@@ -119,7 +120,22 @@ namespace Hopnscotch.Portal.Import
                     }
 
                     lead.LanguageLevel = level;
+
+                    // set total duration of the group (lead)
+                    lead.TotalHours = GetTotalHoursByLevel(lead.LanguageLevel);
                 }
+
+                // set status
+                var status = attendanceUow.LeadStatuses.GetByAmoId(lead.AmoStatusId);
+
+                // if status is not found in database, this is probably the first import, so get status from import context
+                // (already parsed but not committed to database yet)
+                if (status == null)
+                {
+                    context.LeadStatusMap.TryGetValue(lead.AmoStatusId, out status);
+                }
+
+                lead.Status = status;
 
                 var existingLead = attendanceUow.Leads.GetByAmoId(lead.AmoId);
                 if (existingLead == null)
@@ -184,8 +200,7 @@ namespace Hopnscotch.Portal.Import
             {
                 Contact contact;
                 Lead lead;
-                if (context.ContactsMap.TryGetValue(link.ContactId, out contact) && 
-                    context.LeadsMap.TryGetValue(link.LeadId, out lead))
+                if (context.ContactsMap.TryGetValue(link.ContactId, out contact) && context.LeadsMap.TryGetValue(link.LeadId, out lead))
                 {
                     contact.Leads.Add(lead);
                 }
@@ -205,6 +220,23 @@ namespace Hopnscotch.Portal.Import
                 {
                     existingLevel.CopyValuesFrom(level);
                     attendanceUow.Levels.Update(existingLevel);
+                }
+            }
+        }
+
+        private void ImportLeadStatuses(AmoCrmImportContext context)
+        {
+            foreach (var status in context.LeadStatusMap.Values)
+            {
+                var existingStatus = attendanceUow.LeadStatuses.GetByAmoId(status.AmoId);
+                if (existingStatus == null)
+                {
+                    attendanceUow.LeadStatuses.Add(status);
+                }
+                else
+                {
+                    existingStatus.CopyValuesFrom(status);
+                    attendanceUow.LeadStatuses.Update(existingStatus);
                 }
             }
         }
@@ -274,9 +306,8 @@ namespace Hopnscotch.Portal.Import
             {
                 return Enumerable.Empty<Lesson>();
             }
-
-            var totalHours = GetTotalHoursByLevel(lead.LanguageLevel);
-            return CalculateLessonDates(lead.StartDate.Value, lead.Days, lead.Duration.Value, totalHours).Select(lessonDate => new Lesson
+            
+            return CalculateLessonDates(lead.StartDate.Value, lead.Days, lead.Duration.Value, lead.TotalHours).Select(lessonDate => new Lesson
             {
                 AcademicHours = lead.Duration.Value,
                 Date = lessonDate,
@@ -321,6 +352,7 @@ namespace Hopnscotch.Portal.Import
                 date = date.AddDays(1);
             }
 
+            var count = lessonDates.Count;
             return lessonDates;
         }
 

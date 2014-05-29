@@ -12,18 +12,24 @@ namespace Hopnscotch.Portal.Model
             Lessons = new List<Lesson>();
         }
 
+        public int TotalHours { get; set; }
         public double Price { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
         public int? AmoLevelId { get; set; }
         public int? LanguageLevelId { get; set; }
+
+        public int AmoStatusId { get; set; }
+        public int StatusId { get; set; }
         
         public string ScheduleText { get; set; }
 
         //public int GroupTypeId { get; set; }
         
         public Level LanguageLevel { get; set; }
+        public LeadStatus Status { get; set; }
+
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Lesson> Lessons { get; set; }
 
@@ -46,7 +52,9 @@ namespace Hopnscotch.Portal.Model
             this.StartDate = lead.StartDate;
             this.EndDate = lead.EndDate;
             this.AmoLevelId = lead.AmoLevelId;
+            this.AmoStatusId = lead.AmoStatusId;
             this.LanguageLevel = lead.LanguageLevel;
+            this.Status = lead.Status;
             this.ScheduleText = lead.ScheduleText;
         }
 

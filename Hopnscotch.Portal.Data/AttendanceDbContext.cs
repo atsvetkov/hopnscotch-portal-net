@@ -17,6 +17,7 @@ namespace Hopnscotch.Portal.Data
         public DbSet<Lead> Leads { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Level> Levels { get; set; }
+        public DbSet<LeadStatus> LeadStatuses { get; set; }
         public DbSet<ImportData> ImportData { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -31,6 +32,7 @@ namespace Hopnscotch.Portal.Data
             modelBuilder.Configurations.Add(new LessonConfiguration());
             modelBuilder.Configurations.Add(new AttendanceConfiguration());
             modelBuilder.Configurations.Add(new LevelConfiguration());
+            modelBuilder.Configurations.Add(new LeadStatusConfiguration());
             modelBuilder.Configurations.Add(new ImportDataConfiguration());
         }
 

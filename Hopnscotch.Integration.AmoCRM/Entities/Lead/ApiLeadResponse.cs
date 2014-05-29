@@ -14,11 +14,15 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
         private const string LevelCustomFieldName = "Уровень";
         private const string DaysCustomFieldName = "Дни";
         private const string DurationCustomFieldName = "Длительность (академ. часов)";
+        private const string LeadStatusCustomFieldName = "Lead status";
 
         private const string AmoDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
         [JsonProperty("price")]
         public double? Price { get; set; }
+
+        [JsonProperty("status_id")]
+        public int StatusId { get; set; }
 
         public string ScheduleText
         {

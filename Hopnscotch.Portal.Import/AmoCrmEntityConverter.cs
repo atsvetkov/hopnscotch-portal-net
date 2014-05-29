@@ -34,6 +34,7 @@ namespace Hopnscotch.Portal.Import
             {
                 AmoId = response.Id,
                 AmoLevelId = response.AmoLevelId,
+                AmoStatusId = response.StatusId,
                 AmoResponsibleUserId = response.ResponsibleUserId,
                 Name = response.Name,
                 Created = GetDateTimeOrDefault(response.Created),
@@ -54,6 +55,16 @@ namespace Hopnscotch.Portal.Import
                 FirstName = response.FirstName,
                 LastName = response.LastName,
                 Login = response.Login
+            };
+        }
+
+        public LeadStatus Convert(ApiLeadStatusResponse response)
+        {
+            return new LeadStatus
+            {
+                AmoId = response.Id,
+                Name = response.Name,
+                Color = response.Color
             };
         }
 

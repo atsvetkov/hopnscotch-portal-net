@@ -30,6 +30,10 @@
                 <li class="list-group-item">
                     <span class="badge" data-bind="text: totals.numberOfLessons"></span> Lessons
                 </li>
+                
+                <li class="list-group-item">
+                    <span class="badge" data-bind="text: totals.numberOfAttendances"></span> Attendances
+                </li>
             </ul>
         </div>
     </div>
@@ -62,6 +66,14 @@
                         <label>
                             <input id="startFromScratch" name="startFromScratch" type="checkbox" data-bind="checked: options.startFromScratch" />
                             Start import from scratch
+                        </label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="checkbox">
+                        <label>
+                            <input id="includeHistoricalData" name="includeHistoricalData" type="checkbox" data-bind="checked: options.includeHistoricalData" />
+                            Include historical data
                         </label>
                     </div>
                 </li>

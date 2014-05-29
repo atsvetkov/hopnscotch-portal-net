@@ -168,7 +168,7 @@
         var condition = breeze.Predicate('responsibleUser.login', '==', teacherName);
         var query = EntityQuery.from('Leads')
             .where(condition)
-            .expand('ResponsibleUser')
+            .expand('ResponsibleUser, LanguageLevel, Status')
             .orderBy('name');
 
         var message = 'Retrieved leads for teacher with Name=' + teacherName;

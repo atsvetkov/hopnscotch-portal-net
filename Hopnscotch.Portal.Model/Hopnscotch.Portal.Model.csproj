@@ -49,6 +49,7 @@
     <Compile Include="ImportData.cs" />
     <Compile Include="IUpdatableFrom.cs" />
     <Compile Include="Lead.cs" />
+    <Compile Include="LeadStatus.cs" />
     <Compile Include="Lesson.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="NamedBusinessEntityBase.cs" />

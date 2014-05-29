@@ -13,6 +13,7 @@ namespace Hopnscotch.Portal.Contracts
         ITaskRepository Tasks { get; }
         IUserRepository Users { get; }
         ILevelRepository Levels { get; }
+        ILeadStatusRepository LeadStatuses { get; }
 
         void Commit();
     }

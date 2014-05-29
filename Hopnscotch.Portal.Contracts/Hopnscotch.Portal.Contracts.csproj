@@ -52,6 +52,7 @@
     <Compile Include="IConfig.cs" />
     <Compile Include="IContactRepository.cs" />
     <Compile Include="ILeadRepository.cs" />
+    <Compile Include="ILeadStatusRepository.cs" />
     <Compile Include="ILevelRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ITaskRepository.cs" />
