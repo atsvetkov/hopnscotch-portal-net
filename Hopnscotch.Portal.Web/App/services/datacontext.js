@@ -214,6 +214,19 @@
         return runAction('Refresh', totals);
     };
 
+    var createEntity = function (entityType, entity) {
+        return manager.createEntity(entityType, entity);
+    };
+
+    var createEntities = function (entityType, entities) {
+        var results = [];
+        $.map(entities, function (entity) {
+            results.push(manager.createEntity(entityType, entity));
+        });
+
+        return results;
+    };
+
     var saveChanges = function () {
         return manager.saveChanges()
             .then(saveSucceded)
@@ -247,6 +260,8 @@
         getContactById: getContactById,
         getLessonById: getLessonById,
         getUserDisplayNameByLogin: getUserDisplayNameByLogin,
+        createEntity: createEntity,
+        createEntities: createEntities,
         saveChanges: saveChanges
     };
 

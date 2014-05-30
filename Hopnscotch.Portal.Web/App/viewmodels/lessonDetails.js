@@ -1,12 +1,13 @@
 ﻿define(['services/datacontext', 'plugins/router', 'knockout', 'services/session', 'datepicker'], function (datacontext, router, ko, session) {
     var lesson = ko.observable();
+    var contacts = ko.observableArray([]);
     
     var goBack = function () {
         router.navigateBack();
     };
 
     var save = function () {
-        lesson().completed(true);
+        lesson().finalized(true);
         datacontext.saveChanges()
             .then(goBack);
     };
@@ -51,15 +52,44 @@
         $(rootSelector).on(eName, selector, function () {
             var attendance = ko.dataFor(this);
             callback(attendance);
+
             return false;
         });
     };
 
+    var setupAttendances = function() {
+        if (lesson().finalized()) {
+            console.log('lesson already finalized...');
+        } else {
+            if (!lesson().attendances || lesson().attendances().length == 0) {
+                console.log('no attendances yet...');
+
+                var attendanceStubs = [];
+                $.map(contacts(), function(c, i) {
+                    console.log('contact' + i + ': ' + c.name());
+                    attendanceStubs.push({
+                        attended: false,
+                        homeworkPercentage: 0,
+                        lesson: lesson(),
+                        contact: c
+                    });
+                });
+
+                var attendances = datacontext.createEntities('Attendance', attendanceStubs);
+                console.log(attendances.length + ' new attendances have been created!');
+            }
+        }
+
+        console.log('setup complete!');
+        return;
+    };
+
     function activate(routeData) {
-        
         var id = parseInt(routeData);
 
-        return datacontext.getLessonById(id, lesson);
+        return datacontext.getLessonById(id, lesson)
+            .then(function() { return datacontext.getLeadContacts(lesson().lead().id(), contacts); })
+            .then(setupAttendances);
     }
 
     var vm = {

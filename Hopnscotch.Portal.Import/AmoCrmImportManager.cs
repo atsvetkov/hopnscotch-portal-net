@@ -144,18 +144,18 @@ namespace Hopnscotch.Portal.Import
                     foreach (var lesson in CreateLessonsForLead(lead))
                     {
                         // generate default attendance records
-                        foreach (var contact in lead.Contacts)
-                        {
-                            var attendance = new Attendance
-                            {
-                                Attended = false,
-                                Contact = contact,
-                                Lesson = lesson
-                            };
+                        //foreach (var contact in lead.Contacts)
+                        //{
+                        //    var attendance = new Attendance
+                        //    {
+                        //        Attended = false,
+                        //        Contact = contact,
+                        //        Lesson = lesson
+                        //    };
 
-                            lesson.Attendances.Add(attendance);
-                            attendanceUow.Attendances.Add(attendance);
-                        }
+                        //    lesson.Attendances.Add(attendance);
+                        //    attendanceUow.Attendances.Add(attendance);
+                        //}
 
                         attendanceUow.Lessons.Add(lesson);
                     }
@@ -203,6 +203,7 @@ namespace Hopnscotch.Portal.Import
                 if (context.ContactsMap.TryGetValue(link.ContactId, out contact) && context.LeadsMap.TryGetValue(link.LeadId, out lead))
                 {
                     contact.Leads.Add(lead);
+                    lead.Contacts.Add(contact);
                 }
             }
         }
