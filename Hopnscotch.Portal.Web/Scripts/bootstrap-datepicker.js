@@ -697,7 +697,7 @@
 			this.fill();
 		},
 
-		getClassNames: function(date){
+		getClassNames: function (date) {
 			var cls = [],
 				year = this.viewDate.getUTCFullYear(),
 				month = this.viewDate.getUTCMonth(),

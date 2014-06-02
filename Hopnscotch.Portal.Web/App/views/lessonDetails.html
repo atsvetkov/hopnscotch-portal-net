@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="input-group date">
-                        <input type="text" class="form-control" data-bind="date: lesson().date" />
+                        <input type="text" class="form-control" data-bind="date: lesson().date, disable: lesson().finalized" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
+                            <button class="btn btn-default" type="button" data-bind="disable: lesson().finalized">
                                 <i class="fa fa-calendar"></i>
                             </button>
                         </span>
@@ -25,19 +25,43 @@
             <br />
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="list-group" data-bind="foreach: lesson().attendances">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Attended</th>
+                                <th>Homework</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: lesson().attendances">
+                            <tr data-bind="css: { 'success': attended, 'danger': !attended() }">
+                                <td class="attendance-row">
+                                    <span data-bind="text: contact().name"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" data-bind="checked: attended, disable: lesson().finalized" />
+                                </td>
+                                <td>
+                                    <select data-bind="options: $parent.homeworkResultOptions, value: homeworkPercentage, disable: lesson().finalized"></select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!--<div class="list-group" data-bind="foreach: lesson().attendances">
                         <a href="#" class="list-group-item attendance-row" data-bind="css: { 'list-group-item-success': attended, 'list-group-item-danger': !attended() }">
                             <span data-bind="text: contact().name"></span>
                         </a>
-                    </div>
+                    </div>-->
 
                 </div>
             </div>
 
             <br />
 
-            <div class="row" data-bind="if: !lesson().finalized()">
+            <div class="row" data-bind="ifnot: lesson().finalized">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" data-bind="click: selectAll">
                         <i class="fa fa-check fa-lg"></i> All on board
@@ -52,13 +76,13 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <textarea class="form-control" rows="4" data-bind="text: lesson().comment" placeholder="Enter a comment..." maxlength="1000"></textarea>
+                    <textarea class="form-control" rows="4" data-bind="text: lesson().comment, disable: lesson().finalized" placeholder="Enter a comment..." maxlength="1000"></textarea>
                 </div>
             </div>
 
             <br />
 
-            <div class="row" data-bind="if: !lesson().finalized()">
+            <div class="row" data-bind="ifnot: lesson().finalized">
                 <button class="btn btn-primary" data-bind="click: save">
                     <i class="fa fa-save fa-lg"></i> Save
                 </button>

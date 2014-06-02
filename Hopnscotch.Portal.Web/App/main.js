@@ -57,22 +57,38 @@ define(['durandal/system', 'durandal/app', 'durandal/plugins/router', 'durandal/
         }
 
         ko.bindingHandlers.date = {
+            init: function(element, valueAccessor, allBindingsAccessor) {
+                var el = $(element);
+                var options = allBindingsAccessor().datepickerOptions || { language: 'ru', autoclose: true };
+                
+                el.datepicker(options)
+                    .on('changeDate', function() {
+                        var observable = valueAccessor();
+                        observable(el.datepicker('getDate'));
+                    });
+                
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                    el.datepicker('remove');
+                });
+            },
             update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var el = $(element);
                 var value = valueAccessor();
                 var allBindings = allBindingsAccessor();
                 var valueUnwrapped = ko.utils.unwrapObservable(value);
                 var pattern = allBindings.format || 'DD/MM/YYYY';
-
                 var output = "-";
-                if (valueUnwrapped !== null && valueUnwrapped !== undefined && valueUnwrapped.length > 0) {
+                if (valueUnwrapped !== null && valueUnwrapped !== undefined) {
                     output = moment(valueUnwrapped).format(pattern);
                 }
-
-                if ($(element).is("input") === true) {
-                    $(element).val(output);
+                
+                if (el.is("input") === true) {
+                    el.val(output);
                 } else {
-                    $(element).text(output);
+                    el.text(output);
                 }
+
+                el.datepicker('update', valueUnwrapped);
             }
         };
 

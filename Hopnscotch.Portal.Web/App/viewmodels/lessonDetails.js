@@ -1,6 +1,8 @@
 ﻿define(['services/datacontext', 'plugins/router', 'knockout', 'services/session', 'datepicker'], function (datacontext, router, ko, session) {
     var lesson = ko.observable();
     var contacts = ko.observableArray([]);
+
+    var homeworkResultOptions = [0.0, 0.25, 0.50, 0.75, 1.0];
     
     var goBack = function () {
         router.navigateBack();
@@ -36,15 +38,11 @@
     };
 
     var attached = function (view) {
+        if (lesson().finalized()) {
+            return;
+        }
+
         bindEventToList(view, '.attendance-row', viewDetails);
-
-        $('.input-group.date').datepicker({
-            language: "ru",
-            autoclose: true,
-            todayHighlight: true
-        });
-
-        $('.input-group.date').datepicker('update', lesson().date());
     };
 
     var bindEventToList = function (rootSelector, selector, callback, eventName) {
@@ -59,14 +57,10 @@
 
     var setupAttendances = function() {
         if (lesson().finalized()) {
-            console.log('lesson already finalized...');
         } else {
             if (!lesson().attendances || lesson().attendances().length == 0) {
-                console.log('no attendances yet...');
-
                 var attendanceStubs = [];
                 $.map(contacts(), function(c, i) {
-                    console.log('contact' + i + ': ' + c.name());
                     attendanceStubs.push({
                         attended: false,
                         homeworkPercentage: 0,
@@ -75,12 +69,10 @@
                     });
                 });
 
-                var attendances = datacontext.createEntities('Attendance', attendanceStubs);
-                console.log(attendances.length + ' new attendances have been created!');
+                datacontext.createEntities('Attendance', attendanceStubs);
             }
         }
 
-        console.log('setup complete!');
         return;
     };
 
@@ -100,7 +92,8 @@
         selectAll: selectAll,
         selectNone: selectNone,
         title: 'Lesson Details',
-        lesson: lesson
+        lesson: lesson,
+        homeworkResultOptions: homeworkResultOptions
     };
     
     return vm;
