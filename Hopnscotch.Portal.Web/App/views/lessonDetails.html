@@ -4,7 +4,7 @@
             <br />
 
             <div class="row">
-                <h2 data-bind="text: lesson().lead().name"></h2>
+                <h2 data-bind="text: lesson().lead().name() + ' (' + lesson().status() + ')'"></h2>
             </div>
 
             <br />
@@ -61,7 +61,7 @@
 
             <br />
 
-            <div class="row" data-bind="ifnot: lesson().finalized">
+            <!--<div class="row" data-bind="ifnot: lesson().finalized">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" data-bind="click: selectAll">
                         <i class="fa fa-check fa-lg"></i> All on board
@@ -72,10 +72,10 @@
                 </div>
             </div>
 
-            <br />
+            <br />-->
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <textarea class="form-control" rows="4" data-bind="text: lesson().comment, disable: lesson().finalized" placeholder="Enter a comment..." maxlength="1000"></textarea>
                 </div>
             </div>
@@ -83,8 +83,16 @@
             <br />
 
             <div class="row" data-bind="ifnot: lesson().finalized">
-                <button class="btn btn-primary" data-bind="click: save">
-                    <i class="fa fa-save fa-lg"></i> Save
+                <button class="btn btn-primary" data-bind="click: saveChanges">
+                    <i class="fa fa-save fa-lg"></i> Save changes
+                </button>
+                
+                <button class="btn btn-success" data-bind="click: complete">
+                    <i class="fa fa-check fa-lg"></i> Complete lesson
+                </button>
+
+                <button class="btn btn-danger" data-bind="click: cancel">
+                    <i class="fa fa-ban fa-lg"></i> Cancel lesson
                 </button>
             </div>
         </div>

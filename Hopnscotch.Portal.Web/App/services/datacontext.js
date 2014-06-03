@@ -180,7 +180,7 @@
         var condition = breeze.Predicate('leadId', '==', leadId);
         var query = EntityQuery.from('Lessons')
             .where(condition)
-            .orderBy('date')
+            .orderBy('date desc')
             .expand('Lead, Attendances');
 
         var message = 'Retrieved lessons for lead with ID=' + leadId;

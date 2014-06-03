@@ -8,10 +8,23 @@
         router.navigateBack();
     };
 
-    var save = function () {
-        lesson().finalized(true);
+    var save = function (status, isFinalized) {
+        lesson().status(status);
+        lesson().finalized(isFinalized);
         datacontext.saveChanges()
             .then(goBack);
+    };
+
+    var complete = function () {
+        save('Completed', true);
+    };
+
+    var cancel = function () {
+        save('Cancelled', true);
+    };
+
+    var saveChanges = function () {
+        save('Planned', false);
     };
 
     function toggleLessonAttendances(visited) {
@@ -55,24 +68,23 @@
         });
     };
 
-    var setupAttendances = function() {
-        if (lesson().finalized()) {
-        } else {
-            if (!lesson().attendances || lesson().attendances().length == 0) {
-                var attendanceStubs = [];
-                $.map(contacts(), function(c, i) {
-                    attendanceStubs.push({
-                        attended: false,
-                        homeworkPercentage: 0,
-                        lesson: lesson(),
-                        contact: c
-                    });
-                });
+    var setupAttendances = function () {
+        //if (!lesson().finalized() && (!lesson().attendances || lesson().attendances().length == 0)) {
+        //    console.log('setting up attendances');
+        //    var attendanceStubs = [];
+        //    $.map(contacts(), function (c, i) {
+        //        attendanceStubs.push({
+        //            attended: false,
+        //            homeworkPercentage: 0,
+        //            lesson: lesson(),
+        //            contact: c
+        //        });
+        //    });
 
-                datacontext.createEntities('Attendance', attendanceStubs);
-            }
-        }
-
+        //    datacontext.createEntities('Attendance', attendanceStubs);
+        //    return datacontext.saveChanges();
+        //}
+        
         return;
     };
 
@@ -88,7 +100,9 @@
         activate: activate,
         attached: attached,
         goBack: goBack,
-        save: save,
+        saveChanges: saveChanges,
+        complete: complete,
+        cancel: cancel,
         selectAll: selectAll,
         selectNone: selectNone,
         title: 'Lesson Details',

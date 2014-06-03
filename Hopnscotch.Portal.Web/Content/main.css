@@ -17,8 +17,7 @@ body {
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select {
     max-width: 280px;
 }
 
@@ -76,6 +75,18 @@ input[type="checkbox"].input-validation-error {
 #footer {
     position: absolute;
     bottom: 0;    
+}
+
+.progress-bar-label {
+    min-width: 50px;
+}
+
+.lead-lesson {
+    cursor: pointer;
+}
+
+.contact-lesson {
+    cursor: pointer;
 }
 
 
