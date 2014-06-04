@@ -13,8 +13,8 @@
 
     var routes = [{
         route: '',
-        moduleId: 'viewmodels/dashboard',
-        title: 'Dashboard',
+        moduleId: 'viewmodels/welcome',
+        title: 'Welcome',
         nav: false
     }, {
         route: 'dashboard',

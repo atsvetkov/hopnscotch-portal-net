@@ -2,6 +2,54 @@
     var users = ko.observableArray([]);
     var contacts = ko.observableArray([]);
     var teacherLeads = ko.observableArray([]);
+
+    var LeadRegisterPrinter = function() {
+        var leadToPrint = ko.observable();
+        var leadToPrintLessons = ko.observableArray([]);
+        var leadToPrintContacts = ko.observableArray([]);
+        var leadToPrintYears = ko.observableArray(['2014', '2013']);
+        var leadToPrintMonths = ko.observableArray(['June', 'May', 'April']);
+        var leadToPrintSelectedYear = ko.observable();
+        var leadToPrintSelectedMonth = ko.observable();
+
+        var leadToPrintDateColumns = ko.computed(function() {
+            var columns = ['Jun 01, 2014', 'May 29, 2014', 'May 25, 2014'];
+
+            return columns;
+        });
+
+        var prepareLeadForPrinting = function (lead) {
+            leadToPrint(lead);
+
+            var id = leadToPrint().id();
+            return Q.all([
+                datacontext.getLeadLessons(id, leadToPrintLessons),
+                datacontext.getLeadContacts(id, leadToPrintContacts)
+            ]).then(function () {
+                console.log('- lead to print: ' + leadToPrint().name());
+                console.log('- lead has ' + leadToPrintContacts().length + ' students');
+                console.log('- lead has ' + leadToPrintLessons().length + ' lessons');
+            });
+        };
+
+        var print = function() {
+            window.print();
+        };
+
+        return {
+            leadToPrint: leadToPrint,
+            prepareLeadForPrinting: prepareLeadForPrinting,
+            leadToPrintYears: leadToPrintYears,
+            leadToPrintMonths: leadToPrintMonths,
+            leadToPrintSelectedYear: leadToPrintSelectedYear,
+            leadToPrintSelectedMonth: leadToPrintSelectedMonth,
+            leadToPrintDateColumns: leadToPrintDateColumns,
+            leadToPrintContacts: leadToPrintContacts,
+            print: print
+        };
+    };
+
+    var leadRegisterPrinter = new LeadRegisterPrinter();
     
     function activate() {
         return refresh();
@@ -46,7 +94,7 @@
             router.navigate(url);
         }
     };
-
+    
     var attached = function (view) {
         bindEventToList(view, '.lead-row', viewDetails);
     };
@@ -70,6 +118,7 @@
         users: users,
         contacts: contacts,
         teacherLeads: teacherLeads,
+        leadRegisterPrinter: leadRegisterPrinter,
         title: 'Dashboard',
         userIsInRole: userIsInRole
     };

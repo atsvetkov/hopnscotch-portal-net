@@ -1,27 +1,24 @@
 ﻿<section>
     <article>
-            <!--<div class="row">
-                    Select teacher
-                    <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
-                </div>-->
+        <!--<div class="row">
+                Select teacher
+                <select data-bind="options: users, optionsText: 'displayName', value: selectedUser, event: { change: userChanged }"></select>
+            </div>-->
 
-            <br />
-            
-            <!-- ko if: userIsInRole('Administrators') -->
-            <div class="col-md-4" data-bind="template: { name: 'adminTemplate' }"></div>
-            <!-- /ko -->
-            
-            <!-- ko if: userIsInRole('Managers') -->
-            <div class="col-md-4" data-bind="template: { name: 'managerTemplate' }"></div>
-            <!-- /ko -->
-            
-            <!-- ko if: userIsInRole('Teachers') -->
-            <div class="col-md-4" data-bind="template: { name: 'teacherTemplate' }"></div>
-            <!-- /ko -->
-            
-            <!-- ko if: userIsInRole('Students') -->
-            <div class="col-md-4" data-bind="template: { name: 'studentTemplate' }"></div>
-            <!-- /ko -->
+        <br />
+
+        <!-- ko if: userIsInRole('Administrators') -->
+        <div class="col-md-4" data-bind="template: { name: 'adminTemplate' }"></div>
+        <!-- /ko -->
+        <!-- ko if: userIsInRole('Managers') -->
+        <div class="col-md-4" data-bind="template: { name: 'managerTemplate' }"></div>
+        <!-- /ko -->
+        <!-- ko if: userIsInRole('Teachers') -->
+        <div class="col-md-4" data-bind="template: { name: 'teacherTemplate' }"></div>
+        <!-- /ko -->
+        <!-- ko if: userIsInRole('Students') -->
+        <div class="col-md-4" data-bind="template: { name: 'studentTemplate' }"></div>
+        <!-- /ko -->
 
     </article>
 </section>
@@ -31,15 +28,94 @@
         <div class="panel-heading">
             <h3 class="panel-title">Leads</h3>
         </div>
-        <div class="list-group" data-bind="foreach: teacherLeads">
-            <a href="#" class="list-group-item lead-row">
-                <span data-bind="text: name"></span>
-            </a>
 
-            <!-- TODO: Show number of lessons for this lead which need attention (i.e. entering attendance data, not finalized)-->
-            <!-- <span class="badge" data-bind="text: numberOfLeads"></span> Leads-->
-            
-            <!-- TODO: Add button to invite group contacts to Attendance app by sending emails; implement click-URL-based registration -->
+        <!--<div class="panel-body">
+            </div>-->
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: teacherLeads">
+                <tr>
+                    <td class="lead-row">
+                        <span data-bind="text: name"></span>
+                    </td>
+
+                    <td>
+                        <a href="#" title="Print register" class="lead-row-print" data-toggle="modal" data-target="#printModal" data-bind="click: $parent.leadRegisterPrinter.prepareLeadForPrinting">
+                            <i class="fa fa-table"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- TODO: Show number of lessons for this lead which need attention (i.e. entering attendance data, not finalized)-->
+        <!-- <span class="badge" data-bind="text: numberOfLeads"></span> Leads-->
+        <!-- TODO: Add button to invite group contacts to Attendance app by sending emails; implement click-URL-based registration -->
+
+        <!--<div class="list-group" data-bind="foreach: teacherLeads">
+                <a href="#" class="list-group-item lead-row">
+                    <span data-bind="text: name"></span>
+                </a>
+            </div>-->
+    </div>
+
+    <div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModalLabel" aria-hidden="true" data-bind="if: leadRegisterPrinter.leadToPrint()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="printModalLabel">
+                        <span data-bind="text: 'Print register for group ' + leadRegisterPrinter.leadToPrint().name()"></span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <select data-bind="options: leadRegisterPrinter.leadToPrintYears, value: leadRegisterPrinter.leadToPrintSelectedYear"></select>
+                        <select data-bind="options: leadRegisterPrinter.leadToPrintMonths, value: leadRegisterPrinter.leadToPrintSelectedMonth"></select>
+                    </div>
+                    
+                    <br/>
+
+                    <div class="row printable">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    <!-- ko foreach: leadRegisterPrinter.leadToPrintDateColumns -->
+                                    <th>
+                                        <span data-bind="text: $data"></span>
+                                    </th>
+                                    <!-- /ko -->
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: leadRegisterPrinter.leadToPrintContacts">
+                                <tr>
+                                    <td>
+                                        <span data-bind="text: name"></span>
+                                    </td>
+
+                                    <!-- ko foreach: $parent.leadRegisterPrinter.leadToPrintDateColumns -->
+                                    <td>
+
+                                    </td>
+                                    <!-- /ko -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bind="click: leadRegisterPrinter.print">Print</button>
+                </div>
+            </div>
         </div>
     </div>
 </script>

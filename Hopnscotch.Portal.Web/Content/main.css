@@ -89,4 +89,26 @@ input[type="checkbox"].input-validation-error {
     cursor: pointer;
 }
 
+.lead-row {
+    cursor: pointer;
+}
 
+.lead-row-print {
+    
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .printable, .printable * {
+        visibility: visible;
+    }
+
+    .printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
