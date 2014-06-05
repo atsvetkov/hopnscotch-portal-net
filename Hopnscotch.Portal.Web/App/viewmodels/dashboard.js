@@ -3,17 +3,61 @@
     var contacts = ko.observableArray([]);
     var teacherLeads = ko.observableArray([]);
 
+    var lessonPeriod = function(m, y) {
+        var month = ko.observable(m);
+        var year = ko.observable(y);
+        var displayValue = ko.computed(function() {
+            return month() + ' ' + year();
+        });
+
+        return {
+            month: month,
+            year: year,
+            displayValue: displayValue
+        }
+    };
+
     var LeadRegisterPrinter = function() {
         var leadToPrint = ko.observable();
         var leadToPrintLessons = ko.observableArray([]);
         var leadToPrintContacts = ko.observableArray([]);
-        var leadToPrintYears = ko.observableArray(['2014', '2013']);
-        var leadToPrintMonths = ko.observableArray(['June', 'May', 'April']);
-        var leadToPrintSelectedYear = ko.observable();
-        var leadToPrintSelectedMonth = ko.observable();
+        var leadToPrintSelectedPeriod = ko.observable();
+        var leadToPrintPeriods = ko.observableArray([]);
+        
+        var setup = function() {
+            // TODO: Optimize this by pre-creating a dictionary of lesson dates grouped by month+year combination
+            var periods = [];
+            var periodHashes = [];
+            $.map(leadToPrintLessons(), function (lesson) {
+                var lessonDate = moment(lesson.date());
+                var period = new lessonPeriod(lessonDate.format('MMM'), lessonDate.year());
+                var hash = period.displayValue();
+                if ($.inArray(hash, periodHashes) === -1) {
+                    periods.push(period);
+                    periodHashes.push(hash);
+                }
+            });
 
+            leadToPrintPeriods(periods);
+
+            // set initial period to current month/year if exists
+            var today = moment();
+            var todayHash = new lessonPeriod(today.format('MMM'), today.year()).displayValue();
+            $.map(leadToPrintPeriods(), function (period) {
+                if (period.displayValue() === todayHash) {
+                    leadToPrintSelectedPeriod(period);
+                }
+            });
+        };
+        
         var leadToPrintDateColumns = ko.computed(function() {
-            var columns = ['Jun 01, 2014', 'May 29, 2014', 'May 25, 2014'];
+            var columns = [];
+            $.map(leadToPrintLessons(), function(lesson) {
+                var lessonDate = moment(lesson.date());
+                if (lessonDate.year() == leadToPrintSelectedPeriod().year() && lessonDate.format('MMM') == leadToPrintSelectedPeriod().month()) {
+                    columns.push(lessonDate.format('DD.MM.YY'));
+                }
+            });
 
             return columns;
         });
@@ -26,9 +70,7 @@
                 datacontext.getLeadLessons(id, leadToPrintLessons),
                 datacontext.getLeadContacts(id, leadToPrintContacts)
             ]).then(function () {
-                console.log('- lead to print: ' + leadToPrint().name());
-                console.log('- lead has ' + leadToPrintContacts().length + ' students');
-                console.log('- lead has ' + leadToPrintLessons().length + ' lessons');
+                setup();
             });
         };
 
@@ -39,10 +81,8 @@
         return {
             leadToPrint: leadToPrint,
             prepareLeadForPrinting: prepareLeadForPrinting,
-            leadToPrintYears: leadToPrintYears,
-            leadToPrintMonths: leadToPrintMonths,
-            leadToPrintSelectedYear: leadToPrintSelectedYear,
-            leadToPrintSelectedMonth: leadToPrintSelectedMonth,
+            leadToPrintPeriods: leadToPrintPeriods,
+            leadToPrintSelectedPeriod: leadToPrintSelectedPeriod,
             leadToPrintDateColumns: leadToPrintDateColumns,
             leadToPrintContacts: leadToPrintContacts,
             print: print

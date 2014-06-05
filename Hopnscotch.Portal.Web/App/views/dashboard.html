@@ -65,7 +65,7 @@
     </div>
 
     <div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModalLabel" aria-hidden="true" data-bind="if: leadRegisterPrinter.leadToPrint()">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-autosize">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -75,37 +75,34 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <select data-bind="options: leadRegisterPrinter.leadToPrintYears, value: leadRegisterPrinter.leadToPrintSelectedYear"></select>
-                        <select data-bind="options: leadRegisterPrinter.leadToPrintMonths, value: leadRegisterPrinter.leadToPrintSelectedMonth"></select>
+                        Select the period: <select data-bind="options: leadRegisterPrinter.leadToPrintPeriods, optionsText: 'displayValue', value: leadRegisterPrinter.leadToPrintSelectedPeriod"></select>
                     </div>
-                    
-                    <br/>
+
+                    <br />
 
                     <div class="row printable">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-condensed">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="col-register-name">
                                         Name
                                     </th>
 
                                     <!-- ko foreach: leadRegisterPrinter.leadToPrintDateColumns -->
                                     <th>
-                                        <span data-bind="text: $data"></span>
+                                        <span class="col-register-header" data-bind="text: $data"></span>
                                     </th>
                                     <!-- /ko -->
                                 </tr>
                             </thead>
                             <tbody data-bind="foreach: leadRegisterPrinter.leadToPrintContacts">
                                 <tr>
-                                    <td>
+                                    <td class="col-register-header">
                                         <span data-bind="text: name"></span>
                                     </td>
 
                                     <!-- ko foreach: $parent.leadRegisterPrinter.leadToPrintDateColumns -->
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                     <!-- /ko -->
                                 </tr>
                             </tbody>
