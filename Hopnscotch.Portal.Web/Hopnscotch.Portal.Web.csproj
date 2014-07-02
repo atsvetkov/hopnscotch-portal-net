@@ -250,10 +250,13 @@
     <Content Include="404.html" />
     <Content Include="apple-touch-icon-precomposed.png" />
     <Content Include="App\config.js" />
+    <Content Include="App\services\account.js" />
     <Content Include="App\services\session.js" />
     <Content Include="App\services\security.js" />
     <Content Include="App\services\datacontext.js" />
+    <Content Include="App\services\viewHelper.js" />
     <Content Include="App\viewmodels\contactDetails.js" />
+    <Content Include="App\viewmodels\userDetails.js" />
     <Content Include="App\viewmodels\lessonDetails.js" />
     <Content Include="App\viewmodels\leadDetails.js" />
     <Content Include="App\viewmodels\registerExternal.js" />
@@ -266,6 +269,7 @@
     <Content Include="App\viewmodels\dashboard.js" />
     <Content Include="App\viewmodels\users.js" />
     <Content Include="App\views\contactDetails.html" />
+    <Content Include="App\views\userDetails.html" />
     <Content Include="App\views\lessonDetails.html" />
     <Content Include="App\views\leadDetails.html" />
     <Content Include="App\views\registerExternal.html" />

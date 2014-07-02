@@ -1,0 +1,49 @@
+﻿<section>
+    <article>
+        <div class="container">
+            <br />
+
+            <div class="row">
+                <h2 data-bind="text: user().displayName"></h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Roles</h3>
+                        </div>
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: roles">
+                                <tr class="contact-lesson">
+                                    <td>
+                                        <span data-bind="text: name"></span>
+                                    </td>
+
+                                    <td>
+                                        <input type="checkbox" data-bind="checked: isInRole" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <br />
+
+            <div class="row">
+                <button class="btn btn-primary" data-bind="click: save">
+                    <i class="fa fa-save fa-lg"></i> Save
+                </button>
+            </div>
+        </div>
+    </article>
+</section>

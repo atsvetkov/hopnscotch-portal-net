@@ -1,7 +1,9 @@
 ﻿define(function () {
     toastr.options.timeOut = 4000;
 
-    var serviceUrl = 'breeze/breeze';
+    var breezeServiceUrl = 'breeze/breeze';
+
+    var accountServiceUrl = '/api/Account';
 
     var roleNames = {
         Administrators: 'Administrators',
@@ -65,6 +67,12 @@
         nav: true,
         requiredRoles: [roleNames.Managers, roleNames.Administrators]
     }, {
+        route: 'userdetails/:id',
+        moduleId: 'viewmodels/userDetails',
+        title: 'View User',
+        nav: false,
+        requiredRoles: [roleNames.Managers, roleNames.Administrators]
+    }, {
         route: 'login',
         moduleId: 'viewmodels/login',
         title: 'Login',
@@ -89,7 +97,8 @@
     
     return {
         routes: routes,
-        serviceUrl: serviceUrl,
+        breezeServiceUrl: breezeServiceUrl,
+        accountServiceUrl: accountServiceUrl,
         roleNames: roleNames
     };
 });

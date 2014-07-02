@@ -10,7 +10,7 @@
     function configureBreezeManager() {
         breeze.NamingConvention.camelCase.setAsDefault();
 
-        var mgr = new breeze.EntityManager(config.serviceUrl);
+        var mgr = new breeze.EntityManager(config.breezeServiceUrl);
         model.configureMetadataStore(mgr.metadataStore);
 
         return mgr;

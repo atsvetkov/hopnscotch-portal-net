@@ -1,11 +1,8 @@
-﻿define(['services/datacontext', 'knockout'], function (datacontext, ko) {
+﻿define(['services/datacontext', 'services/viewHelper', 'knockout'], function (datacontext, viewHelper, ko) {
     var users = ko.observableArray([]);
 
-    var vm = {
-        activate: activate,
-        users: users,
-        title: 'Users',
-        refresh: refresh
+    var attached = function (view) {
+        viewHelper.bindEntityDetailsRouteOnClick(view, '.user-row', '#/userdetails/');
     };
 
     function activate() {
@@ -14,6 +11,14 @@
 
     function refresh() {
         return datacontext.getUsers(users, true);
+    };
+
+    var vm = {
+        activate: activate,
+        attached: attached,
+        users: users,
+        title: 'Users',
+        refresh: refresh
     };
 
     return vm;

@@ -1,16 +1,17 @@
-﻿define(['jquery'],
-    function ($) {
+﻿define(['jquery', 'config'], function ($, config) {
         // Routes
         addExternalLoginUrl = "/api/Account/AddExternalLogin",
         changePasswordUrl = "/api/Account/changePassword",
         loginUrl = "/Token",
-        logoutUrl = "/api/Account/Logout",
+        logoutUrl = config.accountServiceUrl + "/Logout",
         registerUrl = "/api/Account/Register",
         registerExternalUrl = "/api/Account/RegisterExternal",
         removeLoginUrl = "/api/Account/RemoveLogin",
         setPasswordUrl = "/api/Account/setPassword",
         siteUrl = "/",
-        userInfoUrl = "/api/Account/UserInfo";
+        userInfoUrl = "/api/Account/UserInfo",
+        getUserUrl = "/api/Account/GetUser",
+        saveUserUrl = "/api/Account/SaveUser";
 
         // Route operations
         function externalLoginsUrl(returnUrl, generateState) {
@@ -66,6 +67,8 @@
             getExternalLogins: getExternalLogins,
             getManageInfo: getManageInfo,
             getUserInfo: getUserInfo,
+            getUser: getUser,
+            saveUser: saveUser,
             login: login,
             logout: logout,
             register: register,
@@ -140,6 +143,27 @@
             return $.ajax(userInfoUrl, {
                 cache: false,
                 headers: headers
+            });
+        };
+
+        function getUser(id, observable) {
+            return $.ajax(getUserUrl + '?id=' + id, {
+                cache: false,
+                headers: getSecurityHeaders()
+            })
+            .done(function (data) {
+                if (data) {
+                    observable(data);
+                    return Q.resolve();
+                }
+            });
+        };
+
+        function saveUser(data) {
+            return $.ajax(saveUserUrl, {
+                type: "POST",
+                data: data,
+                headers: getSecurityHeaders()
             });
         };
 

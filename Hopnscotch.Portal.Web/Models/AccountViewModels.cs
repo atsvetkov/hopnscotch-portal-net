@@ -42,4 +42,15 @@ namespace Hopnscotch.Portal.Web.Models
 
         public string ProviderKey { get; set; }
     }
+
+    public class AttendanceUserViewModel
+    {
+        public string Id { get; set; }
+
+        public string Login { get; set; }
+        
+        public string DisplayName { get; set; }
+        
+        public string[] UserRoles { get; set; }
+    }
 }

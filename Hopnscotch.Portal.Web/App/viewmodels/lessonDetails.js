@@ -2,7 +2,7 @@
     var lesson = ko.observable();
     var contacts = ko.observableArray([]);
 
-    var homeworkResultOptions = [0.0, 0.25, 0.50, 0.75, 1.0];
+    var homeworkResultOptions = ['0.0', '0.25', '0.50', '0.75', '1.0'];
     
     var goBack = function () {
         router.navigateBack();
@@ -43,30 +43,30 @@
         toggleLessonAttendances(false);
     };
     
-    var viewDetails = function (attendance) {
-        if (attendance && attendance.id()) {
-            // switch attendance state
-            attendance.attended(!attendance.attended());
-        }
-    };
+    //var viewDetails = function (attendance) {
+    //    if (attendance && attendance.id()) {
+    //        // switch attendance state
+    //        attendance.attended(!attendance.attended());
+    //    }
+    //};
 
-    var attached = function (view) {
-        if (lesson().finalized()) {
-            return;
-        }
+    //var attached = function (view) {
+    //    if (lesson().finalized()) {
+    //        return;
+    //    }
 
-        bindEventToList(view, '.attendance-row', viewDetails);
-    };
+    //    bindEventToList(view, '.attendance-row', viewDetails);
+    //};
 
-    var bindEventToList = function (rootSelector, selector, callback, eventName) {
-        var eName = eventName || 'click';
-        $(rootSelector).on(eName, selector, function () {
-            var attendance = ko.dataFor(this);
-            callback(attendance);
+    //var bindEventToList = function (rootSelector, selector, callback, eventName) {
+    //    var eName = eventName || 'click';
+    //    $(rootSelector).on(eName, selector, function () {
+    //        var attendance = ko.dataFor(this);
+    //        callback(attendance);
 
-            return false;
-        });
-    };
+    //        return false;
+    //    });
+    //};
 
     var setupAttendances = function () {
         //if (!lesson().finalized() && (!lesson().attendances || lesson().attendances().length == 0)) {
@@ -98,7 +98,7 @@
 
     var vm = {
         activate: activate,
-        attached: attached,
+        //attached: attached,
         goBack: goBack,
         saveChanges: saveChanges,
         complete: complete,

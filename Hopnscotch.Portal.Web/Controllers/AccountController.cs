@@ -7,6 +7,10 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Breeze.ContextProvider.EF6;
+using Hopnscotch.Portal.Data;
+using Hopnscotch.Portal.Model;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -24,6 +28,8 @@ namespace Hopnscotch.Portal.Web.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private const string DefaultUserRole = "RegisteredUsers";
+
+        private readonly EFContextProvider<AttendanceDbContext> contextProvider = new EFContextProvider<AttendanceDbContext>();
 
         public AccountController()
             : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
@@ -265,6 +271,65 @@ namespace Hopnscotch.Portal.Web.Controllers
                 }),
                 State = state
             }).ToList();
+        }
+
+        // GET api/Account/GetUser
+        [AllowAnonymous]
+        [Route("GetUser")]
+        public AttendanceUserViewModel GetUser(string id)
+        {
+            int userId;
+            if (!int.TryParse(id, out userId))
+            {
+                return null;
+            }
+
+            var user = contextProvider.Context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return null;
+            }
+
+            var identityUser = UserManager.FindByName(user.Login);
+            if (identityUser == null)
+            {
+                return null;
+            }
+
+            //var roles = UserManager.GetRoles(identityUser.Roles);
+
+            return new AttendanceUserViewModel
+            {
+                Id = identityUser.Id,
+                Login = user.Login,
+                DisplayName = user.FirstName + " " + user.LastName,
+                UserRoles = identityUser.Roles.Select(r => r.Role.Name).ToArray()
+            };
+        }
+
+        // POST api/Account/SaveUser
+        [Route("SaveUser")]
+        public IHttpActionResult SaveUser(AttendanceUserViewModel userModel)
+        {
+            var userId = userModel.Id;
+
+            var user = UserManager.FindById(userId);
+            var newRolesSet = new HashSet<string>(userModel.UserRoles);
+
+            // remove from no more relevant roles
+            var rolesToRemove = user.Roles.Select(r => r.Role.Name).Where(role => !newRolesSet.Contains(role)).ToArray();
+            foreach (var role in rolesToRemove)
+            {
+                UserManager.RemoveFromRole(userId, role);
+            }
+
+            // add to new roles
+            foreach (var role in newRolesSet.Where(role => !UserManager.IsInRole(userId, role)))
+            {
+                UserManager.AddToRole(userId, role);
+            }
+
+            return Ok();
         }
 
         // POST api/Account/Register
