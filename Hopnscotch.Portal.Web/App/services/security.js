@@ -154,7 +154,6 @@
             .done(function (data) {
                 if (data) {
                     observable(data);
-                    return Q.resolve();
                 }
             });
         };

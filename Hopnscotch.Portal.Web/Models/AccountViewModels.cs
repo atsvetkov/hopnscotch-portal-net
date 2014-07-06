@@ -52,5 +52,7 @@ namespace Hopnscotch.Portal.Web.Models
         public string DisplayName { get; set; }
         
         public string[] UserRoles { get; set; }
+        
+        public bool IsRegistered { get; set; }
     }
 }

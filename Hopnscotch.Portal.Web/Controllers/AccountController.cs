@@ -274,7 +274,6 @@ namespace Hopnscotch.Portal.Web.Controllers
         }
 
         // GET api/Account/GetUser
-        [AllowAnonymous]
         [Route("GetUser")]
         public AttendanceUserViewModel GetUser(string id)
         {
@@ -293,13 +292,17 @@ namespace Hopnscotch.Portal.Web.Controllers
             var identityUser = UserManager.FindByName(user.Login);
             if (identityUser == null)
             {
-                return null;
+                return new AttendanceUserViewModel
+                {
+                    IsRegistered = false,
+                    Login = user.Login,
+                    DisplayName = user.FirstName + " " + user.LastName
+                };
             }
-
-            //var roles = UserManager.GetRoles(identityUser.Roles);
 
             return new AttendanceUserViewModel
             {
+                IsRegistered = true,
                 Id = identityUser.Id,
                 Login = user.Login,
                 DisplayName = user.FirstName + " " + user.LastName,

@@ -13,16 +13,14 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Roles</h3>
                         </div>
+                        
+                        <ul class="list-group" data-bind="ifnot: user().isRegistered">
+                            <li class="list-group-item list-group-item-warning">No roles to display, user is not registered yet!</li>
+                        </ul>
 
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                        <table class="table" data-bind="if: user().isRegistered">
                             <tbody data-bind="foreach: roles">
-                                <tr class="contact-lesson">
+                                <tr>
                                     <td>
                                         <span data-bind="text: name"></span>
                                     </td>
