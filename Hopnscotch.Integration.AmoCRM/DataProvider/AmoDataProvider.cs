@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -24,6 +26,10 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         private const string ApiGetTasksUrlTail = "private/api/v2/json/tasks/list";
         private const string ApiGetContactLeadLinksUrlTail = "private/api/v2/json/contacts/links";
         private const string ApiGetAccountUrlTail = "private/api/v2/json/accounts/current";
+
+        private const string RowsLimitQueryParameter = "limit_rows";
+        private const string RowsOffsetQueryParameter = "limit_offset";
+        private const int DefaultRowsLimit = 500;
         
         private readonly string subDomain;
         private readonly string login;
@@ -110,7 +116,13 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
 
         public ApiResponseRoot<ApiContactListResponse> GetContacts()
         {
-            return GetEntities<ApiContactListResponse>(ApiGetContactsUrlTail);
+            return new ApiResponseRoot<ApiContactListResponse>
+            {
+                Response = new ApiContactListResponse
+                {
+                    Entities = RetrieveEntities<ApiContactListResponse, ApiIndividualContactResponse>(ApiGetContactsUrlTail)
+                }
+            };
         }
 
         public ApiResponseRoot<ApiLeadListResponse> GetLeads()
@@ -122,21 +134,37 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
         {
             return GetEntities<ApiTaskListResponse>(ApiGetTasksUrlTail);
         }
-
+        
         public ApiResponseRoot<ApiContactLeadLinkListResponse> GetContactLeadLinks()
         {
-            return GetEntities<ApiContactLeadLinkListResponse>(ApiGetContactLeadLinksUrlTail);
+            return new ApiResponseRoot<ApiContactLeadLinkListResponse>
+            {
+                Response = new ApiContactLeadLinkListResponse
+                {
+                    Entities = RetrieveEntities<ApiContactLeadLinkListResponse, ApiContactLeadLinkResponse>(ApiGetContactLeadLinksUrlTail)
+                }
+            };
         }
 
         public bool SaveDataDuringImport { get; set; }
-        
+
+        private static string BuildUrlWithPaging(string url, int rowsLimit, int rowsOffset)
+        {
+            if (rowsLimit < 0 || rowsOffset < 0)
+            {
+                return url;
+            }
+
+            return url + "?" + RowsLimitQueryParameter + "=" + rowsLimit + "&" + RowsOffsetQueryParameter + "=" + rowsOffset;
+        }
+
         private async Task<ApiResponseRoot<T>> GetEntitiesAsync<T>(string relativeUrl) where T : class
         {
             var response = await client.GetAsync(new Uri(relativeUrl, UriKind.Relative));
 
             return await response.Content.ReadAsAsync<ApiResponseRoot<T>>();
         }
-
+        
         private ApiResponseRoot<T> GetEntities<T>(string relativeUrl) where T : class
         {
             var response = client.GetAsync(new Uri(relativeUrl, UriKind.Relative)).Result;
@@ -150,6 +178,39 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.DataProvider
             }
 
             return response.Content.ReadAsAsync<ApiResponseRoot<T>>().Result;
+        }
+
+        private ApiResponseRoot<T> GetEntitiesPaged<T>(string relativeUrl, int rowsLimit, int rowsOffset) where T : class
+        {
+            var pagedUrl = BuildUrlWithPaging(relativeUrl, rowsLimit, rowsOffset);
+            var response = client.GetAsync(new Uri(pagedUrl, UriKind.Relative)).Result;
+
+            return response.Content.ReadAsAsync<ApiResponseRoot<T>>().Result;
+        }
+
+        private T2[] RetrieveEntities<T1, T2>(string url) where T1 : ApiListResponseBase<T2>
+        {
+            var result = new List<T2>();
+            var rowsOffset = 0;
+            while (true)
+            {
+                var response = GetEntitiesPaged<T1>(url, DefaultRowsLimit, rowsOffset);
+                var entities = response.Response.Entities;
+                if (entities == null || entities.Length == 0)
+                {
+                    break;
+                }
+
+                result.AddRange(entities);
+                if (entities.Length < DefaultRowsLimit)
+                {
+                    break;
+                }
+
+                rowsOffset++;
+            }
+
+            return result.ToArray();
         }
 
         private void SaveImportData<T>(string responseString)

@@ -196,12 +196,22 @@ namespace Hopnscotch.Portal.Import
 
         private static void SetupContactLeadLinks(AmoCrmImportContext context)
         {
-            foreach (var link in context.ContactLeadLinks)
+            foreach (var lead in context.LeadsMap.Values)
             {
-                Contact contact;
-                Lead lead;
-                if (context.ContactsMap.TryGetValue(link.ContactId, out contact) && context.LeadsMap.TryGetValue(link.LeadId, out lead))
+                HashSet<int> leadContactAmoIds;
+                if (!context.LeadContactsMap.TryGetValue(lead.AmoId, out leadContactAmoIds))
                 {
+                    continue;
+                }
+
+                foreach (var contactAmoId in leadContactAmoIds)
+                {
+                    Contact contact;
+                    if (!context.ContactsMap.TryGetValue(contactAmoId, out contact))
+                    {
+                        continue;
+                    }
+
                     contact.Leads.Add(lead);
                     lead.Contacts.Add(contact);
                 }

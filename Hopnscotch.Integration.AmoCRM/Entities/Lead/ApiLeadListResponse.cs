@@ -6,9 +6,9 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
     [AmoCrmResponseType("Leads")]
-    public sealed class ApiLeadListResponse
+    public sealed class ApiLeadListResponse : ApiListResponseBase<ApiLeadResponse>
     {
         [JsonProperty("leads")]
-        public ApiLeadResponse[] Leads { get; set; }
+        public override ApiLeadResponse[] Entities { get; set; }
     }
 }

@@ -53,22 +53,9 @@ namespace Hopnscotch.Portal.Web.Controllers
         [HttpGet]
         public IQueryable<Contact> ContactsOfLead(int leadId)
         {
-            var lead = contextProvider.Context.Leads.FirstOrDefault(l => l.Id == leadId);
-            var a = lead.Contacts.ToList();
-            var b = a.ToArray();
-            
             var contactsOfLead = contextProvider.Context.Contacts.Where(c => c.Leads.Select(l => l.Id).Contains(leadId));
-            var cc = contactsOfLead.ToArray();
             
             return contactsOfLead;
-
-            //var lead = contextProvider.Context.Leads.Include("Contacts").FirstOrDefault(l => l.Id == leadId);
-            //if (lead == null)
-            //{
-            //    return null;
-            //}
-
-            //return lead.Contacts.AsQueryable();
         }
 
         [HttpGet]

@@ -6,9 +6,9 @@ namespace Hopnscotch.Portal.Integration.AmoCRM.Entities
 {
     [UsedImplicitly]
     [AmoCrmResponseType("Tasks")]
-    public sealed class ApiTaskListResponse
+    public sealed class ApiTaskListResponse : ApiListResponseBase<ApiTaskResponse>
     {
         [JsonProperty("tasks")]
-        public ApiTaskResponse[] Tasks { get; set; }
+        public override ApiTaskResponse[] Entities { get; set; }
     }
 }
