@@ -19,5 +19,15 @@ namespace Hopnscotch.Portal.Web
         {
             get { return ConfigurationManager.AppSettings["AmoHash"]; }
         }
+
+        public string DbConnectionString
+        {
+            get
+            {
+                var connectionStringSettingName = ConfigurationManager.AppSettings["ConnectionStringSettingName"];
+                
+                return ConfigurationManager.AppSettings[connectionStringSettingName];
+            }
+        }
     }
 }

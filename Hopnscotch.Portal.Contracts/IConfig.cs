@@ -7,5 +7,7 @@
         string AmoHash { get; }
 
         string AmoLogin { get; }
+
+        string DbConnectionString { get; }
     }
 }

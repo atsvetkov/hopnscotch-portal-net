@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Web.Mvc;
+using Hopnscotch.Portal.Contracts;
 using Hopnscotch.Portal.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -22,7 +21,9 @@ namespace Hopnscotch.Portal.Web
 
             UserManagerFactory = () =>
             {
-                var context = new IdentityDbContext();
+                var config = DependencyResolver.Current.GetService<IConfig>();
+                
+                var context = new IdentityDbContext(config.DbConnectionString);
                 Database.SetInitializer(new IdentityDbInitializer());
                 
                 var userStore = new UserStore<IdentityUser>(context);
@@ -39,7 +40,9 @@ namespace Hopnscotch.Portal.Web
 
             RoleManagerFactory = () =>
             {
-                var context = new IdentityDbContext();
+                var config = DependencyResolver.Current.GetService<IConfig>();
+
+                var context = new IdentityDbContext(config.DbConnectionString);
                 Database.SetInitializer(new IdentityDbInitializer());
 
                 var roleStore = new RoleStore<IdentityRole>(context);
