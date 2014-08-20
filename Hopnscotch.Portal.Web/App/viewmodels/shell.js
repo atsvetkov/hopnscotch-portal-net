@@ -1,5 +1,5 @@
-﻿define(['durandal/system', 'services/logger', 'plugins/router', 'config', 'services/datacontext', 'services/session', 'services/security', 'jquery.utilities'],
-    function(system, logger, router, config, datacontext, session, security) {
+﻿define(['durandal/system', 'services/logger', 'plugins/router', 'config', 'services/datacontext', 'services/session', 'services/security', 'jquery', 'jquery.utilities'],
+    function(system, logger, router, config, datacontext, session, security, $) {
         var shell = {
             activate: activate,
             router: router,
@@ -80,7 +80,11 @@
         function init() {
             logger.log('Started', null, system.getModuleId(shell), true);
 
-            var dfd = $.Deferred(), fragment = $.getFragment(), externalAccessToken, externalError, loginUrl;
+            var dfd = $.Deferred();
+            var fragment = $.getFragment();
+            var externalAccessToken;
+            var externalError;
+            var loginUrl;
 
             verifyStateMatch(fragment);
 
