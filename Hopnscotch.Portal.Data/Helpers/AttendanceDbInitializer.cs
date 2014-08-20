@@ -2,11 +2,7 @@
 
 namespace Hopnscotch.Portal.Data
 {
-    internal sealed class AttendanceDbInitializer : DropCreateDatabaseIfModelChanges<AttendanceDbContext>
+    internal sealed class AttendanceDbInitializer : CreateDatabaseIfNotExists<AttendanceDbContext>
     {
-        protected override void Seed(AttendanceDbContext context)
-        {
-
-        }
     }
 }

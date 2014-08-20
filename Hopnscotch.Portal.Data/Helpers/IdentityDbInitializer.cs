@@ -1,11 +1,10 @@
 ﻿using System.Data.Entity;
-using Hopnscotch.Portal.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Hopnscotch.Portal.Data
 {
-    public sealed class IdentityDbInitializer : DropCreateDatabaseAlways<IdentityDbContext>
+    public sealed class IdentityDbInitializer : CreateDatabaseIfNotExists<IdentityDbContext>
     {
         protected override void Seed(IdentityDbContext context)
         {
