@@ -1,7 +1,6 @@
 ﻿namespace Hopnscotch.Portal.Data
 {
-    public interface IAttendanceDbContextFactory
+    public interface IAttendanceDbContextFactory : IContextFactory<AttendanceDbContext>
     {
-        AttendanceDbContext GetContext();
     }
 }

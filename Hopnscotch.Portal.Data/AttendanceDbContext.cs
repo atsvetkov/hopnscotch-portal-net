@@ -7,10 +7,6 @@ namespace Hopnscotch.Portal.Data
 {
     public class AttendanceDbContext : DbContext
     {
-        public AttendanceDbContext() : base("AttendanceDb")
-        {   
-        }
-
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Contact> Contacts { get; set; }

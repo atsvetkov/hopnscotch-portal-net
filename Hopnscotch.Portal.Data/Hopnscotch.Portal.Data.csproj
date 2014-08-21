@@ -99,6 +99,7 @@
     <Compile Include="Helpers\RepositoryFactories.cs" />
     <Compile Include="Helpers\RepositoryProvider.cs" />
     <Compile Include="IAttendanceDbContextFactory.cs" />
+    <Compile Include="IContextFactory.cs" />
     <Compile Include="ImportDataRepository.cs" />
     <Compile Include="LeadRepository.cs" />
     <Compile Include="LeadStatusRepository.cs" />
