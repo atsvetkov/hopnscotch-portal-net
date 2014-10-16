@@ -95,7 +95,6 @@
     <Compile Include="Helpers\IdentityDbInitializer.cs" />
     <Compile Include="Helpers\IRepositoryFactories.cs" />
     <Compile Include="Helpers\IRepositoryProvider.cs" />
-    <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="Helpers\RepositoryFactories.cs" />
     <Compile Include="Helpers\RepositoryProvider.cs" />
     <Compile Include="IAttendanceDbContextFactory.cs" />
